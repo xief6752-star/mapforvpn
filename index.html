@@ -665,6 +665,8 @@
     border-radius: 10px;
     transition: all .3s;
     border: 1px solid transparent;
+    text-decoration: none;
+    color: inherit;
   }
 
   .airport-item:hover {
@@ -1559,10 +1561,10 @@ function renderAirportsForISP(code, isp) {
   }
 
   airportList.innerHTML = recommendedAirports.map(airport => `
-    <div class="airport-item">
+    <a href="${airport.affUrl}" target="_blank" rel="noopener noreferrer" class="airport-item">
       <div class="airport-name">${airport.name}</div>
       <div class="airport-latency">${airport.provinceData.avgLatency}ms</div>
-    </div>
+    </a>
   `).join('');
 }
 
