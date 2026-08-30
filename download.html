@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VPN客户端下载 - Clash/V2Ray/Shadowrocket官方版本 | MapForVPN</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=Noto+Sans+SC:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600&display=swap">
+
+<style>
+  :root {
+    --bg: #f8faf9;
+    --bg-soft: #f0f4f1;
+    --surface: #ffffff;
+    --border: #d1e4d7;
+    --border-soft: #e8f3ec;
+    --text: #1a3a2a;
+    --text-muted: #4a6355;
+    --text-faint: #6b8577;
+    --accent: #2d6a4f;
+    --accent-strong: #1b4332;
+    --accent-soft: rgba(45, 106, 79, 0.1);
+    --accent-2: #52b788;
+    --success: #40916c;
+    --r: 12px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Noto Sans SC', sans-serif;
+    line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+
+  .navbar {
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(0,0,0,.05); position: sticky; top: 0; z-index: 100;
+  }
+  .navbar-inner {
+    max-width: 1400px; margin: 0 auto; padding: 0 24px;
+    display: flex; align-items: center; justify-content: space-between; height: 64px;
+  }
+  .navbar-logo {
+    font-family: 'ZCOOL XiaoWei', serif; font-size: 22px; font-weight: 400;
+    text-decoration: none; color: var(--text);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .navbar-logo-icon { font-size: 26px; }
+  .navbar-nav { display: flex; align-items: center; gap: 32px; }
+  .navbar-link {
+    color: var(--text-muted); text-decoration: none;
+    font-size: 14px; font-weight: 500; transition: color .2s;
+  }
+  .navbar-link:hover { color: var(--accent); }
+  .navbar-link.active { color: var(--accent); font-weight: 600; }
+
+  .container { max-width: 1400px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  .page-header {
+    text-align: center; margin-bottom: 48px;
+  }
+  .page-header h1 {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 36px; font-weight: 900; margin: 0 0 12px;
+    color: var(--text);
+  }
+  .page-header p {
+    font-size: 16px; color: var(--text-muted);
+  }
+
+  .tabs {
+    display: flex; gap: 8px; margin-bottom: 32px;
+    border-bottom: 2px solid var(--border);
+    overflow-x: auto;
+  }
+  .tab-btn {
+    padding: 12px 24px; border: none; background: none;
+    font-size: 16px; font-weight: 600; color: var(--text-muted);
+    cursor: pointer; transition: all .2s;
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+  }
+  .tab-btn:hover {
+    color: var(--accent);
+  }
+  .tab-btn.active {
+    color: var(--accent); border-bottom-color: var(--accent);
+  }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .clients-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px; margin-bottom: 60px;
+  }
+
+  .client-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--r); padding: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.05);
+    transition: all .2s;
+  }
+  .client-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0,0,0,.1);
+    border-color: var(--accent);
+  }
+
+  .client-header {
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 16px;
+  }
+  .client-icon {
+    width: 48px; height: 48px; border-radius: 10px;
+    background: var(--accent-soft);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+  }
+  .client-info { flex: 1; }
+  .client-name {
+    font-size: 18px; font-weight: 700; color: var(--text);
+    margin: 0 0 4px 0;
+  }
+  .client-version {
+    font-size: 12px; color: var(--text-faint);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .client-badge {
+    display: inline-block; padding: 2px 8px;
+    background: var(--accent); color: white;
+    border-radius: 4px; font-size: 11px; font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .client-badge.hot { background: #d97706; }
+  .client-badge.new { background: #0891b2; }
+
+  .client-desc {
+    font-size: 14px; color: var(--text-muted);
+    line-height: 1.6; margin-bottom: 16px;
+    min-height: 42px;
+  }
+
+  .client-meta {
+    display: flex; gap: 16px; margin-bottom: 16px;
+    font-size: 12px; color: var(--text-faint);
+  }
+  .client-meta span {
+    display: flex; align-items: center; gap: 4px;
+  }
+
+  .client-actions {
+    display: flex; gap: 8px;
+  }
+  .btn {
+    flex: 1; padding: 10px 16px; border-radius: 8px;
+    font-size: 14px; font-weight: 600;
+    text-align: center; text-decoration: none;
+    transition: all .2s; cursor: pointer;
+    border: none;
+  }
+  .btn-primary {
+    background: var(--accent); color: white;
+  }
+  .btn-primary:hover {
+    background: var(--accent-strong);
+  }
+  .btn-secondary {
+    background: var(--bg-soft); color: var(--text-muted);
+    border: 1px solid var(--border);
+  }
+  .btn-secondary:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .guide-section {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--r); padding: 32px;
+    margin-bottom: 32px;
+  }
+  .guide-title {
+    font-size: 20px; font-weight: 700; color: var(--text);
+    margin: 0 0 20px 0;
+  }
+  .guide-list {
+    list-style: none; padding: 0; margin: 0;
+  }
+  .guide-list li {
+    padding: 12px 0; padding-left: 28px;
+    position: relative; line-height: 1.7;
+    color: var(--text-muted); font-size: 14px;
+  }
+  .guide-list li::before {
+    content: '→'; position: absolute; left: 0; top: 12px;
+    color: var(--accent); font-weight: 700;
+  }
+
+  .faq-section {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--r); padding: 40px;
+  }
+  .faq-title {
+    font-size: 24px; font-weight: 700; margin-bottom: 28px;
+    text-align: center; color: var(--text);
+  }
+  .faq-item {
+    margin-bottom: 24px; padding-bottom: 24px;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .faq-item:last-child {
+    margin-bottom: 0; padding-bottom: 0; border-bottom: none;
+  }
+  .faq-question {
+    font-size: 16px; font-weight: 600; margin-bottom: 10px;
+    color: var(--text);
+  }
+  .faq-answer {
+    font-size: 14px; color: var(--text-muted); line-height: 1.7;
+  }
+
+  .footer {
+    background: var(--surface); border-top: 1px solid var(--border);
+    padding: 32px 24px; margin-top: 80px;
+  }
+  .footer-inner {
+    max-width: 1400px; margin: 0 auto; text-align: center;
+    font-size: 13px; color: var(--text-faint);
+  }
+
+  @media (max-width: 860px) {
+    .navbar-nav { display: none; }
+    .clients-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="提供Clash、V2RayN、Shadowrocket、QuantumultX等主流VPN客户端的官方下载链接和安装教程，支持Windows、Mac、iOS、Android全平台。">
+    <meta name="keywords" content="VPN下载,Clash下载,V2Ray下载,Shadowrocket下载,客户端下载,翻墙软件下载">
+    <meta name="author" content="MapForVPN">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="bingbot" content="index, follow">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mapforvpn.com/download.html">
+    <meta property="og:title" content="VPN客户端下载 - Clash/V2Ray/Shadowrocket官方版本 | MapForVPN">
+    <meta property="og:description" content="提供Clash、V2RayN、Shadowrocket、QuantumultX等主流VPN客户端的官方下载链接和安装教程，支持Windows、Mac、iOS、Android全平台。">
+    <meta property="og:site_name" content="MapForVPN">
+    <meta property="og:locale" content="zh_CN">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://mapforvpn.com/download.html">
+    <meta name="twitter:title" content="VPN客户端下载 - Clash/V2Ray/Shadowrocket官方版本 | MapForVPN">
+    <meta name="twitter:description" content="提供Clash、V2RayN、Shadowrocket、QuantumultX等主流VPN客户端的官方下载链接和安装教程，支持Windows、Mac、iOS、Android全平台。">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://mapforvpn.com/download.html">
+
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="navbar-logo">
+      <span style="font-weight: 900; font-family: 'Noto Sans SC', sans-serif; color: #2d5016;">Map</span><span style="font-weight: 900; font-family: 'Noto Sans SC', sans-serif; color: #5fb878;">For</span><span style="font-weight: 900; font-family: 'Noto Sans SC', sans-serif; color: #2d5016;">VPN</span>
+    </a>
+    <div class="navbar-nav">
+      <a href="index.html" class="navbar-link">首页</a>
+      <a href="rankings.html" class="navbar-link">机场榜单</a>
+      <a href="reviews.html" class="navbar-link">机场评测</a>
+      <a href="nodes/" class="navbar-link">省份节点</a>
+      <a href="wiki.html" class="navbar-link">科普百科</a>
+      <a href="tutorials.html" class="navbar-link">使用教程</a>
+      <a href="download.html" class="navbar-link active">客户端下载</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="page-header">
+    <h1>客户端下载</h1>
+    <p>精选各平台主流代理客户端，提供官方下载和本地备份</p>
+  </div>
+
+  <!-- Platform Tabs -->
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="windows">🪟 Windows</button>
+    <button class="tab-btn" data-tab="macos">🍎 macOS</button>
+    <button class="tab-btn" data-tab="ios">📱 iOS</button>
+    <button class="tab-btn" data-tab="android">🤖 Android</button>
+    <button class="tab-btn" data-tab="linux">🐧 Linux</button>
+  </div>
+
+  <!-- Windows Tab -->
+  <div class="tab-content active" id="windows">
+    <div class="clients-grid">
+      <div class="client-card">
+        <span class="client-badge hot">热门推荐</span>
+        <div class="client-header">
+          <div class="client-icon">⚡</div>
+          <div class="client-info">
+            <h3 class="client-name">Clash Verge Rev</h3>
+            <p class="client-version">v2.0.1 · 2024-12</p>
+          </div>
+        </div>
+        <p class="client-desc">基于 Clash Meta 核心，界面美观，功能强大，新手友好，支持一键订阅</p>
+        <div class="client-meta">
+          <span>💾 Win 10/11</span>
+          <span>📦 95 MB</span>
+        </div>
+        <div class="client-actions">
+          <a href="#" class="btn btn-primary">立即下载</a>
+          <a href="https://github.com/clash-verge-rev/clash-verge-rev" class="btn btn-secondary">官方页面</a>
+        </div>
+      </div>
+
+      <div class="client-card">
+        <span class="client-badge hot">热门推荐</span>
+        <div class="client-header">
+          <div class="client-icon">🚀</div>
+          <div class="client-info">
+            <h3 class="client-name">Karing</h3>
+            <p class="client-version">v1.2.22 · 2024-12</p>
+          </div>
+        </div>
+        <p class="client-desc">现代化代理工具，支持多种协议，自动选择最优节点，性能出色</p>
+        <div class="client-meta">
+          <span>💾 Win 10/11</span>
+          <span>📦 52 MB</span>
+        </div>
+        <div class="client-actions">
+          <a href="#" class="btn btn-primary">立即下载</a>
+          <a href="https://github.com/KaringX/karing" class="btn btn-secondary">官方页面</a>
+        </div>
+      </div>
+
+      <div class="client-card">
+        <div class="client-header">
+          <div class="client-icon">🌐</div>
+          <div class="client-info">
+            <h3 class="client-name">v2rayN</h3>
+            <p class="client-version">v7.3.1 · 2024-12</p>
+          </div>
+        </div>
+        <p class="client-desc">老牌 V2Ray 客户端，稳定可靠，支持多种协议，适合进阶用户</p>
+        <div class="client-meta">
+          <span>💾 Win 7+</span>
+          <span>📦 78 MB</span>
+        </div>
+        <div class="client-actions">
+          <a href="#" class="btn btn-primary">立即下载</a>
+          <a href="https://github.com/2dust/v2rayN" class="btn btn-secondary">官方页面</a>
+        </div>
+      </div>
+
+      <div class="client-card">
+        <div class="client-header">
+          <div class="client-icon">🎯</div>
+          <div class="client-info">
+            <h3 class="client-name">Hiddify</h3>
+            <p class="client-version">v4.1.1 · 2024-11</p>
+          </div>
+        </div>
+        <p class="client-desc">开源跨平台客户端，界面简洁，支持自定义规则和订阅管理</p>
+        <div class="client-meta">
+          <span>💾 Win 10/11</span>
+          <span>📦 45 MB</span>
+        </div>
+        <div class="client-actions">
+          <a href="#" class="btn btn-primary">立即下载</a>
+          <a href="https://github.com/hiddify/hiddify-next" class="btn btn-secondary">官方页面</a>
+        </div>
+      </div>
+
+      <div class="client-card">
+        <span class="client-badge new">游戏优化</span>
+        <div class="client-header">
+          <div class="client-icon">🎮</div>
+          <div class="client-info">
+            <h3 class="client-name">Netch</h3>
+            <p class="client-version">v1.9.7 · 2024-05</p>
+          </div>
+        </div>
+        <p class="client-desc">专为游戏加速设计，支持进程代理，降低游戏延迟，提升联机体验</p>
+        <div class="client-meta">
+          <span>💾 Win 10/11</span>
+          <span>📦 28 MB</span>
+        </div>
+        <div class="client-actions">
+          <a href="#" class="btn btn-primary">立即下载</a>
+          <a href="https://github.com/netchx/netch" class="btn btn-secondary">官方页面</a>
+        </div>
+      </div>
+
+      <div class="client-card">
+        <span class="client-badge new">跨平台</span>
+        <div class="client-header">
+          <div class="client-icon">🔮</div>
+          <div class="client-info">
+            <h3 class="client-name">Clashmi</h3>
+            <p class="client-version">v1.0.28 · 2024-12</p>
+          </div>
+        </div>
+        <p class="client-desc">全平台支持的现代化客户端，界面简洁，功能强大，支持多种协议</p>
+        <div class="client-meta">
+          <span>💾 Win 10/11</span>
+          <span>📦 40 MB</span>
+        </div>
+        <div class="client-actions">
+          <a href="https://clashmi.com" class="btn btn-primary">官方下载</a>
+          <a href="https://clashmi.com" class="btn btn-secondary">官方页面</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- macOS Tab -->
+  <div class="tab-content" id="macos">
+    <div class="clients-grid">
+      <div class="client-card">
+        <span class="client-badge hot">热门推荐</span>
+        <div class="client-header">
+          <div class="client-icon">⚡</div>
+          <div class="client-info">
+            <h3 class="client-name">Clash Verge Rev</h3>
+            <p class="client-version">v2.0.1 · 2024-12</p>
+          </div>
+        </div>
+        <p class="client-desc">功能强大的 Clash 客户端，支持 M1/M2/M3 芯片和 Intel 芯片</p>
+        <div class="client-meta">
+          <span>💾 macOS 10.15+</span>
+          <span>📦 Intel / Apple Silicon</span>
+        </div>
+        <div class="client-actions">
+          <a href="#" class="btn btn-primary">M芯片版</a>
+          <a href="#" class="btn btn-secondary">Intel版</a>
+        </div>
+      </div>
+
+      <div class="client-card">
+        <span class="client-badge hot">热门推荐</span>
+        <div class="client-header">
+          <div class="client-icon">🚀</div>
+          <div class="client-info">
+            <h3 class="client-name">Karing</h3>
+            <p class="client-version">v1.2.22 · 2024-12</p>
+          </div>
+        </div>
+        <p class="client-desc">现代化客户端，支持自动选择最优节点，操作简便</p>
+        <div class="client-meta">
+          <span>💾 macOS 11+</span>
+          <span>📦 Universal</span>
+        </div>
+        <div class="client-actions">
+          <a href="#" class="btn btn-primary">立即下载</a>
+          <a href="https://github.com/KaringX/karing" class="btn btn-secondary">官方页面</a>
+        </div>
+      </div>
+
+      <div class="client-card">
+        <div class="client-header">
+          <div class="client-icon">🌐</div>
+          <div class="client-info">
+            <h3 class="client-name">V2rayU</h3>
+            <p class="client-version">v5.1.0 · 2024-08</p>
+          </div>
+        </div>
+        <p class="client-desc">基于 V2Ray 核心，支持多种协议，功能完善</p>
+        <div class="client-meta">
+          <span>💾 macOS 10.15+</span>
+          <span>📦 42 MB</span>
+        </div>
+        <div class="client-actions">
+          <a href="#" class="btn btn-primary">立即下载</a>
+          <a href="https://github.com/yanue/V2rayU" class="btn btn-secondary">官方页面</a>
+        </div>
+      </div>
+
+      <div class="client-card">
+        <div class="client-header">
+          <div class="client-icon">🎯</div>
+          <div class="client-info">
+            <h3 class="client-name">Hiddify</h3>
+            <p class="client-version">v4.1.1 · 2024-11</p>
+          </div>
+        </div>
+        <p class="client-desc">开源跨平台客户端，界面简洁友好</p>
+        <div class="client-meta">
+          <span>💾 macOS 11+</span>
+          <span>📦 48 MB</span>
+        </div>
+        <div class="client-actions">
+          <a href="#" class="btn btn-primary">立即下载</a>
+          <a href="https://github.com/hiddify/hiddify-next" class="btn btn-secondary">官方页面</a>
+        </div>
+      </div>
+
+      <div class="client-card">
+        <div class="client-header">
+          <div class="client-icon">⚙️</div>
+          <div class="client-info">
+            <h3 class="client-name">FlClash</h3>
+            <p class="client-version">v0.8.96 · 2024-12</p>
+          </div>
+        </div>
+        <p class="client-desc">基于 Flutter 开发，跨平台客户端，支持 Clash 配置</p>
+        <div class="client-meta">
+          <span>💾 macOS 11+</span>
+          <span>📦 Universal</span>
+        </div>
+        <div class="client-actions">
+          <a href="#" class="btn btn-primary">立即下载</a>
+          <a href="https://github.com/chen08209/FlClash" class="btn btn-secondary">官方页面</a>
+        </div>
+      </div>
+
+      <div class="client-card">
+        <span class="client-badge new">跨平台</span>
+        <div class="client-header">
+          <div class="client-icon">🔮</div>
+          <div class="client-info">
+            <h3 class="client-name">Clashmi</h3>
+            <p class="client-version">v1.0.28 · 2024-12</p>
+          </div>
+        </div>
+        <p class="client-desc">全平台支持的现代化客户端，界面简洁，功能强大，支持多种协议</p>
+        <div class="client-meta">
+          <span>💾 macOS 11+</span>
+          <span>📦 Universal</span>
+        </div>
+        <div class="client-actions">
+          <a href="https://clashmi.com" class="btn btn-primary">官方下载</a>
+          <a href="https://clashmi.com" class="btn btn-secondary">官方页面</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- iOS Tab -->
+  <div class="tab-content" id="ios">
+    <div class="clients-grid">
+      <div class="client-card">
+        <span class="client-badge hot">最受欢迎</span>
+        <div class="client-header">
+          <div class="client-icon">🚀</div>
+          <div class="client-info">
+            <h3 class="client-name">Shadowrocket</h3>
+            <p class="client-version">$2.99 · App Store</p>
+          </div>
+        </div>
+        <p class="client-desc">iOS 上最流行的代理工具，功能全面，规则丰富，支持多种协议</p>
+        <div class="client-meta">
+          <span>💾 iOS 13.0+</span>
+          <span>📦 需美区账号</span>
+        </div>
+        <div class="client-actions">
+          <a href="https://apps.apple.com/us/app/shadowrocket/id932747118" class="btn btn-primary">App Store</a>
+        </div>
+      </div>
+
+      <div class="client-card">
+        <span class="client-badge">专业工具</span>
+        <div class="client-header">
+          <div class="client-icon">⚡</div>
+          <div class="client-info">
+            <h3 class="client-name">Surge 5</h3>
+            <p class="client-version">$49.99 · App Store</p>
+          </div>
+        </div>
+        <p class="client-desc">专业级网络调试工具，功能最强大，适合高级用户</p>
+        <div class="client-meta">
+          <span>💾 iOS 15.0+</span>
+          <span>📦 需美区账号</span>
+        </div>
+        <div class="client-actions">
+          <a href="https://apps.apple.com/us/app/surge-5/id1442620678" class="btn btn-primary">App Store</a>
+        </div>
+      </div>
+
+      <div class="client-card">
+        <div class="client-header">
+          <div class="client-icon">🎯</div>
+          <div class="client-info">
+            <h3 class="client-name">Quantumult X</h3>
+            <p class="client-version">$7.99 · App Store</p>
+          </div>
+        </div>
+        <p class="client-desc">功能强大的代理工具，支持复杂规则和脚本</p>
+        <div class="client-meta">
+          <span>💾 iOS 13.0+</span>
+          <span>📦 需美区账号</span>
+        </div>
+        <div class="client-actions">
+          <a href="https://apps.apple.com/us/app/quantumult-x/id1443988620" class="btn btn-primary">App Store</a>
+        </div>
+      </div>
+
+      <div class="client-card">
+        <div class="client-header">
+          <div class="client-icon">🌊</div>
+          <div class="client-info">
+            <h3 class="client-name">Loon</h3>
+            <p class="client-version">$5.99 · App Store</p>
+          </div>
+        </div>
+        <p class="client-desc">国产优秀代理工具，界面友好，性能稳定</p>
+        <div class="client-meta">
+          <span>💾 iOS 14.0+</span>
+          <span>📦 需美区账号</span>
+        </div>
+        <div class="client-actions">
+          <a href="https://apps.apple.com/us/app/loon/id1373567447" class="btn btn-primary">App Store</a>
+        </div>
+      </div>
+
+      <div class="client-card">
+        <span class="client-badge new">免费开源</span>
+        <div class="client-header">
+          <div class="client-icon">🎈</div>
+          <div class="client-info">
+            <h3 class="client-name">Karing</h3>
+            <p class="client-version">免费 · TestFlight</p>
+          </div>
+        </div>
+        <p class="client-desc">完全免费的开源客户端，无需美区账号，通过 TestFlight 安装</p>
+        <div class="client-meta">
+          <span>💾 iOS 15.0+</span>
+          <span>📦 TestFlight</span>
+        </div>
+        <div class="client-actions">
+          <a href="https://testflight.apple.com/join/RLU59OsJ" class="btn btn-primary">TestFlight</a>
+        </div>
+      </div>
+
+      <div class="client-card">
+        <span class="client-badge new">跨平台</span>
+        <div class="client-header">
+          <div class="client-icon">🔮</div>
+          <div class="client-info">
+            <h3 class="client-name">Clashmi</h3>
+            <p class="client-version">免费 · clashmi.com</p>
+          </div>
+        </div>
+        <p class="client-desc">全平台支持的现代化客户端，界面简洁，功能强大，支持多种协议</p>
+        <div class="client-meta">
+          <span>💾 iOS 13.0+</span>
+          <span>📦 通过官网安装</span>
+        </div>
+        <div class="client-actions">
+          <a href="https://clashmi.com" class="btn btn-primary">官方下载</a>
+          <a href="https://clashmi.com" class="btn btn-secondary">官方页面</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Android Tab -->
+  <div class="tab-content" id="android">
+    <div class="clients-grid">
+      <div class="client-card">
+        <span class="client-badge hot">热门推荐</span>
+        <div class="client-header">
+          <div class="client-icon">🚀</div>
+          <div class="client-info">
+            <h3 class="client-name">v2rayNG</h3>
+            <p class="client-version">v2.2.6 · 2024-12</p>
+          </div>
+        </div>
+        <p class="client-desc">Android 平台最流行的 V2Ray 客户端，开源免费，支持多种协议</p>
+        <div class="client-meta">
+          <span>💾 Android 5.0+</span>
+          <span>📦 15 MB</span>
+        </div>
+        <div class="client-actions">
+          <a href="#" class="btn btn-primary">立即下载</a>
+          <a href="https://github.com/2dust/v2rayNG" class="btn btn-secondary">官方页面</a>
+        </div>
+      </div>
+
+      <div class="client-card">
+        <span class="client-badge hot">热门推荐</span>
+        <div class="client-header">
+          <div class="client-icon">⚡</div>
+          <div class="client-info">
+            <h3 class="client-name">Clash Meta</h3>
+            <p class="client-version">v2.11.32 · 2024-11</p>
+          </div>
+        </div>
+        <p class="client-desc">基于 Clash Meta 核心，功能强大，规则丰富</p>
+        <div class="client-meta">
+          <span>💾 Android 6.0+</span>
+          <span>📦 22 MB</span>
+        </div>
+        <div class="client-actions">
+          <a href="#" class="btn btn-primary">立即下载</a>
+          <a href="https://github.com/MetaCubeX/ClashMetaForAndroid" class="btn btn-secondary">官方页面</a>
+        </div>
+      </div>
+
+      <div class="client-card">
+        <div class="client-header">
+          <div class="client-icon">🎯</div>
+          <div class="client-info">
+            <h3 class="client-name">Karing</h3>
+            <p class="client-version">v1.2.22 · 2024-12</p>
+          </div>
+        </div>
+        <p class="client-desc">现代化开源客户端，界面美观，新手友好</p>
+        <div class="client-meta">
+          <span>💾 Android 8.0+</span>
+          <span>📦 32 MB</span>
+        </div>
+        <div class="client-actions">
+          <a href="#" class="btn btn-primary">立即下载</a>
+          <a href="https://github.com/KaringX/karing" class="btn btn-secondary">官方页面</a>
+        </div>
+      </div>
+
+      <div class="client-card">
+        <div class="client-header">
+          <div class="client-icon">🌊</div>
+          <div class="client-info">
+            <h3 class="client-name">Surfboard</h3>
+            <p class="client-version">v2.33 · 2024-10</p>
+          </div>
+        </div>
+        <p class="client-desc">Android 上的 Surge，功能完善，性能优秀</p>
+        <div class="client-meta">
+          <span>💾 Android 7.0+</span>
+          <span>📦 18 MB</span>
+        </div>
+        <div class="client-actions">
+          <a href="#" class="btn btn-primary">立即下载</a>
+          <a href="https://github.com/getsurfboard/surfboard" class="btn btn-secondary">官方页面</a>
+        </div>
+      </div>
+
+      <div class="client-card">
+        <div class="client-header">
+          <div class="client-icon">🎈</div>
+          <div class="client-info">
+            <h3 class="client-name">Hiddify</h3>
+            <p class="client-version">v4.1.1 · 2024-11</p>
+          </div>
+        </div>
+        <p class="client-desc">开源跨平台客户端，支持多核心</p>
+        <div class="client-meta">
+          <span>💾 Android 8.0+</span>
+          <span>📦 28 MB</span>
+        </div>
+        <div class="client-actions">
+          <a href="#" class="btn btn-primary">立即下载</a>
+          <a href="https://github.com/hiddify/hiddify-next" class="btn btn-secondary">官方页面</a>
+        </div>
+      </div>
+
+      <div class="client-card">
+        <div class="client-header">
+          <div class="client-icon">🐱</div>
+          <div class="client-info">
+            <h3 class="client-name">NekoBox</h3>
+            <p class="client-version">v1.4.2 · 2024-11</p>
+          </div>
+        </div>
+        <p class="client-desc">基于 sing-box 核心，支持多种协议</p>
+        <div class="client-meta">
+          <span>💾 Android 7.0+</span>
+          <span>📦 24 MB</span>
+        </div>
+        <div class="client-actions">
+          <a href="#" class="btn btn-primary">立即下载</a>
+          <a href="https://github.com/MatsuriDayo/NekoBoxForAndroid" class="btn btn-secondary">官方页面</a>
+        </div>
+      </div>
+
+      <div class="client-card">
+        <span class="client-badge new">跨平台</span>
+        <div class="client-header">
+          <div class="client-icon">🔮</div>
+          <div class="client-info">
+            <h3 class="client-name">Clashmi</h3>
+            <p class="client-version">v1.0.28 · 2024-12</p>
+          </div>
+        </div>
+        <p class="client-desc">全平台支持的现代化客户端，界面简洁，功能强大，支持多种协议</p>
+        <div class="client-meta">
+          <span>💾 Android 7.0+</span>
+          <span>📦 35 MB</span>
+        </div>
+        <div class="client-actions">
+          <a href="https://clashmi.com" class="btn btn-primary">官方下载</a>
+          <a href="https://clashmi.com" class="btn btn-secondary">官方页面</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Linux Tab -->
+  <div class="tab-content" id="linux">
+    <div class="clients-grid">
+      <div class="client-card">
+        <span class="client-badge hot">推荐</span>
+        <div class="client-header">
+          <div class="client-icon">⚡</div>
+          <div class="client-info">
+            <h3 class="client-name">Clash Verge Rev</h3>
+            <p class="client-version">v2.0.1 · 2024-12</p>
+          </div>
+        </div>
+        <p class="client-desc">图形界面，操作便捷，支持多种 Linux 发行版</p>
+        <div class="client-meta">
+          <span>💾 .deb / .rpm / .AppImage</span>
+        </div>
+        <div class="client-actions">
+          <a href="#" class="btn btn-primary">立即下载</a>
+          <a href="https://github.com/clash-verge-rev/clash-verge-rev" class="btn btn-secondary">官方页面</a>
+        </div>
+      </div>
+
+      <div class="client-card">
+        <div class="client-header">
+          <div class="client-icon">🚀</div>
+          <div class="client-info">
+            <h3 class="client-name">Karing</h3>
+            <p class="client-version">v1.2.22 · 2024-12</p>
+          </div>
+        </div>
+        <p class="client-desc">跨平台现代化客户端，支持多种 Linux 发行版</p>
+        <div class="client-meta">
+          <span>💾 .deb / .rpm / .AppImage</span>
+        </div>
+        <div class="client-actions">
+          <a href="#" class="btn btn-primary">立即下载</a>
+          <a href="https://github.com/KaringX/karing" class="btn btn-secondary">官方页面</a>
+        </div>
+      </div>
+
+      <div class="client-card">
+        <div class="client-header">
+          <div class="client-icon">🌐</div>
+          <div class="client-info">
+            <h3 class="client-name">v2rayA</h3>
+            <p class="client-version">v2.2.5 · 2024-09</p>
+          </div>
+        </div>
+        <p class="client-desc">Web 界面管理，支持多核心，适合服务器部署</p>
+        <div class="client-meta">
+          <span>💾 Web UI + CLI</span>
+        </div>
+        <div class="client-actions">
+          <a href="#" class="btn btn-primary">立即下载</a>
+          <a href="https://github.com/v2rayA/v2rayA" class="btn btn-secondary">官方页面</a>
+        </div>
+      </div>
+
+      <div class="client-card">
+        <div class="client-header">
+          <div class="client-icon">🎯</div>
+          <div class="client-info">
+            <h3 class="client-name">Hiddify</h3>
+            <p class="client-version">v4.1.1 · 2024-11</p>
+          </div>
+        </div>
+        <p class="client-desc">开源跨平台客户端</p>
+        <div class="client-meta">
+          <span>💾 .deb / .rpm / .AppImage</span>
+        </div>
+        <div class="client-actions">
+          <a href="#" class="btn btn-primary">立即下载</a>
+          <a href="https://github.com/hiddify/hiddify-next" class="btn btn-secondary">官方页面</a>
+        </div>
+      </div>
+
+      <div class="client-card">
+        <span class="client-badge new">跨平台</span>
+        <div class="client-header">
+          <div class="client-icon">🔮</div>
+          <div class="client-info">
+            <h3 class="client-name">Clashmi</h3>
+            <p class="client-version">v1.0.28 · 2024-12</p>
+          </div>
+        </div>
+        <p class="client-desc">全平台支持的现代化客户端，界面简洁，功能强大，支持多种协议</p>
+        <div class="client-meta">
+          <span>💾 .deb / .rpm / .AppImage</span>
+        </div>
+        <div class="client-actions">
+          <a href="https://clashmi.com" class="btn btn-primary">官方下载</a>
+          <a href="https://clashmi.com" class="btn btn-secondary">官方页面</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Download Guide -->
+  <div class="guide-section">
+    <h2 class="guide-title">📖 下载指南</h2>
+    <ul class="guide-list">
+      <li><strong>按系统选择：</strong>根据你的操作系统选择对应的标签页，查看推荐的客户端</li>
+      <li><strong>双下载入口：</strong>提供"立即下载"（本站备份）和"官方页面"（GitHub/官网）两种下载方式</li>
+      <li><strong>优先官方下载：</strong>建议优先使用官方页面下载最新版本，本站备份仅作应急使用</li>
+      <li><strong>关于订阅：</strong>客户端本身不提供代理服务，需要配合机场订阅使用</li>
+      <li><strong>新手推荐：</strong>Windows 选 Clash Verge / Karing，macOS 选 Clash Verge / Karing，iOS 选 Shadowrocket，Android 选 v2rayNG / Clash Meta</li>
+      <li><strong>安全提示：</strong>仅从官方渠道或本站下载，避免使用来路不明的修改版</li>
+    </ul>
+  </div>
+
+  <!-- FAQ Section -->
+  <div class="faq-section">
+    <h2 class="faq-title">💬 常见问题</h2>
+
+    <div class="faq-item">
+      <h3 class="faq-question">Q: Windows 平台选择哪个客户端最好？</h3>
+      <p class="faq-answer">
+        推荐 Clash Verge Rev 或 Karing。Clash Verge Rev 功能全面、界面美观，适合新手；Karing 性能出色、自动优选节点。进阶用户可选 v2rayN。
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3 class="faq-question">Q: iOS 客户端都是付费的吗？</h3>
+      <p class="faq-answer">
+        大部分优秀的 iOS 客户端是付费的（如 Shadowrocket $2.99），这是因为 App Store 的政策。也有免费选择如 Karing（通过 TestFlight 安装）。建议使用自己的美区账号购买正版，避免使用共享账号。
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3 class="faq-question">Q: 下载后如何使用？</h3>
+      <p class="faq-answer">
+        下载并安装客户端后，需要从机场获取订阅链接，然后在客户端中导入订阅。具体步骤请查看<a href="tutorials.html" style="color: var(--accent);">使用教程</a>页面。
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3 class="faq-question">Q: 官方下载和本站下载有什么区别？</h3>
+      <p class="faq-answer">
+        官方下载指向 GitHub 或官网，保证是最新版本；本站下载是我们保存的备份版本，可能不是最新。建议优先使用官方下载，本站备份仅在官方无法访问时使用。
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3 class="faq-question">Q: Clash for Windows 还能用吗？</h3>
+      <p class="faq-answer">
+        Clash for Windows 已于 2023 年停止更新，但现有版本仍可正常使用。推荐使用其继任者 Clash Verge Rev，功能更强大且持续维护。
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3 class="faq-question">Q: 如何选择适合游戏加速的客户端？</h3>
+      <p class="faq-answer">
+        Windows 推荐使用 Netch，支持进程代理模式，可以只为游戏加速而不影响其他程序。也可以使用 Clash 的 TUN 模式实现全局代理。
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3 class="faq-question">Q: 客户端之间有什么区别？</h3>
+      <p class="faq-answer">
+        主要区别在于：1）支持的协议类型（Clash 系列支持 Clash 配置，v2ray 系列支持更多协议）；2）界面设计和易用性；3）高级功能（规则定制、脚本支持等）。新手选择界面友好的即可，进阶用户可根据需求选择。
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3 class="faq-question">Q: 一个订阅可以在多个客户端使用吗？</h3>
+      <p class="faq-answer">
+        可以。订阅链接可以在多个设备和客户端上使用，但要注意机场的设备数量限制。大多数机场允许 2-5 台设备同时在线。
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3 class="faq-question">Q: 杀毒软件报毒怎么办？</h3>
+      <p class="faq-answer">
+        代理软件因其网络特性，可能被部分杀毒软件误报。从官方渠道下载的客户端是安全的，可以添加到杀毒软件的白名单中。
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3 class="faq-question">Q: 没有找到适合我的客户端？</h3>
+      <p class="faq-answer">
+        页面列出的是主流和推荐的客户端。如果有特殊需求，可以访问客户端的 GitHub 页面查看更多选项，或查看机场的推荐。
+      </p>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+// Tab switching
+const tabBtns = document.querySelectorAll('.tab-btn');
+const tabContents = document.querySelectorAll('.tab-content');
+
+tabBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const targetTab = btn.dataset.tab;
+
+    // Update buttons
+    tabBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    // Update content
+    tabContents.forEach(content => {
+      content.classList.remove('active');
+      if (content.id === targetTab) {
+        content.classList.add('active');
+      }
+    });
+  });
+});
+</script>
+
+
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-section">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span style="font-weight: 900; color: #2d5016;">Map</span><span style="font-weight: 900; color: #5fb878;">For</span><span style="font-weight: 900; color: #2d5016;">VPN</span>
+        </div>
+        <p class="footer-desc">专注真实机场测评，帮助用户找到最稳定、最高性价比的科学上网工具。数据持续更新，从不接受付费植入。</p>
+      </div>
+    </div>
+
+    <div class="footer-section">
+      <h4>机场推荐</h4>
+      <ul class="footer-links">
+        <li><a href="rankings.html">综合榜单</a></li>
+        <li><a href="rankings.html#speed">横向对比表</a></li>
+        <li><a href="review-netflix.html">ChatGPT机场</a></li>
+        <li><a href="review-netflix.html">Netflix机场</a></li>
+        <li><a href="review-netflix.html">TikTok机场</a></li>
+        <li><a href="rankings.html">便宜机场</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h4>使用教程</h4>
+      <ul class="footer-links">
+        <li><a href="tutorials.html">Windows教程</a></li>
+        <li><a href="tutorials.html">Mac教程</a></li>
+        <li><a href="tutorials.html">iOS教程</a></li>
+        <li><a href="tutorials.html">Android教程</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h4>更多</h4>
+      <ul class="footer-links">
+        <li><a href="wiki.html">科普百科</a></li>
+        <li><a href="reviews.html">优惠专区</a></li>
+        <li><a href="index.html#about">关于我们</a></li>
+        <li><a href="https://t.me/shinhuw" target="_blank" rel="noopener noreferrer">TG频道</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-disclaimer">
+      <p>⚠️ 免责声明：本站所有内容仅供学习与技术研究参考，请遵守所在地区相关法律法规。本站仅链接至联盟推广链接，点击购买后本站获得少量佣金，但不影响购买价格。</p>
+    </div>
+    <div class="footer-meta">
+      <p>© 2026 MapForVPN · 保留所有权利</p>
+      <p>📧 联系我们：<a href="https://t.me/shinhuw" target="_blank" rel="noopener noreferrer">@shinhuw</a> · ⭐ <a href="https://github.com/shinhuw" target="_blank" rel="noopener noreferrer">GitHub 数据仓库</a></p>
+    </div>
+  </div>
+</footer>
+
+
+<style>
+.footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  margin-top: 80px;
+}
+
+.footer-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 60px 24px 40px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+}
+
+.footer-section h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.footer-brand .footer-logo {
+  font-size: 24px;
+  margin-bottom: 12px;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+
+.footer-desc {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 400px;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 12px;
+}
+
+.footer-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
+.footer-bottom {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px 24px 32px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.footer-disclaimer {
+  margin-bottom: 20px;
+}
+
+.footer-disclaimer p {
+  color: var(--text-faint);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.footer-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-meta p {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin: 0;
+}
+
+.footer-meta a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-meta a:hover {
+  color: var(--accent-strong);
+}
+
+@media (max-width: 1024px) {
+  .footer-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .footer-meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+</style>
+
+</body>
+</html>

@@ -1,0 +1,580 @@
+<title>机场详情</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=Noto+Sans+SC:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600&display=swap">
+
+<style>
+  :root {
+    --bg: #F4F6FB; --bg-soft: #ECEEF6; --surface: #FFFFFF;
+    --border: #DDE1EC; --border-soft: #E7E9F2;
+    --text: #171B29; --text-muted: #5B6172; --text-faint: #8890A2;
+    --accent: #3652E0; --accent-strong: #2740C4; --accent-soft: #E8ECFF;
+    --accent-2: #D98A2B; --accent-2-soft: #FBEEDA;
+    --success: #10B981; --warning: #F59E0B; --danger: #EF4444;
+    --shadow: 0 1px 3px rgba(23,27,41,.05), 0 8px 24px -12px rgba(23,27,41,.12);
+    --r: 10px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0A0E1A; --bg-soft: #101527; --surface: #121729;
+      --border: #232B42; --border-soft: #1B2136;
+      --text: #E8EAF3; --text-muted: #A5ABC0; --text-faint: #6C7288;
+      --accent: #6E8BFF; --accent-strong: #8CA3FF; --accent-soft: #1B2450;
+      --accent-2: #F0B65C; --accent-2-soft: #2E2413;
+      --success: #34D399; --warning: #FBBF24; --danger: #F87171;
+      --shadow: 0 1px 3px rgba(0,0,0,.3), 0 12px 32px -14px rgba(0,0,0,.5);
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Noto Sans SC', "PingFang SC", "Microsoft YaHei", sans-serif;
+    line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+  .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+
+  .page { max-width: 1000px; margin: 0 auto; padding: 32px 24px 80px; }
+
+  .back {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; color: var(--text-muted); text-decoration: none;
+    margin-bottom: 24px; transition: color .12s;
+  }
+  .back:hover { color: var(--accent); }
+
+  .hero {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--r); box-shadow: var(--shadow); padding: 32px;
+    margin-bottom: 24px;
+  }
+  .hero-top {
+    display: flex; align-items: start; gap: 20px; margin-bottom: 24px;
+  }
+  .hero-logo {
+    width: 80px; height: 80px; border-radius: 12px;
+    background: var(--bg-soft); border: 1px solid var(--border);
+    flex-shrink: 0; object-fit: cover;
+  }
+  .hero-info { flex: 1; }
+  .hero-header {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 8px;
+  }
+  .hero-name {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 28px; font-weight: 400; margin: 0;
+  }
+  .hero-tier {
+    display: inline-block; font-size: 12px; padding: 4px 12px;
+    border-radius: 12px; font-weight: 600;
+  }
+  .hero-tier.tier-高端 { background: #FEF3C7; color: #B45309; }
+  .hero-tier.tier-中端 { background: #DBEAFE; color: #1E40AF; }
+  .hero-tier.tier-入门 { background: #E0E7FF; color: #4338CA; }
+
+  .hero-meta {
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    font-size: 13px; color: var(--text-muted); margin-bottom: 16px;
+  }
+  .hero-meta-item {
+    display: flex; align-items: center; gap: 6px;
+  }
+  .hero-rating {
+    display: flex; align-items: center; gap: 4px;
+    font-weight: 600; color: var(--accent-2);
+  }
+  .hero-status {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 10px; border-radius: 12px;
+    background: var(--success); color: white; font-size: 11px; font-weight: 600;
+  }
+  .hero-status::before { content: '●'; }
+
+  .hero-tags {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .hero-tag {
+    font-size: 12px; padding: 4px 12px; border-radius: 12px;
+    background: var(--accent-soft); color: var(--accent); font-weight: 500;
+  }
+
+  .hero-actions {
+    display: flex; gap: 12px; margin-top: 20px;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 24px; border-radius: 8px;
+    background: var(--accent); color: white; font-weight: 600;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: all .12s; font-size: 14px;
+  }
+  .btn-primary:hover { background: var(--accent-strong); transform: translateY(-1px); }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 24px; border-radius: 8px;
+    background: var(--bg-soft); color: var(--text); font-weight: 600;
+    text-decoration: none; border: 1px solid var(--border); cursor: pointer;
+    transition: all .12s; font-size: 14px;
+  }
+  .btn-secondary:hover { background: var(--border); }
+
+  .content {
+    display: grid; grid-template-columns: 2fr 1fr; gap: 24px; align-items: start;
+  }
+  @media (max-width: 768px) { .content { grid-template-columns: 1fr; } }
+
+  .section {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--r); box-shadow: var(--shadow); padding: 24px;
+    margin-bottom: 24px;
+  }
+  .section-title {
+    font-size: 18px; font-weight: 700; margin: 0 0 16px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-icon { font-size: 20px; }
+
+  .price-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px;
+  }
+  .price-card {
+    background: var(--bg-soft); border: 1px solid var(--border-soft);
+    border-radius: 8px; padding: 16px; text-align: center;
+  }
+  .price-card-label {
+    font-size: 12px; color: var(--text-faint); margin-bottom: 8px;
+  }
+  .price-card-value {
+    font-size: 24px; font-weight: 700; color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .price-card-value span { font-size: 14px; font-weight: 500; }
+  .price-card-period { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+  .features-list {
+    display: grid; gap: 10px;
+  }
+  .feature-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px; background: var(--bg-soft); border-radius: 6px;
+  }
+  .feature-icon {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--accent-soft); color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 12px;
+  }
+  .feature-text { font-size: 14px; }
+
+  .protocols {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .protocol-badge {
+    padding: 6px 14px; border-radius: 6px;
+    background: var(--bg-soft); border: 1px solid var(--border);
+    font-size: 13px; font-weight: 600; font-family: 'JetBrains Mono', monospace;
+  }
+
+  .info-grid {
+    display: grid; gap: 12px;
+  }
+  .info-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px; background: var(--bg-soft); border-radius: 6px;
+  }
+  .info-label { font-size: 13px; color: var(--text-muted); }
+  .info-value { font-size: 14px; font-weight: 600; }
+
+  .promo-box {
+    background: linear-gradient(135deg, var(--accent-2-soft) 0%, var(--accent-soft) 100%);
+    border: 1px solid var(--border); border-radius: 8px; padding: 16px;
+    text-align: center;
+  }
+  .promo-label { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; }
+  .promo-code {
+    font-size: 24px; font-weight: 700; color: var(--accent-2);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 2px;
+  }
+
+  .provinces-table {
+    width: 100%; border-collapse: collapse;
+  }
+  .provinces-table th {
+    background: var(--bg-soft); padding: 10px;
+    text-align: left; font-size: 12px; font-weight: 600;
+    color: var(--text-muted); border-bottom: 1px solid var(--border);
+  }
+  .provinces-table td {
+    padding: 12px 10px; border-bottom: 1px solid var(--border-soft);
+    font-size: 13px;
+  }
+  .provinces-table tr:last-child td { border-bottom: none; }
+  .provinces-table .mono { font-size: 13px; font-weight: 600; }
+
+  .warning-box {
+    background: var(--accent-2-soft); border: 1px solid var(--accent-2);
+    border-radius: 8px; padding: 16px; margin-top: 24px;
+    display: flex; align-items: start; gap: 12px;
+  }
+  .warning-icon { font-size: 20px; flex-shrink: 0; }
+  .warning-text { font-size: 13px; line-height: 1.6; color: var(--text-muted); }
+
+
+.footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  margin-top: 80px;
+}
+
+.footer-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 60px 24px 40px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+}
+
+.footer-section h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.footer-brand .footer-logo {
+  font-size: 24px;
+  margin-bottom: 12px;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+
+.footer-desc {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 400px;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 12px;
+}
+
+.footer-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
+.footer-bottom {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px 24px 32px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.footer-disclaimer {
+  margin-bottom: 20px;
+}
+
+.footer-disclaimer p {
+  color: var(--text-faint);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.footer-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-meta p {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin: 0;
+}
+
+.footer-meta a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-meta a:hover {
+  color: var(--accent-strong);
+}
+
+@media (max-width: 1024px) {
+  .footer-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .footer-meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+</style>
+
+<div class="page">
+  <a class="back" href="china-province-airports.html">← 返回地图</a>
+
+  <div class="hero">
+    <div class="hero-top">
+      <img class="hero-logo" id="airportLogo" src="" alt="">
+      <div class="hero-info">
+        <div class="hero-header">
+          <h1 class="hero-name" id="airportName">加载中...</h1>
+          <span class="hero-tier" id="airportTier"></span>
+        </div>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-rating" id="airportRating">
+              <span>⭐</span>
+              <span>-</span>
+            </span>
+          </div>
+          <div class="hero-meta-item">
+            <span>📅</span>
+            <span id="airportRegDate">-</span>
+          </div>
+          <div class="hero-meta-item">
+            <span>🔍</span>
+            <span id="airportLastCheck">-</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-status" id="airportStatus">运营中</span>
+          </div>
+        </div>
+        <div class="hero-tags" id="airportTags"></div>
+      </div>
+    </div>
+    <div class="hero-actions">
+      <a class="btn-primary" id="officialLink" href="#" target="_blank">
+        <span>🚀</span>
+        <span>访问官网</span>
+      </a>
+      <button class="btn-secondary" onclick="window.history.back()">
+        <span>📊</span>
+        <span>返回地图</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="content">
+    <div>
+      <div class="section">
+        <h2 class="section-title">
+          <span class="section-icon">💰</span>
+          <span>套餐价格</span>
+        </h2>
+        <div class="price-grid" id="priceGrid"></div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">
+          <span class="section-icon">✨</span>
+          <span>主要特性</span>
+        </h2>
+        <div class="features-list" id="featuresList"></div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">
+          <span class="section-icon">🔐</span>
+          <span>支持协议</span>
+        </h2>
+        <div class="protocols" id="protocolsList"></div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">
+          <span class="section-icon">📍</span>
+          <span>省份节点分布</span>
+        </h2>
+        <table class="provinces-table" id="provincesTable">
+          <thead>
+            <tr>
+              <th>省份</th>
+              <th>节点数</th>
+              <th>平均速度</th>
+              <th>延迟</th>
+              <th>稳定性</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div>
+      <div class="section">
+        <h2 class="section-title">
+          <span class="section-icon">📝</span>
+          <span>基本信息</span>
+        </h2>
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="info-label">流量配额</span>
+            <span class="info-value" id="infoTraffic">-</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">同时设备</span>
+            <span class="info-value" id="infoDevices">-</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="promoSection" style="display:none">
+        <h2 class="section-title">
+          <span class="section-icon">🎁</span>
+          <span>优惠码</span>
+        </h2>
+        <div class="promo-box">
+          <div class="promo-label">使用优惠码享受折扣</div>
+          <div class="promo-code" id="promoCode">-</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="warning-box">
+    <span class="warning-icon">⚠️</span>
+    <div class="warning-text">
+      本页面数据仅供参考，实际速度和稳定性可能因网络环境、时段等因素而异。
+      建议在购买前先查看官网最新信息和用户评价，部分机场提供试用服务。
+    </div>
+  </div>
+</div>
+
+<script>
+const PROVINCES = {
+  '110000': '北京市', '120000': '天津市', '130000': '河北省', '140000': '山西省',
+  '150000': '内蒙古自治区', '210000': '辽宁省', '220000': '吉林省', '230000': '黑龙江省',
+  '310000': '上海市', '320000': '江苏省', '330000': '浙江省', '340000': '安徽省',
+  '350000': '福建省', '360000': '江西省', '370000': '山东省', '410000': '河南省',
+  '420000': '湖北省', '430000': '湖南省', '440000': '广东省', '450000': '广西壮族自治区',
+  '460000': '海南省', '500000': '重庆市', '510000': '四川省', '520000': '贵州省',
+  '530000': '云南省', '540000': '西藏自治区', '610000': '陕西省', '620000': '甘肃省',
+  '630000': '青海省', '640000': '宁夏回族自治区', '650000': '新疆维吾尔自治区'
+};
+
+// Get airport ID from URL
+const params = new URLSearchParams(location.search);
+const airportId = params.get('id');
+
+// Load airport data
+fetch('data/airports.json')
+  .then(res => res.json())
+  .then(data => {
+    const airport = data.find(a => a.id === airportId);
+    if (!airport) {
+      alert('未找到该机场信息');
+      return;
+    }
+    renderAirport(airport);
+  })
+  .catch(err => {
+    console.error('Failed to load airport data:', err);
+    alert('加载数据失败');
+  });
+
+function renderAirport(airport) {
+  document.title = `${airport.name} - 机场详情`;
+
+  // Hero section
+  document.getElementById('airportLogo').src = airport.logo;
+  document.getElementById('airportLogo').alt = airport.name;
+  document.getElementById('airportName').textContent = airport.name;
+  document.getElementById('airportTier').textContent = airport.tier;
+  document.getElementById('airportTier').className = `hero-tier tier-${airport.tier}`;
+  document.getElementById('airportRating').innerHTML = `<span>⭐</span><span>${airport.rating}</span>`;
+  document.getElementById('airportRegDate').textContent = `注册于 ${airport.registerDate}`;
+  document.getElementById('airportLastCheck').textContent = `检测于 ${airport.lastCheck}`;
+  document.getElementById('airportStatus').textContent = airport.status;
+  document.getElementById('officialLink').href = airport.officialUrl;
+
+  // Tags
+  if (airport.tags && airport.tags.length > 0) {
+    document.getElementById('airportTags').innerHTML = airport.tags
+      .map(tag => `<span class="hero-tag">${tag}</span>`)
+      .join('');
+  }
+
+  // Prices
+  const priceHTML = [
+    { label: '月付', value: airport.price.monthly, period: '每月' },
+    { label: '季付', value: airport.price.quarterly, period: '每3个月' },
+    { label: '年付', value: airport.price.yearly, period: '每年' },
+  ].map(p => `
+    <div class="price-card">
+      <div class="price-card-label">${p.label}</div>
+      <div class="price-card-value">¥${p.value}<span>/${p.label === '月付' ? '月' : p.label === '季付' ? '季' : '年'}</span></div>
+      <div class="price-card-period">${p.period}</div>
+    </div>
+  `).join('');
+  document.getElementById('priceGrid').innerHTML = priceHTML;
+
+  // Features
+  const featuresHTML = airport.features
+    .map(f => `
+      <div class="feature-item">
+        <div class="feature-icon">✓</div>
+        <div class="feature-text">${f}</div>
+      </div>
+    `).join('');
+  document.getElementById('featuresList').innerHTML = featuresHTML;
+
+  // Protocols
+  const protocolsHTML = airport.protocols
+    .map(p => `<span class="protocol-badge">${p}</span>`)
+    .join('');
+  document.getElementById('protocolsList').innerHTML = protocolsHTML;
+
+  // Basic info
+  document.getElementById('infoTraffic').textContent = airport.traffic;
+  document.getElementById('infoDevices').textContent = `${airport.devices} 台`;
+
+  // Promo code
+  if (airport.promoCode) {
+    document.getElementById('promoSection').style.display = '';
+    document.getElementById('promoCode').textContent = airport.promoCode;
+  }
+
+  // Provinces table
+  const provincesHTML = Object.entries(airport.provinces || {})
+    .map(([code, data]) => `
+      <tr>
+        <td>${PROVINCES[code] || code}</td>
+        <td class="mono">${data.nodeCount}</td>
+        <td class="mono">${data.avgSpeed} Mbps</td>
+        <td class="mono">${data.avgLatency} ms</td>
+        <td class="mono">${data.stability}%</td>
+      </tr>
+    `).join('');
+  document.getElementById('provincesTable').querySelector('tbody').innerHTML = provincesHTML;
+}
+</script>

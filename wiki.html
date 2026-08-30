@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>科学上网百科 - VPN、Shadowsocks、V2Ray知识全解析 | MapForVPN</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=Noto+Sans+SC:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600&display=swap">
+
+<style>
+  :root {
+    --bg: #f8faf9;
+    --bg-soft: #f0f4f1;
+    --surface: #ffffff;
+    --border: #d1e4d7;
+    --border-soft: #e8f3ec;
+    --text: #1a3a2a;
+    --text-muted: #4a6355;
+    --text-faint: #6b8577;
+    --accent: #2d6a4f;
+    --accent-strong: #1b4332;
+    --accent-soft: rgba(45, 106, 79, 0.1);
+    --accent-2: #52b788;
+    --success: #40916c;
+    --r: 12px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0d1f17;
+      --bg-soft: #152d23;
+      --surface: #1a3329;
+      --border: #2d4a3d;
+      --border-soft: #243d32;
+      --text: #e8f3ec;
+      --text-muted: #a5bfb0;
+      --text-faint: #6b8577;
+      --accent: #52b788;
+      --accent-strong: #74c69d;
+      --accent-soft: rgba(82, 183, 136, 0.15);
+      --accent-2: #95d5b2;
+      --success: #74c69d;
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Noto Sans SC', sans-serif;
+    line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+
+  .navbar {
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow); position: sticky; top: 0; z-index: 100;
+  }
+  .navbar-inner {
+    max-width: 1400px; margin: 0 auto; padding: 0 24px;
+    display: flex; align-items: center; justify-content: space-between; height: 64px;
+  }
+  .navbar-logo {
+    font-family: 'ZCOOL XiaoWei', serif; font-size: 22px; font-weight: 400;
+    text-decoration: none; color: var(--text);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .navbar-logo-icon { font-size: 26px; }
+  .navbar-nav { display: flex; align-items: center; gap: 32px; }
+  .navbar-link {
+    color: var(--text-muted); text-decoration: none;
+    font-size: 14px; font-weight: 500; transition: color .2s;
+  }
+  .navbar-link:hover { color: var(--accent); }
+  .navbar-link.active { color: var(--accent); font-weight: 600; }
+
+  .container { max-width: 1400px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  .page-header {
+    text-align: center; margin-bottom: 48px;
+  }
+  .page-header h1 {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 36px; font-weight: 900; margin: 0 0 12px;
+    color: var(--text);
+  }
+  .page-header p {
+    font-size: 16px; color: var(--text-muted);
+  }
+
+  .wiki-section {
+    margin-bottom: 60px;
+  }
+  .section-title {
+    font-size: 24px; font-weight: 700; margin-bottom: 24px;
+    color: var(--text); display: flex; align-items: center; gap: 12px;
+  }
+  .section-icon {
+    font-size: 32px;
+  }
+  .wiki-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+  }
+  .wiki-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--r); padding: 24px; box-shadow: var(--shadow);
+    transition: all .2s; text-decoration: none; color: inherit;
+    display: block;
+  }
+  .wiki-card:hover {
+    transform: translateY(-4px); box-shadow: var(--shadow-lg);
+    border-color: var(--accent);
+  }
+  .wiki-card-title {
+    font-size: 18px; font-weight: 700; margin-bottom: 12px;
+    color: var(--text);
+  }
+  .wiki-card-desc {
+    font-size: 14px; color: var(--text-muted); line-height: 1.7;
+    margin-bottom: 16px;
+  }
+  .wiki-card-topics {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .topic-tag {
+    background: var(--bg-soft); color: var(--text-muted);
+    padding: 4px 12px; border-radius: 12px; font-size: 12px;
+    border: 1px solid var(--border-soft);
+  }
+
+  .footer {
+    background: var(--surface); border-top: 1px solid var(--border);
+    padding: 32px 24px; margin-top: 80px;
+  }
+  .footer-inner {
+    max-width: 1400px; margin: 0 auto; text-align: center;
+    font-size: 13px; color: var(--text-faint);
+  }
+
+  @media (max-width: 860px) {
+    .navbar-nav { display: none; }
+  }
+</style>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="科学上网科普百科，详解VPN、Shadowsocks、V2Ray、Trojan等协议原理，以及SSR、IPLC、CN2等专业术语，帮助新手快速入门。">
+    <meta name="keywords" content="科学上网,VPN原理,Shadowsocks,V2Ray,Trojan,SSR,IPLC,CN2,科学上网百科">
+    <meta name="author" content="MapForVPN">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="bingbot" content="index, follow">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mapforvpn.com/wiki.html">
+    <meta property="og:title" content="科学上网百科 - VPN、Shadowsocks、V2Ray知识全解析 | MapForVPN">
+    <meta property="og:description" content="科学上网科普百科，详解VPN、Shadowsocks、V2Ray、Trojan等协议原理，以及SSR、IPLC、CN2等专业术语，帮助新手快速入门。">
+    <meta property="og:site_name" content="MapForVPN">
+    <meta property="og:locale" content="zh_CN">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://mapforvpn.com/wiki.html">
+    <meta name="twitter:title" content="科学上网百科 - VPN、Shadowsocks、V2Ray知识全解析 | MapForVPN">
+    <meta name="twitter:description" content="科学上网科普百科，详解VPN、Shadowsocks、V2Ray、Trojan等协议原理，以及SSR、IPLC、CN2等专业术语，帮助新手快速入门。">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://mapforvpn.com/wiki.html">
+
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="navbar-logo">
+      <span style="font-weight: 900; font-family: 'Noto Sans SC', sans-serif; color: #2d5016;">Map</span><span style="font-weight: 900; font-family: 'Noto Sans SC', sans-serif; color: #5fb878;">For</span><span style="font-weight: 900; font-family: 'Noto Sans SC', sans-serif; color: #2d5016;">VPN</span>
+    </a>
+    <div class="navbar-nav">
+      <a href="index.html" class="navbar-link">首页</a>
+      <a href="rankings.html" class="navbar-link">机场榜单</a>
+      <a href="reviews.html" class="navbar-link">机场评测</a>
+      <a href="wiki.html" class="navbar-link active">科普百科</a>
+      <a href="tutorials.html" class="navbar-link">使用教程</a>
+      <a href="download.html" class="navbar-link">客户端下载</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="page-header">
+    <h1>📚 科普百科</h1>
+    <p>系统化的知识体系，帮助你从零开始了解VPN相关技术</p>
+  </div>
+
+  <!-- 基础概念 -->
+  <section class="wiki-section">
+    <h2 class="section-title">
+      <span class="section-icon">🔰</span>
+      <span>基础概念</span>
+    </h2>
+    <div class="wiki-grid">
+      <a href="#" class="wiki-card">
+        <h3 class="wiki-card-title">什么是VPN</h3>
+        <p class="wiki-card-desc">
+          VPN（Virtual Private Network）即虚拟专用网络，通过加密隧道技术在公共网络上建立专用网络连接，保护数据传输安全和隐私。
+        </p>
+        <div class="wiki-card-topics">
+          <span class="topic-tag">加密技术</span>
+          <span class="topic-tag">隐私保护</span>
+          <span class="topic-tag">网络安全</span>
+        </div>
+      </a>
+
+      <a href="#" class="wiki-card">
+        <h3 class="wiki-card-title">机场是什么</h3>
+        <p class="wiki-card-desc">
+          "机场"是科学上网服务商的俗称，提供代理服务器节点和订阅链接。名称来源于早期使用Shadowsocks（SS）协议，SS与机场的英文缩写相同。
+        </p>
+        <div class="wiki-card-topics">
+          <span class="topic-tag">服务商</span>
+          <span class="topic-tag">代理服务</span>
+          <span class="topic-tag">订阅机制</span>
+        </div>
+      </a>
+
+      <a href="#" class="wiki-card">
+        <h3 class="wiki-card-title">节点与线路</h3>
+        <p class="wiki-card-desc">
+          节点是指代理服务器，线路是指从你的设备到节点服务器的网络路径。不同的线路类型（直连、中转、专线）会影响速度和稳定性。
+        </p>
+        <div class="wiki-card-topics">
+          <span class="topic-tag">服务器</span>
+          <span class="topic-tag">网络路径</span>
+          <span class="topic-tag">线路优化</span>
+        </div>
+      </a>
+
+      <a href="#" class="wiki-card">
+        <h3 class="wiki-card-title">常见术语解释</h3>
+        <p class="wiki-card-desc">
+          解释机场服务中的常见术语：带宽、倍率、流量、重置周期、BGP、CN2、GIA等，帮助新手理解套餐信息。
+        </p>
+        <div class="wiki-card-topics">
+          <span class="topic-tag">术语</span>
+          <span class="topic-tag">套餐</span>
+          <span class="topic-tag">技术指标</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- 协议详解 -->
+  <section class="wiki-section">
+    <h2 class="section-title">
+      <span class="section-icon">🔧</span>
+      <span>协议详解</span>
+    </h2>
+    <div class="wiki-grid">
+      <a href="#" class="wiki-card">
+        <h3 class="wiki-card-title">Shadowsocks</h3>
+        <p class="wiki-card-desc">
+          轻量级的SOCKS5代理协议，简称SS。特点是简单高效，但特征明显容易被检测。ShadowsocksR（SSR）是其增强版本，增加了混淆和协议插件。
+        </p>
+        <div class="wiki-card-topics">
+          <span class="topic-tag">SOCKS5</span>
+          <span class="topic-tag">轻量级</span>
+          <span class="topic-tag">混淆</span>
+        </div>
+      </a>
+
+      <a href="#" class="wiki-card">
+        <h3 class="wiki-card-title">V2Ray / VMess</h3>
+        <p class="wiki-card-desc">
+          功能强大的代理平台，VMess是其原生协议。支持多种传输方式（TCP、mKCP、WebSocket等）和伪装技术，抗封锁能力强。
+        </p>
+        <div class="wiki-card-topics">
+          <span class="topic-tag">平台</span>
+          <span class="topic-tag">伪装</span>
+          <span class="topic-tag">传输协议</span>
+        </div>
+      </a>
+
+      <a href="#" class="wiki-card">
+        <h3 class="wiki-card-title">Trojan</h3>
+        <p class="wiki-card-desc">
+          通过模拟正常的HTTPS流量来规避检测，将代理流量伪装成标准的TLS加密网站访问。需要合法的TLS证书，安全性和隐蔽性较好。
+        </p>
+        <div class="wiki-card-topics">
+          <span class="topic-tag">TLS</span>
+          <span class="topic-tag">HTTPS伪装</span>
+          <span class="topic-tag">证书</span>
+        </div>
+      </a>
+
+      <a href="#" class="wiki-card">
+        <h3 class="wiki-card-title">WireGuard</h3>
+        <p class="wiki-card-desc">
+          现代化的VPN协议，代码简洁、性能优异。采用最新的加密算法，连接速度快、电量消耗低，但在某些地区可能面临封锁。
+        </p>
+        <div class="wiki-card-topics">
+          <span class="topic-tag">现代协议</span>
+          <span class="topic-tag">高性能</span>
+          <span class="topic-tag">加密</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- 线路类型 -->
+  <section class="wiki-section">
+    <h2 class="section-title">
+      <span class="section-icon">🌐</span>
+      <span>线路类型</span>
+    </h2>
+    <div class="wiki-grid">
+      <a href="#" class="wiki-card">
+        <h3 class="wiki-card-title">直连线路</h3>
+        <p class="wiki-card-desc">
+          从你的网络直接连接到境外节点，走公网路由。成本最低但速度和稳定性依赖运营商的国际出口质量，晚高峰容易拥堵。
+        </p>
+        <div class="wiki-card-topics">
+          <span class="topic-tag">公网</span>
+          <span class="topic-tag">低成本</span>
+          <span class="topic-tag">质量波动</span>
+        </div>
+      </a>
+
+      <a href="#" class="wiki-card">
+        <h3 class="wiki-card-title">IPLC专线</h3>
+        <p class="wiki-card-desc">
+          International Private Leased Circuit，国际专用租赁线路。物理专线直连，不经过GFW，速度快且稳定，但价格昂贵。
+        </p>
+        <div class="wiki-card-topics">
+          <span class="topic-tag">专线</span>
+          <span class="topic-tag">高速稳定</span>
+          <span class="topic-tag">高价格</span>
+        </div>
+      </a>
+
+      <a href="#" class="wiki-card">
+        <h3 class="wiki-card-title">IEPL专线</h3>
+        <p class="wiki-card-desc">
+          International Ethernet Private Line，国际以太网专线。类似IPLC但基于以太网技术，性价比相对较高，速度和稳定性介于IPLC和中转之间。
+        </p>
+        <div class="wiki-card-topics">
+          <span class="topic-tag">以太网</span>
+          <span class="topic-tag">性价比</span>
+          <span class="topic-tag">稳定</span>
+        </div>
+      </a>
+
+      <a href="#" class="wiki-card">
+        <h3 class="wiki-card-title">中转线路</h3>
+        <p class="wiki-card-desc">
+          通过国内中转服务器转发流量到境外节点，优化网络路由。可以使用CN2 GIA等优质线路，比直连更稳定，价格适中。
+        </p>
+        <div class="wiki-card-topics">
+          <span class="topic-tag">中转</span>
+          <span class="topic-tag">CN2</span>
+          <span class="topic-tag">路由优化</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- 使用场景 -->
+  <section class="wiki-section">
+    <h2 class="section-title">
+      <span class="section-icon">🎯</span>
+      <span>使用场景</span>
+    </h2>
+    <div class="wiki-grid">
+      <a href="#" class="wiki-card">
+        <h3 class="wiki-card-title">流媒体解锁</h3>
+        <p class="wiki-card-desc">
+          观看Netflix、Disney+、HBO Max等流媒体平台的区域限定内容。需要机场支持原生IP或专门的解锁节点，部分机场会标注支持的平台。
+        </p>
+        <div class="wiki-card-topics">
+          <span class="topic-tag">Netflix</span>
+          <span class="topic-tag">原生IP</span>
+          <span class="topic-tag">区域解锁</span>
+        </div>
+      </a>
+
+      <a href="#" class="wiki-card">
+        <h3 class="wiki-card-title">游戏加速</h3>
+        <p class="wiki-card-desc">
+          降低游戏延迟，访问国际服游戏。需要选择低延迟的节点和优质线路，游戏加速对稳定性要求高，建议选择IPLC或优质中转线路。
+        </p>
+        <div class="wiki-card-topics">
+          <span class="topic-tag">低延迟</span>
+          <span class="topic-tag">稳定性</span>
+          <span class="topic-tag">游戏服</span>
+        </div>
+      </a>
+
+      <a href="#" class="wiki-card">
+        <h3 class="wiki-card-title">ChatGPT访问</h3>
+        <p class="wiki-card-desc">
+          访问ChatGPT、Claude等AI服务。这些服务对IP质量要求严格，需要使用原生住宅IP或数据中心IP，部分机场会标注是否支持OpenAI。
+        </p>
+        <div class="wiki-card-topics">
+          <span class="topic-tag">AI服务</span>
+          <span class="topic-tag">IP质量</span>
+          <span class="topic-tag">OpenAI</span>
+        </div>
+      </a>
+
+      <a href="#" class="wiki-card">
+        <h3 class="wiki-card-title">日常上网</h3>
+        <p class="wiki-card-desc">
+          访问Google、YouTube、Twitter等常用网站。对速度和稳定性要求适中，大多数机场都能满足需求，可以根据性价比选择合适的套餐。
+        </p>
+        <div class="wiki-card-topics">
+          <span class="topic-tag">常规使用</span>
+          <span class="topic-tag">性价比</span>
+          <span class="topic-tag">浏览</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- 安全须知 -->
+  <section class="wiki-section">
+    <h2 class="section-title">
+      <span class="section-icon">⚠️</span>
+      <span>安全须知</span>
+    </h2>
+    <div class="wiki-grid">
+      <a href="#" class="wiki-card">
+        <h3 class="wiki-card-title">隐私保护</h3>
+        <p class="wiki-card-desc">
+          使用机场服务时的隐私保护措施：选择可信的服务商、避免在代理环境下登录重要账号、注意DNS泄漏、使用HTTPS网站等。
+        </p>
+        <div class="wiki-card-topics">
+          <span class="topic-tag">数据安全</span>
+          <span class="topic-tag">DNS</span>
+          <span class="topic-tag">账号安全</span>
+        </div>
+      </a>
+
+      <a href="#" class="wiki-card">
+        <h3 class="wiki-card-title">常见风险</h3>
+        <p class="wiki-card-desc">
+          使用机场服务可能面临的风险：机场跑路、数据被记录、账号被盗、恶意软件等。了解风险才能更好地保护自己。
+        </p>
+        <div class="wiki-card-topics">
+          <span class="topic-tag">风险评估</span>
+          <span class="topic-tag">数据记录</span>
+          <span class="topic-tag">恶意软件</span>
+        </div>
+      </a>
+
+      <a href="#" class="wiki-card">
+        <h3 class="wiki-card-title">防骗指南</h3>
+        <p class="wiki-card-desc">
+          识别机场骗局的方法：警惕虚假宣传、过低价格、缺乏口碑的新机场、要求特殊支付方式等。学会辨别可靠的服务商。
+        </p>
+        <div class="wiki-card-topics">
+          <span class="topic-tag">防骗</span>
+          <span class="topic-tag">识别</span>
+          <span class="topic-tag">虚假宣传</span>
+        </div>
+      </a>
+
+      <a href="#" class="wiki-card">
+        <h3 class="wiki-card-title">使用规范</h3>
+        <p class="wiki-card-desc">
+          合理合法使用代理服务的规范：遵守当地法律法规、不进行违法活动、尊重服务商的使用条款、避免滥用流量等。
+        </p>
+        <div class="wiki-card-topics">
+          <span class="topic-tag">法律法规</span>
+          <span class="topic-tag">使用条款</span>
+          <span class="topic-tag">规范使用</span>
+        </div>
+      </a>
+    </div>
+  </section>
+</div>
+
+
+
+
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-section">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span style="font-weight: 900; color: #2d5016;">Map</span><span style="font-weight: 900; color: #5fb878;">For</span><span style="font-weight: 900; color: #2d5016;">VPN</span>
+        </div>
+        <p class="footer-desc">专注真实机场测评，帮助用户找到最稳定、最高性价比的科学上网工具。数据持续更新，从不接受付费植入。</p>
+      </div>
+    </div>
+
+    <div class="footer-section">
+      <h4>机场推荐</h4>
+      <ul class="footer-links">
+        <li><a href="rankings.html">综合榜单</a></li>
+        <li><a href="rankings.html#speed">横向对比表</a></li>
+        <li><a href="review-netflix.html">ChatGPT机场</a></li>
+        <li><a href="review-netflix.html">Netflix机场</a></li>
+        <li><a href="review-netflix.html">TikTok机场</a></li>
+        <li><a href="rankings.html">便宜机场</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h4>使用教程</h4>
+      <ul class="footer-links">
+        <li><a href="tutorials.html">Windows教程</a></li>
+        <li><a href="tutorials.html">Mac教程</a></li>
+        <li><a href="tutorials.html">iOS教程</a></li>
+        <li><a href="tutorials.html">Android教程</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h4>更多</h4>
+      <ul class="footer-links">
+        <li><a href="wiki.html">科普百科</a></li>
+        <li><a href="reviews.html">优惠专区</a></li>
+        <li><a href="index.html#about">关于我们</a></li>
+        <li><a href="https://t.me/shinhuw" target="_blank" rel="noopener noreferrer">TG频道</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-disclaimer">
+      <p>⚠️ 免责声明：本站所有内容仅供学习与技术研究参考，请遵守所在地区相关法律法规。本站仅链接至联盟推广链接，点击购买后本站获得少量佣金，但不影响购买价格。</p>
+    </div>
+    <div class="footer-meta">
+      <p>© 2026 MapForVPN · 保留所有权利</p>
+      <p>📧 联系我们：<a href="https://t.me/shinhuw" target="_blank" rel="noopener noreferrer">@shinhuw</a> · ⭐ <a href="https://github.com/shinhuw" target="_blank" rel="noopener noreferrer">GitHub 数据仓库</a></p>
+    </div>
+  </div>
+</footer>
+
+
+<style>
+.footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  margin-top: 80px;
+}
+
+.footer-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 60px 24px 40px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+}
+
+.footer-section h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.footer-brand .footer-logo {
+  font-size: 24px;
+  margin-bottom: 12px;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+
+.footer-desc {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 400px;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 12px;
+}
+
+.footer-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
+.footer-bottom {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px 24px 32px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.footer-disclaimer {
+  margin-bottom: 20px;
+}
+
+.footer-disclaimer p {
+  color: var(--text-faint);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.footer-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-meta p {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin: 0;
+}
+
+.footer-meta a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-meta a:hover {
+  color: var(--accent-strong);
+}
+
+@media (max-width: 1024px) {
+  .footer-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .footer-meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+</style>
+
+</body>
+</html>

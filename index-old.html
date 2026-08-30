@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>机场导航系统</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap">
+
+<style>
+  :root {
+    --bg: #F4F6FB; --surface: #FFFFFF;
+    --border: #DDE1EC; --text: #171B29; --text-muted: #5B6172;
+    --accent: #3652E0; --accent-2: #D98A2B;
+    --shadow: 0 1px 3px rgba(23,27,41,.05), 0 8px 24px -12px rgba(23,27,41,.12);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0A0E1A; --surface: #121729; --border: #232B42;
+      --text: #E8EAF3; --text-muted: #A5ABC0;
+      --accent: #6E8BFF; --accent-2: #F0B65C;
+      --shadow: 0 1px 3px rgba(0,0,0,.3), 0 12px 32px -14px rgba(0,0,0,.5);
+    }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Noto Sans SC', sans-serif;
+    line-height: 1.6; -webkit-font-smoothing: antialiased;
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+  }
+
+  .container { max-width: 900px; width: 100%; }
+
+  .hero {
+    text-align: center; margin-bottom: 48px;
+  }
+  .hero h1 {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 48px; font-weight: 400; margin-bottom: 12px;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero p { font-size: 16px; color: var(--text-muted); }
+
+  .grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px; margin-bottom: 32px;
+  }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 28px; box-shadow: var(--shadow);
+    text-decoration: none; color: inherit;
+    transition: all .2s; cursor: pointer;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,.12);
+    border-color: var(--accent);
+  }
+
+  .card-icon {
+    font-size: 48px; margin-bottom: 16px; display: block;
+  }
+  .card-title {
+    font-size: 20px; font-weight: 700; margin-bottom: 8px;
+  }
+  .card-desc {
+    font-size: 14px; color: var(--text-muted); line-height: 1.6;
+  }
+  .card-badge {
+    display: inline-block; margin-top: 12px; padding: 4px 12px;
+    border-radius: 12px; font-size: 11px; font-weight: 600;
+  }
+  .badge-primary { background: color-mix(in srgb, var(--accent) 15%, transparent); color: var(--accent); }
+  .badge-secondary { background: color-mix(in srgb, var(--accent-2) 15%, transparent); color: var(--accent-2); }
+
+  .footer {
+    text-align: center; padding: 24px;
+    border-top: 1px solid var(--border); margin-top: 32px;
+    font-size: 13px; color: var(--text-muted);
+  }
+  .footer a {
+    color: var(--accent); text-decoration: none;
+  }
+  .footer a:hover { text-decoration: underline; }
+
+  @media (max-width: 640px) {
+    .hero h1 { font-size: 36px; }
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="提供真实的机场测评和科学上网教程">
+    <meta name="keywords" content="机场推荐,VPN推荐,科学上网">
+    <meta name="author" content="MapForVPN">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="bingbot" content="index, follow">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mapforvpn.com/index-old.html">
+    <meta property="og:title" content="MapForVPN - 专业机场测评与推荐">
+    <meta property="og:description" content="提供真实的机场测评和科学上网教程">
+    <meta property="og:site_name" content="MapForVPN">
+    <meta property="og:locale" content="zh_CN">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://mapforvpn.com/index-old.html">
+    <meta name="twitter:title" content="MapForVPN - 专业机场测评与推荐">
+    <meta name="twitter:description" content="提供真实的机场测评和科学上网教程">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://mapforvpn.com/index-old.html">
+
+</head>
+<body>
+
+<div class="container">
+  <div class="hero">
+    <h1>🗺️ 机场导航系统</h1>
+    <p>基于省份地图的机场信息展示与管理平台</p>
+  </div>
+
+  <div class="grid">
+    <a class="card" href="china-province-airports.html">
+      <span class="card-icon">🗺️</span>
+      <h2 class="card-title">省份机场地图</h2>
+      <p class="card-desc">
+        点击地图上的省份，查看该地区可用的机场服务商及其节点性能数据
+      </p>
+      <span class="card-badge badge-primary">推荐使用</span>
+    </a>
+
+    <a class="card" href="airport-admin.html">
+      <span class="card-icon">⚙️</span>
+      <h2 class="card-title">数据管理后台</h2>
+      <p class="card-desc">
+        添加、编辑和删除机场信息，管理省份节点数据，导出 JSON 文件
+      </p>
+      <span class="card-badge badge-secondary">管理工具</span>
+    </a>
+
+    <a class="card" href="vpn-speedtest-map.html">
+      <span class="card-icon">📡</span>
+      <h2 class="card-title">节点雷达</h2>
+      <p class="card-desc">
+        全球节点分布地图，可视化展示各个机场的节点位置和覆盖范围
+      </p>
+    </a>
+
+    <a class="card" href="airport-speedtest-map.html">
+      <span class="card-icon">📍</span>
+      <h2 class="card-title">信号点位</h2>
+      <p class="card-desc">
+        机场信号点位分布图，查看具体节点的地理位置和连接状态
+      </p>
+    </a>
+
+    <a class="card" href="china-province-map.html">
+      <span class="card-icon">🇨🇳</span>
+      <h2 class="card-title">省份地图（原始）</h2>
+      <p class="card-desc">
+        中国省份交互地图，支持省份选择和区域筛选功能
+      </p>
+    </a>
+
+    <a class="card" href="data/airports.json" target="_blank">
+      <span class="card-icon">📄</span>
+      <h2 class="card-title">数据文件</h2>
+      <p class="card-desc">
+        查看或下载当前的机场数据 JSON 文件，可用于备份或迁移
+      </p>
+    </a>
+  </div>
+
+  <div class="footer">
+    <p>
+      📖 查看 <a href="README.md">使用文档</a> 了解更多功能和配置选项
+    </p>
+    <p style="margin-top: 8px; font-size: 12px;">
+      最后更新：2026-08-28
+    </p>
+  </div>
+</div>
+
+
+
+
+
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-section">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span style="font-weight: 900; color: #2d5016;">Map</span><span style="font-weight: 900; color: #5fb878;">For</span><span style="font-weight: 900; color: #2d5016;">VPN</span>
+        </div>
+        <p class="footer-desc">专注真实机场测评，帮助用户找到最稳定、最高性价比的科学上网工具。数据持续更新，从不接受付费植入。</p>
+      </div>
+    </div>
+
+    <div class="footer-section">
+      <h4>机场推荐</h4>
+      <ul class="footer-links">
+        <li><a href="rankings.html">综合榜单</a></li>
+        <li><a href="rankings.html#speed">横向对比表</a></li>
+        <li><a href="review-netflix.html">ChatGPT机场</a></li>
+        <li><a href="review-netflix.html">Netflix机场</a></li>
+        <li><a href="review-netflix.html">TikTok机场</a></li>
+        <li><a href="rankings.html">便宜机场</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h4>使用教程</h4>
+      <ul class="footer-links">
+        <li><a href="tutorials.html">Windows教程</a></li>
+        <li><a href="tutorials.html">Mac教程</a></li>
+        <li><a href="tutorials.html">iOS教程</a></li>
+        <li><a href="tutorials.html">Android教程</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h4>更多</h4>
+      <ul class="footer-links">
+        <li><a href="wiki.html">科普百科</a></li>
+        <li><a href="reviews.html">优惠专区</a></li>
+        <li><a href="index.html#about">关于我们</a></li>
+        <li><a href="https://t.me/shinhuw" target="_blank" rel="noopener noreferrer">TG频道</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-disclaimer">
+      <p>⚠️ 免责声明：本站所有内容仅供学习与技术研究参考，请遵守所在地区相关法律法规。本站仅链接至联盟推广链接，点击购买后本站获得少量佣金，但不影响购买价格。</p>
+    </div>
+    <div class="footer-meta">
+      <p>© 2026 MapForVPN · 保留所有权利</p>
+      <p>📧 联系我们：<a href="https://t.me/shinhuw" target="_blank" rel="noopener noreferrer">@shinhuw</a> · ⭐ <a href="https://github.com/shinhuw" target="_blank" rel="noopener noreferrer">GitHub 数据仓库</a></p>
+    </div>
+  </div>
+</footer>
+
+
+<style>
+.footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  margin-top: 80px;
+}
+
+.footer-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 60px 24px 40px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+}
+
+.footer-section h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.footer-brand .footer-logo {
+  font-size: 24px;
+  margin-bottom: 12px;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+
+.footer-desc {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 400px;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 12px;
+}
+
+.footer-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
+.footer-bottom {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px 24px 32px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.footer-disclaimer {
+  margin-bottom: 20px;
+}
+
+.footer-disclaimer p {
+  color: var(--text-faint);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.footer-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-meta p {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin: 0;
+}
+
+.footer-meta a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-meta a:hover {
+  color: var(--accent-strong);
+}
+
+@media (max-width: 1024px) {
+  .footer-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .footer-meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+</style>
+
+</body>
+</html>

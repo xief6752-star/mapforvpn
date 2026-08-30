@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VPN使用教程 - Windows/Mac/iOS/Android全平台配置指南 | MapForVPN</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=Noto+Sans+SC:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600&display=swap">
+
+<style>
+  :root {
+    --bg: #f8faf9;
+    --bg-soft: #f0f4f1;
+    --surface: #ffffff;
+    --border: #d1e4d7;
+    --border-soft: #e8f3ec;
+    --text: #1a3a2a;
+    --text-muted: #4a6355;
+    --text-faint: #6b8577;
+    --accent: #2d6a4f;
+    --accent-strong: #1b4332;
+    --accent-soft: rgba(45, 106, 79, 0.1);
+    --accent-2: #52b788;
+    --success: #40916c;
+    --r: 12px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0d1f17;
+      --bg-soft: #152d23;
+      --surface: #1a3329;
+      --border: #2d4a3d;
+      --border-soft: #243d32;
+      --text: #e8f3ec;
+      --text-muted: #a5bfb0;
+      --text-faint: #6b8577;
+      --accent: #52b788;
+      --accent-strong: #74c69d;
+      --accent-soft: rgba(82, 183, 136, 0.15);
+      --accent-2: #95d5b2;
+      --success: #74c69d;
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Noto Sans SC', sans-serif;
+    line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+
+  .navbar {
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow); position: sticky; top: 0; z-index: 100;
+  }
+  .navbar-inner {
+    max-width: 1400px; margin: 0 auto; padding: 0 24px;
+    display: flex; align-items: center; justify-content: space-between; height: 64px;
+  }
+  .navbar-logo {
+    font-family: 'ZCOOL XiaoWei', serif; font-size: 22px; font-weight: 400;
+    text-decoration: none; color: var(--text);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .navbar-logo-icon { font-size: 26px; }
+  .navbar-nav { display: flex; align-items: center; gap: 32px; }
+  .navbar-link {
+    color: var(--text-muted); text-decoration: none;
+    font-size: 14px; font-weight: 500; transition: color .2s;
+  }
+  .navbar-link:hover { color: var(--accent); }
+  .navbar-link.active { color: var(--accent); font-weight: 600; }
+
+  .container { max-width: 1400px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  .page-header {
+    text-align: center; margin-bottom: 48px;
+  }
+  .page-header h1 {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 36px; font-weight: 900; margin: 0 0 12px;
+    color: var(--text);
+  }
+  .page-header p {
+    font-size: 16px; color: var(--text-muted);
+  }
+
+  .platform-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 28px; margin-bottom: 60px;
+  }
+  .platform-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--r); padding: 32px; box-shadow: var(--shadow);
+    transition: all .2s; text-decoration: none; color: inherit;
+    display: block;
+  }
+  .platform-card:hover {
+    transform: translateY(-4px); box-shadow: var(--shadow-lg);
+    border-color: var(--accent);
+  }
+  .platform-icon {
+    font-size: 56px; margin-bottom: 20px; display: block;
+  }
+  .platform-name {
+    font-size: 22px; font-weight: 700; margin-bottom: 12px;
+    color: var(--text);
+  }
+  .platform-desc {
+    font-size: 14px; color: var(--text-muted); line-height: 1.7;
+    margin-bottom: 20px;
+  }
+  .client-list {
+    list-style: none; padding: 0; margin: 0;
+  }
+  .client-list li {
+    padding: 8px 0; font-size: 14px; color: var(--text-muted);
+    position: relative; padding-left: 20px;
+  }
+  .client-list li::before {
+    content: '→'; position: absolute; left: 0;
+    color: var(--accent); font-weight: 700;
+  }
+  .view-tutorial {
+    display: inline-block; margin-top: 16px; padding: 10px 20px;
+    background: var(--accent-soft); color: var(--accent);
+    border-radius: 8px; font-weight: 600; font-size: 14px;
+    transition: all .2s;
+  }
+  .platform-card:hover .view-tutorial {
+    background: var(--accent); color: white;
+  }
+
+  .tutorial-section {
+    margin-bottom: 60px;
+  }
+  .tutorial-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--r); padding: 40px; box-shadow: var(--shadow);
+    margin-bottom: 32px;
+  }
+  .tutorial-header {
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 24px; padding-bottom: 20px;
+    border-bottom: 2px solid var(--border);
+  }
+  .tutorial-icon {
+    font-size: 48px;
+  }
+  .tutorial-title {
+    font-size: 28px; font-weight: 900; color: var(--text);
+    margin: 0;
+  }
+  .tutorial-subtitle {
+    font-size: 14px; color: var(--text-muted);
+    margin: 4px 0 0 0;
+  }
+  .step-list {
+    list-style: none; padding: 0; margin: 0;
+  }
+  .step-item {
+    margin-bottom: 32px; padding-bottom: 32px;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .step-item:last-child {
+    margin-bottom: 0; padding-bottom: 0; border-bottom: none;
+  }
+  .step-number {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--accent); color: white;
+    font-weight: 700; font-size: 16px;
+    margin-bottom: 12px;
+  }
+  .step-title {
+    font-size: 18px; font-weight: 700; color: var(--text);
+    margin: 0 0 12px 0;
+  }
+  .step-content {
+    font-size: 15px; color: var(--text-muted); line-height: 1.8;
+    margin-left: 0;
+  }
+  .step-content p {
+    margin: 0 0 12px 0;
+  }
+  .step-content p:last-child {
+    margin-bottom: 0;
+  }
+  .step-code {
+    background: var(--bg-soft); border: 1px solid var(--border);
+    border-radius: 8px; padding: 16px; margin: 12px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; color: var(--text);
+    overflow-x: auto;
+  }
+  .step-note {
+    background: var(--accent-soft); border-left: 3px solid var(--accent);
+    padding: 12px 16px; margin: 12px 0;
+    border-radius: 6px; font-size: 14px;
+    color: var(--text-muted);
+  }
+  .step-note strong {
+    color: var(--accent-strong); font-weight: 600;
+  }
+  .download-links {
+    display: flex; flex-wrap: wrap; gap: 12px; margin: 16px 0;
+  }
+  .download-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 20px; background: var(--accent);
+    color: white; text-decoration: none;
+    border-radius: 8px; font-weight: 600; font-size: 14px;
+    transition: all .2s;
+  }
+  .download-btn:hover {
+    background: var(--accent-strong);
+    transform: translateY(-2px);
+  }
+
+  .faq-section {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--r); padding: 40px; box-shadow: var(--shadow);
+    margin-top: 60px;
+  }
+  .faq-title {
+    font-size: 24px; font-weight: 700; margin-bottom: 28px;
+    text-align: center; color: var(--text);
+  }
+  .faq-item {
+    margin-bottom: 24px; padding-bottom: 24px;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .faq-item:last-child {
+    margin-bottom: 0; padding-bottom: 0; border-bottom: none;
+  }
+  .faq-question {
+    font-size: 16px; font-weight: 600; margin-bottom: 10px;
+    color: var(--text);
+  }
+  .faq-answer {
+    font-size: 14px; color: var(--text-muted); line-height: 1.7;
+  }
+
+  .platform-section {
+    margin-bottom: 60px;
+  }
+  .platform-title {
+    font-size: 28px; font-weight: 900; color: var(--text);
+    margin-bottom: 24px; display: flex; align-items: center; gap: 12px;
+  }
+  .platform-icon {
+    font-size: 32px;
+  }
+  .tutorial-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+  }
+  .tutorial-card-link {
+    text-decoration: none; color: inherit;
+  }
+  .tutorial-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--r); padding: 28px; box-shadow: var(--shadow);
+    transition: all .2s; position: relative; height: 100%;
+    display: flex; flex-direction: column;
+  }
+  .tutorial-card-link:hover .tutorial-card {
+    transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    border-color: var(--accent);
+  }
+  .recommend-badge {
+    position: absolute; top: -12px; right: 20px;
+    background: var(--accent); color: white;
+    padding: 4px 12px; border-radius: 20px;
+    font-size: 12px; font-weight: 600;
+  }
+  .tutorial-icon {
+    font-size: 48px; margin-bottom: 16px;
+  }
+  .tutorial-name {
+    font-size: 20px; font-weight: 700; color: var(--text);
+    margin: 0 0 12px 0;
+  }
+  .tutorial-desc {
+    font-size: 14px; color: var(--text-muted); line-height: 1.7;
+    margin-bottom: 16px; flex-grow: 1;
+  }
+  .tutorial-meta {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    font-size: 13px; color: var(--text-faint);
+    margin-bottom: 16px;
+  }
+  .tutorial-action {
+    color: var(--accent); font-weight: 600; font-size: 14px;
+    transition: all .2s;
+  }
+  .tutorial-card-link:hover .tutorial-action {
+    color: var(--accent-strong);
+  }
+
+  .footer {
+    background: var(--surface); border-top: 1px solid var(--border);
+    padding: 32px 24px; margin-top: 80px;
+  }
+  .footer-inner {
+    max-width: 1400px; margin: 0 auto; text-align: center;
+    font-size: 13px; color: var(--text-faint);
+  }
+
+  @media (max-width: 860px) {
+    .navbar-nav { display: none; }
+    .tutorial-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="详细的VPN和机场使用教程，涵盖Clash、V2Ray、Shadowrocket等主流客户端在Windows、Mac、iOS、Android平台的配置方法。">
+    <meta name="keywords" content="VPN教程,Clash教程,V2Ray教程,Shadowrocket教程,科学上网教程,翻墙教程,代理配置">
+    <meta name="author" content="MapForVPN">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="bingbot" content="index, follow">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mapforvpn.com/tutorials.html">
+    <meta property="og:title" content="VPN使用教程 - Windows/Mac/iOS/Android全平台配置指南 | MapForVPN">
+    <meta property="og:description" content="详细的VPN和机场使用教程，涵盖Clash、V2Ray、Shadowrocket等主流客户端在Windows、Mac、iOS、Android平台的配置方法。">
+    <meta property="og:site_name" content="MapForVPN">
+    <meta property="og:locale" content="zh_CN">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://mapforvpn.com/tutorials.html">
+    <meta name="twitter:title" content="VPN使用教程 - Windows/Mac/iOS/Android全平台配置指南 | MapForVPN">
+    <meta name="twitter:description" content="详细的VPN和机场使用教程，涵盖Clash、V2Ray、Shadowrocket等主流客户端在Windows、Mac、iOS、Android平台的配置方法。">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://mapforvpn.com/tutorials.html">
+
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="navbar-logo">
+      <span style="font-weight: 900; font-family: 'Noto Sans SC', sans-serif; color: #2d5016;">Map</span><span style="font-weight: 900; font-family: 'Noto Sans SC', sans-serif; color: #5fb878;">For</span><span style="font-weight: 900; font-family: 'Noto Sans SC', sans-serif; color: #2d5016;">VPN</span>
+    </a>
+    <div class="navbar-nav">
+      <a href="index.html" class="navbar-link">首页</a>
+      <a href="rankings.html" class="navbar-link">机场榜单</a>
+      <a href="reviews.html" class="navbar-link">机场评测</a>
+      <a href="nodes/" class="navbar-link">省份节点</a>
+      <a href="wiki.html" class="navbar-link">科普百科</a>
+      <a href="tutorials.html" class="navbar-link active">使用教程</a>
+      <a href="download.html" class="navbar-link">客户端下载</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="page-header">
+    <h1>使用教程</h1>
+    <p>选择你的设备平台，查看详细的客户端配置教程</p>
+  </div>
+
+  <!-- Platform Sections -->
+
+  <!-- Windows -->
+  <section class="platform-section">
+    <h2 class="platform-title">
+      <span class="platform-icon">🪟</span>
+      <span>Windows 客户端</span>
+    </h2>
+    <div class="tutorial-grid">
+      <a href="tutorial-clash-verge.html" class="tutorial-card-link">
+        <div class="tutorial-card">
+          <span class="recommend-badge">推荐</span>
+          <div class="tutorial-icon">⚡</div>
+          <h3 class="tutorial-name">Clash Verge Rev</h3>
+          <p class="tutorial-desc">界面美观，功能强大，新手友好，支持一键订阅</p>
+          <div class="tutorial-meta">
+            <span>✓ Windows 10/11</span>
+            <span>✓ 简单易用</span>
+          </div>
+          <div class="tutorial-action">查看教程 →</div>
+        </div>
+      </a>
+
+      <a href="tutorial-v2rayn.html" class="tutorial-card-link">
+        <div class="tutorial-card">
+          <div class="tutorial-icon">🌐</div>
+          <h3 class="tutorial-name">v2rayN</h3>
+          <p class="tutorial-desc">老牌客户端，稳定可靠，支持多种协议</p>
+          <div class="tutorial-meta">
+            <span>✓ Windows 7+</span>
+            <span>✓ 功能全面</span>
+          </div>
+          <div class="tutorial-action">查看教程 →</div>
+        </div>
+      </a>
+
+      <a href="tutorial-karing.html" class="tutorial-card-link">
+        <div class="tutorial-card">
+          <div class="tutorial-icon">🚀</div>
+          <h3 class="tutorial-name">Karing</h3>
+          <p class="tutorial-desc">现代化工具，自动选择最优节点，性能出色</p>
+          <div class="tutorial-meta">
+            <span>✓ Windows 10/11</span>
+            <span>✓ 智能优化</span>
+          </div>
+          <div class="tutorial-action">查看教程 →</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- macOS -->
+  <section class="platform-section">
+    <h2 class="platform-title">
+      <span class="platform-icon">🍎</span>
+      <span>macOS 客户端</span>
+    </h2>
+    <div class="tutorial-grid">
+      <a href="tutorial-clashx.html" class="tutorial-card-link">
+        <div class="tutorial-card">
+          <span class="recommend-badge">推荐</span>
+          <div class="tutorial-icon">⚡</div>
+          <h3 class="tutorial-name">ClashX Pro</h3>
+          <p class="tutorial-desc">Mac 平台最受欢迎的客户端，简单高效</p>
+          <div class="tutorial-meta">
+            <span>✓ macOS 10.15+</span>
+            <span>✓ 原生体验</span>
+          </div>
+          <div class="tutorial-action">查看教程 →</div>
+        </div>
+      </a>
+
+      <a href="tutorial-surge-mac.html" class="tutorial-card-link">
+        <div class="tutorial-card">
+          <div class="tutorial-icon">🌊</div>
+          <h3 class="tutorial-name">Surge</h3>
+          <p class="tutorial-desc">专业级网络工具，功能强大，性能极佳</p>
+          <div class="tutorial-meta">
+            <span>✓ macOS 10.15+</span>
+            <span>✓ 高级功能</span>
+          </div>
+          <div class="tutorial-action">查看教程 →</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- iOS -->
+  <section class="platform-section">
+    <h2 class="platform-title">
+      <span class="platform-icon">📱</span>
+      <span>iOS 客户端</span>
+    </h2>
+    <div class="tutorial-grid">
+      <a href="tutorial-shadowrocket.html" class="tutorial-card-link">
+        <div class="tutorial-card">
+          <span class="recommend-badge">推荐</span>
+          <div class="tutorial-icon">🚀</div>
+          <h3 class="tutorial-name">Shadowrocket</h3>
+          <p class="tutorial-desc">小火箭，iOS 平台最流行的代理工具</p>
+          <div class="tutorial-meta">
+            <span>✓ iOS 13+</span>
+            <span>✓ App Store</span>
+          </div>
+          <div class="tutorial-action">查看教程 →</div>
+        </div>
+      </a>
+
+      <a href="tutorial-surge-ios.html" class="tutorial-card-link">
+        <div class="tutorial-card">
+          <div class="tutorial-icon">🌊</div>
+          <h3 class="tutorial-name">Surge</h3>
+          <p class="tutorial-desc">专业级工具，支持模块和脚本扩展</p>
+          <div class="tutorial-meta">
+            <span>✓ iOS 13+</span>
+            <span>✓ 功能丰富</span>
+          </div>
+          <div class="tutorial-action">查看教程 →</div>
+        </div>
+      </a>
+
+      <a href="tutorial-quantumult-x.html" class="tutorial-card-link">
+        <div class="tutorial-card">
+          <div class="tutorial-icon">Ⓧ</div>
+          <h3 class="tutorial-name">Quantumult X</h3>
+          <p class="tutorial-desc">圈X，强大的规则和脚本支持</p>
+          <div class="tutorial-meta">
+            <span>✓ iOS 13+</span>
+            <span>✓ 高级玩家</span>
+          </div>
+          <div class="tutorial-action">查看教程 →</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Android -->
+  <section class="platform-section">
+    <h2 class="platform-title">
+      <span class="platform-icon">🤖</span>
+      <span>Android 客户端</span>
+    </h2>
+    <div class="tutorial-grid">
+      <a href="tutorial-clash-android.html" class="tutorial-card-link">
+        <div class="tutorial-card">
+          <span class="recommend-badge">推荐</span>
+          <div class="tutorial-icon">⚡</div>
+          <h3 class="tutorial-name">Clash Meta</h3>
+          <p class="tutorial-desc">功能全面，界面简洁，支持多种协议</p>
+          <div class="tutorial-meta">
+            <span>✓ Android 5.0+</span>
+            <span>✓ 开源免费</span>
+          </div>
+          <div class="tutorial-action">查看教程 →</div>
+        </div>
+      </a>
+
+      <a href="tutorial-v2rayng.html" class="tutorial-card-link">
+        <div class="tutorial-card">
+          <div class="tutorial-icon">🌐</div>
+          <h3 class="tutorial-name">v2rayNG</h3>
+          <p class="tutorial-desc">Android 版 v2ray 客户端，稳定可靠</p>
+          <div class="tutorial-meta">
+            <span>✓ Android 5.0+</span>
+            <span>✓ 轻量简洁</span>
+          </div>
+          <div class="tutorial-action">查看教程 →</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+</div>
+        <span class="tutorial-icon">🍎</span>
+        <div>
+          <h2 class="tutorial-title">macOS 配置教程</h2>
+          <p class="tutorial-subtitle">适用于 macOS 系统 | 推荐客户端：ClashX</p>
+        </div>
+      </div>
+
+      <ol class="step-list">
+        <li class="step-item">
+          <div class="step-number">1</div>
+          <h3 class="step-title">下载并安装 ClashX</h3>
+          <div class="step-content">
+            <p>访问 GitHub 下载最新版本的 ClashX.dmg 安装包。</p>
+            <div class="download-links">
+              <a href="#" class="download-btn">📥 官方下载</a>
+            </div>
+            <p>双击打开 .dmg 文件，将 ClashX 拖入 Applications（应用程序）文件夹。</p>
+            <div class="step-note">
+              <strong>提示：</strong>首次打开可能提示"无法验证开发者"，请前往"系统偏好设置 → 安全性与隐私"中点击"仍要打开"。
+            </div>
+          </div>
+        </li>
+
+        <li class="step-item">
+          <div class="step-number">2</div>
+          <h3 class="step-title">导入订阅配置</h3>
+          <div class="step-content">
+            <p>从机场官网复制订阅链接。</p>
+            <p>打开 ClashX，点击菜单栏的 ClashX 图标，选择"配置 → 托管配置 → 管理"。</p>
+            <p>点击"添加"，粘贴订阅链接，填写配置名称，点击"确定"。</p>
+          </div>
+        </li>
+
+        <li class="step-item">
+          <div class="step-number">3</div>
+          <h3 class="step-title">启用系统代理</h3>
+          <div class="step-content">
+            <p>点击菜单栏的 ClashX 图标，勾选"设置为系统代理"。</p>
+            <p>首次启用会要求输入系统密码授权。</p>
+            <p>建议同时勾选"开机启动"和"自动更新订阅"。</p>
+          </div>
+        </li>
+
+        <li class="step-item">
+          <div class="step-number">4</div>
+          <h3 class="step-title">选择节点和模式</h3>
+          <div class="step-content">
+            <p>点击 ClashX 图标，在"Proxy"或"代理"菜单中选择节点。</p>
+            <p>可以选择延迟测试功能找到最快的节点。</p>
+            <p>在"出站模式"中选择"规则判断"（Rule）实现智能分流。</p>
+          </div>
+        </li>
+
+        <li class="step-item">
+          <div class="step-number">5</div>
+          <h3 class="step-title">验证连接</h3>
+          <div class="step-content">
+            <p>打开 Safari 或 Chrome，访问 https://www.google.com 测试。</p>
+            <p>ClashX 图标变为彩色表示已启用代理。</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- iOS 教程 -->
+  <div class="tutorial-section">
+    <div class="tutorial-card">
+      <div class="tutorial-header">
+        <span class="tutorial-icon">📱</span>
+        <div>
+          <h2 class="tutorial-title">iOS / iPadOS 配置教程</h2>
+          <p class="tutorial-subtitle">适用于 iPhone 和 iPad | 推荐客户端：Shadowrocket</p>
+        </div>
+      </div>
+
+      <ol class="step-list">
+        <li class="step-item">
+          <div class="step-number">1</div>
+          <h3 class="step-title">下载 Shadowrocket</h3>
+          <div class="step-content">
+            <p>Shadowrocket 是 App Store 付费应用（约 $2.99），需要使用美区 Apple ID 购买。</p>
+            <p>如果没有美区账号，可以购买已购账号或使用其他免费替代品（如 Quantumult X）。</p>
+            <div class="step-note">
+              <strong>注意：</strong>切勿使用共享账号下载，避免隐私泄露和设备被锁风险。建议自己注册美区账号购买。
+            </div>
+          </div>
+        </li>
+
+        <li class="step-item">
+          <div class="step-number">2</div>
+          <h3 class="step-title">添加订阅</h3>
+          <div class="step-content">
+            <p>从机场官网复制订阅链接。</p>
+            <p>打开 Shadowrocket，点击右上角"+"号，选择"类型 → Subscribe（订阅）"。</p>
+            <p>在 URL 栏粘贴订阅链接，点击"完成"。</p>
+            <p>订阅会自动下载节点列表。</p>
+          </div>
+        </li>
+
+        <li class="step-item">
+          <div class="step-number">3</div>
+          <h3 class="step-title">启用 VPN</h3>
+          <div class="step-content">
+            <p>返回 Shadowrocket 主页，点击顶部的"未连接"开关。</p>
+            <p>首次启用会弹出"添加 VPN 配置"提示，点击"Allow"（允许）并输入密码或使用面容/指纹验证。</p>
+            <p>开关变为绿色，状态栏出现 VPN 图标表示连接成功。</p>
+          </div>
+        </li>
+
+        <li class="step-item">
+          <div class="step-number">4</div>
+          <h3 class="step-title">选择节点和路由</h3>
+          <div class="step-content">
+            <p>点击"全局路由"，选择"配置"（推荐，智能分流）或"代理"（全局代理）。</p>
+            <p>点击"延迟测试"找到最快的节点，点击节点名称切换。</p>
+          </div>
+        </li>
+
+        <li class="step-item">
+          <div class="step-number">5</div>
+          <h3 class="step-title">验证连接</h3>
+          <div class="step-content">
+            <p>打开 Safari 访问 https://www.google.com 测试连接。</p>
+            <p>在 Shadowrocket 主页可以看到实时网速。</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- Android 教程 -->
+  <div class="tutorial-section">
+    <div class="tutorial-card">
+      <div class="tutorial-header">
+        <span class="tutorial-icon">🤖</span>
+        <div>
+          <h2 class="tutorial-title">Android 配置教程</h2>
+          <p class="tutorial-subtitle">适用于 Android 系统 | 推荐客户端：Clash for Android</p>
+        </div>
+      </div>
+
+      <ol class="step-list">
+        <li class="step-item">
+          <div class="step-number">1</div>
+          <h3 class="step-title">下载并安装 Clash for Android</h3>
+          <div class="step-content">
+            <p>访问 GitHub 下载最新版本的 .apk 安装包。</p>
+            <div class="download-links">
+              <a href="#" class="download-btn">📥 官方下载</a>
+              <a href="#" class="download-btn">📥 Google Play</a>
+            </div>
+            <p>下载后打开 .apk 文件安装。系统可能提示"不允许安装未知来源应用"，需前往设置中允许该来源。</p>
+          </div>
+        </li>
+
+        <li class="step-item">
+          <div class="step-number">2</div>
+          <h3 class="step-title">导入订阅</h3>
+          <div class="step-content">
+            <p>从机场官网复制订阅链接。</p>
+            <p>打开 Clash for Android，点击顶部"配置"标签。</p>
+            <p>点击右上角"+"号，选择"URL"，粘贴订阅链接，填写名称，点击"保存"。</p>
+            <p>点击刚添加的配置文件进行下载和加载。</p>
+          </div>
+        </li>
+
+        <li class="step-item">
+          <div class="step-number">3</div>
+          <h3 class="step-title">启动代理</h3>
+          <div class="step-content">
+            <p>返回"主页"标签，点击中间的"点击启动"按钮。</p>
+            <p>首次启动会请求 VPN 连接权限，点击"确定"。</p>
+            <p>状态栏出现钥匙图标表示代理已启动。</p>
+          </div>
+        </li>
+
+        <li class="step-item">
+          <div class="step-number">4</div>
+          <h3 class="step-title">选择节点</h3>
+          <div class="step-content">
+            <p>点击"代理"标签查看所有节点。</p>
+            <p>点击"延迟测试"图标测试所有节点速度。</p>
+            <p>选择延迟最低的节点。</p>
+          </div>
+        </li>
+
+        <li class="step-item">
+          <div class="step-number">5</div>
+          <h3 class="step-title">验证连接</h3>
+          <div class="step-content">
+            <p>打开浏览器访问 https://www.google.com 测试。</p>
+            <p>Clash 主页会显示实时上传和下载速度。</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- Platform Tutorials -->
+  <div class="platform-grid" style="margin-top: 60px;">
+    <div class="platform-card" style="pointer-events: none;">
+      <span class="platform-icon">🔌</span>
+      <h2 class="platform-name">路由器配置</h2>
+      <p class="platform-desc">
+        路由器透明代理配置，全家设备自动翻墙
+      </p>
+      <ul class="client-list">
+        <li>OpenWrt + PassWall</li>
+        <li>梅林固件 + Clash</li>
+        <li>软路由方案</li>
+      </ul>
+      <div class="step-note" style="margin-top: 16px;">
+        <strong>提示：</strong>路由器配置较为复杂，建议有一定网络基础的用户尝试。配置前请备份路由器设置。
+      </div>
+    </div>
+
+    <div class="platform-card" style="pointer-events: none;">
+      <span class="platform-icon">🐧</span>
+      <h2 class="platform-name">Linux 配置</h2>
+      <p class="platform-desc">
+        适用于 Linux 桌面和服务器的配置指南
+      </p>
+      <ul class="client-list">
+        <li>Clash（命令行）</li>
+        <li>V2ray（命令行）</li>
+        <li>Qv2ray（图形界面）</li>
+      </ul>
+      <div class="step-note" style="margin-top: 16px;">
+        <strong>提示：</strong>Linux 配置需要使用终端命令，适合熟悉命令行的用户。
+      </div>
+    </div>
+
+    <div class="platform-card" style="pointer-events: none;">
+      <span class="platform-icon">📺</span>
+      <h2 class="platform-name">智能电视/盒子</h2>
+      <p class="platform-desc">
+        Android TV、Apple TV 等设备配置
+      </p>
+      <ul class="client-list">
+        <li>通过路由器代理（推荐）</li>
+        <li>安装 Android 客户端</li>
+        <li>使用代理服务器</li>
+      </ul>
+      <div class="step-note" style="margin-top: 16px;">
+        <strong>提示：</strong>部分智能电视不支持直接安装代理应用，建议使用路由器方案。
+      </div>
+    </div>
+
+    <div class="platform-card" style="pointer-events: none;">
+      <span class="platform-icon">🎮</span>
+      <h2 class="platform-name">游戏主机加速</h2>
+      <p class="platform-desc">
+        PlayStation、Xbox、Switch 加速方案
+      </p>
+      <ul class="client-list">
+        <li>路由器透明代理</li>
+        <li>电脑共享热点</li>
+        <li>专用游戏加速器</li>
+      </ul>
+      <div class="step-note" style="margin-top: 16px;">
+        <strong>提示：</strong>游戏主机加速推荐使用路由器方案或低延迟专线节点。
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ Section -->
+  <div class="faq-section">
+    <h2 class="faq-title">💬 常见问题</h2>
+
+    <div class="faq-item">
+      <h3 class="faq-question">Q: 如何获取订阅链接？</h3>
+      <p class="faq-answer">
+        订阅链接由机场服务商提供。购买套餐后，在机场官网的用户中心或仪表板中可以找到订阅链接。通常显示为"一键订阅"、"订阅地址"或类似名称。复制该链接后粘贴到客户端中即可。
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3 class="faq-question">Q: 订阅链接会过期吗？</h3>
+      <p class="faq-answer">
+        订阅链接通常不会过期，但如果你重置了订阅链接或更换了套餐，旧的链接会失效。定期（每天或每周）更新订阅可以获取最新的节点列表和配置。
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3 class="faq-question">Q: 为什么连接成功但无法上网？</h3>
+      <p class="faq-answer">
+        可能的原因：1) 选择的节点不可用，尝试切换其他节点；2) 系统代理未正确设置，检查客户端的系统代理开关；3) 浏览器使用了独立代理设置，清除浏览器代理配置；4) DNS设置问题，尝试更换DNS服务器。
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3 class="faq-question">Q: 如何选择合适的节点？</h3>
+      <p class="faq-answer">
+        选择节点的建议：1) 优先选择延迟低的节点（通常<100ms）；2) 根据用途选择：日常浏览选中转或直连，流媒体选原生IP节点，游戏选低延迟专线；3) 使用客户端的延迟测试功能找到最快的节点；4) 避开高峰时段使用热门节点。
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3 class="faq-question">Q: 可以在多台设备上同时使用吗？</h3>
+      <p class="faq-answer">
+        取决于机场服务商的限制。大多数机场允许2-5台设备同时在线，部分高端套餐支持更多设备。超过限制可能导致连接被中断或账号被封禁。具体限制请查看套餐说明或咨询客服。
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3 class="faq-question">Q: 如何判断客户端配置是否正确？</h3>
+      <p class="faq-answer">
+        验证方法：1) 访问 https://www.google.com，能正常打开说明代理工作；2) 访问 ip.sb 或 ipinfo.io，查看显示的IP是否为节点IP；3) 访问 https://www.netflix.com，测试流媒体解锁；4) 客户端显示"已连接"且实时网速有数据。
+      </p>
+    </div>
+  </div>
+</div>
+
+
+
+
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-section">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span style="font-weight: 900; color: #2d5016;">Map</span><span style="font-weight: 900; color: #5fb878;">For</span><span style="font-weight: 900; color: #2d5016;">VPN</span>
+        </div>
+        <p class="footer-desc">专注真实机场测评，帮助用户找到最稳定、最高性价比的科学上网工具。数据持续更新，从不接受付费植入。</p>
+      </div>
+    </div>
+
+    <div class="footer-section">
+      <h4>机场推荐</h4>
+      <ul class="footer-links">
+        <li><a href="rankings.html">综合榜单</a></li>
+        <li><a href="rankings.html#speed">横向对比表</a></li>
+        <li><a href="review-netflix.html">ChatGPT机场</a></li>
+        <li><a href="review-netflix.html">Netflix机场</a></li>
+        <li><a href="review-netflix.html">TikTok机场</a></li>
+        <li><a href="rankings.html">便宜机场</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h4>使用教程</h4>
+      <ul class="footer-links">
+        <li><a href="tutorials.html">Windows教程</a></li>
+        <li><a href="tutorials.html">Mac教程</a></li>
+        <li><a href="tutorials.html">iOS教程</a></li>
+        <li><a href="tutorials.html">Android教程</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h4>更多</h4>
+      <ul class="footer-links">
+        <li><a href="wiki.html">科普百科</a></li>
+        <li><a href="reviews.html">优惠专区</a></li>
+        <li><a href="index.html#about">关于我们</a></li>
+        <li><a href="https://t.me/shinhuw" target="_blank" rel="noopener noreferrer">TG频道</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-disclaimer">
+      <p>⚠️ 免责声明：本站所有内容仅供学习与技术研究参考，请遵守所在地区相关法律法规。本站仅链接至联盟推广链接，点击购买后本站获得少量佣金，但不影响购买价格。</p>
+    </div>
+    <div class="footer-meta">
+      <p>© 2026 MapForVPN · 保留所有权利</p>
+      <p>📧 联系我们：<a href="https://t.me/shinhuw" target="_blank" rel="noopener noreferrer">@shinhuw</a> · ⭐ <a href="https://github.com/shinhuw" target="_blank" rel="noopener noreferrer">GitHub 数据仓库</a></p>
+    </div>
+  </div>
+</footer>
+
+
+<style>
+.footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  margin-top: 80px;
+}
+
+.footer-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 60px 24px 40px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+}
+
+.footer-section h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.footer-brand .footer-logo {
+  font-size: 24px;
+  margin-bottom: 12px;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+
+.footer-desc {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 400px;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 12px;
+}
+
+.footer-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
+.footer-bottom {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px 24px 32px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.footer-disclaimer {
+  margin-bottom: 20px;
+}
+
+.footer-disclaimer p {
+  color: var(--text-faint);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.footer-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-meta p {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin: 0;
+}
+
+.footer-meta a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-meta a:hover {
+  color: var(--accent-strong);
+}
+
+@media (max-width: 1024px) {
+  .footer-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .footer-meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+</style>
+
+</body>
+</html>

@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026年如何选择适合自己的机场服务 - MapForVPN</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=Noto+Sans+SC:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600&display=swap">
+
+<style>
+  :root {
+    --bg: #f8faf9;
+    --bg-soft: #f0f4f1;
+    --surface: #ffffff;
+    --border: #d1e4d7;
+    --border-soft: #e8f3ec;
+    --text: #1a3a2a;
+    --text-muted: #4a6355;
+    --text-faint: #6b8577;
+    --accent: #2d6a4f;
+    --accent-strong: #1b4332;
+    --accent-soft: rgba(45, 106, 79, 0.1);
+    --success: #40916c;
+    --warning: #f59e0b;
+    --r: 12px;
+    --shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0d1f17;
+      --bg-soft: #152d23;
+      --surface: #1a3329;
+      --border: #2d4a3d;
+      --border-soft: #243d32;
+      --text: #e8f3ec;
+      --text-muted: #a5bfb0;
+      --text-faint: #6b8577;
+      --accent: #52b788;
+      --accent-strong: #74c69d;
+      --accent-soft: rgba(82, 183, 136, 0.15);
+      --success: #74c69d;
+      --shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Noto Sans SC', sans-serif;
+    line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+
+  .navbar {
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow); position: sticky; top: 0; z-index: 100;
+  }
+  .navbar-inner {
+    max-width: 1400px; margin: 0 auto; padding: 0 24px;
+    display: flex; align-items: center; justify-content: space-between; height: 64px;
+  }
+  .navbar-logo {
+    font-size: 22px; font-weight: 400;
+    text-decoration: none; color: var(--text);
+    display: flex; align-items: center;
+  }
+  .navbar-nav { display: flex; align-items: center; gap: 32px; }
+  .navbar-link {
+    color: var(--text-muted); text-decoration: none;
+    font-size: 14px; font-weight: 500; transition: color .2s;
+  }
+  .navbar-link:hover { color: var(--accent); }
+  .navbar-link.active { color: var(--accent); font-weight: 600; }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  .back-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--accent); text-decoration: none;
+    font-weight: 600; font-size: 14px;
+    margin-bottom: 32px;
+    transition: all .2s;
+  }
+  .back-link:hover {
+    color: var(--accent-strong);
+    transform: translateX(-4px);
+  }
+
+  .article-header {
+    margin-bottom: 40px;
+    padding-bottom: 32px;
+    border-bottom: 2px solid var(--border);
+  }
+  .article-meta {
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 16px;
+    font-size: 14px; color: var(--text-muted);
+  }
+  .article-tag {
+    background: var(--accent-soft);
+    color: var(--accent-strong);
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-weight: 600;
+  }
+  .article-title {
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--text);
+    line-height: 1.3;
+    margin-bottom: 12px;
+  }
+  .article-stats {
+    display: flex; gap: 20px;
+    font-size: 14px; color: var(--text-muted);
+  }
+
+  .article-content {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text);
+  }
+  .article-content h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 48px 0 20px;
+    color: var(--text);
+  }
+  .article-content h3 {
+    font-size: 22px;
+    font-weight: 600;
+    margin: 32px 0 16px;
+    color: var(--text);
+  }
+  .article-content p {
+    margin-bottom: 20px;
+  }
+  .article-content ul {
+    margin: 20px 0;
+    padding-left: 24px;
+  }
+  .article-content li {
+    margin-bottom: 12px;
+  }
+  .article-content strong {
+    color: var(--accent-strong);
+    font-weight: 600;
+  }
+
+  .info-box {
+    background: var(--accent-soft);
+    border-left: 4px solid var(--accent);
+    padding: 20px 24px;
+    margin: 24px 0;
+    border-radius: 6px;
+  }
+  .info-box h4 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--accent-strong);
+    margin-bottom: 12px;
+  }
+
+  .warning-box {
+    background: #fff3cd;
+    border-left: 4px solid var(--warning);
+    padding: 20px 24px;
+    margin: 24px 0;
+    border-radius: 6px;
+    color: #856404;
+  }
+  .warning-box h4 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #856404;
+    margin-bottom: 12px;
+  }
+
+  @media (max-width: 860px) {
+    .navbar-nav { display: none; }
+    .article-title { font-size: 28px; }
+  }
+
+
+.footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  margin-top: 80px;
+}
+
+.footer-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 60px 24px 40px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+}
+
+.footer-section h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.footer-brand .footer-logo {
+  font-size: 24px;
+  margin-bottom: 12px;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+
+.footer-desc {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 400px;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 12px;
+}
+
+.footer-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
+.footer-bottom {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px 24px 32px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.footer-disclaimer {
+  margin-bottom: 20px;
+}
+
+.footer-disclaimer p {
+  color: var(--text-faint);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.footer-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-meta p {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin: 0;
+}
+
+.footer-meta a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-meta a:hover {
+  color: var(--accent-strong);
+}
+
+@media (max-width: 1024px) {
+  .footer-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .footer-meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+</style>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="提供真实的机场测评和科学上网教程">
+    <meta name="keywords" content="机场推荐,VPN推荐,科学上网">
+    <meta name="author" content="MapForVPN">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="bingbot" content="index, follow">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mapforvpn.com/review-guide.html">
+    <meta property="og:title" content="MapForVPN - 专业机场测评与推荐">
+    <meta property="og:description" content="提供真实的机场测评和科学上网教程">
+    <meta property="og:site_name" content="MapForVPN">
+    <meta property="og:locale" content="zh_CN">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://mapforvpn.com/review-guide.html">
+    <meta name="twitter:title" content="MapForVPN - 专业机场测评与推荐">
+    <meta name="twitter:description" content="提供真实的机场测评和科学上网教程">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://mapforvpn.com/review-guide.html">
+
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="navbar-logo">
+      <span style="font-weight: 900; font-family: 'Noto Sans SC', sans-serif; color: #2d5016;">Map</span><span style="font-weight: 900; font-family: 'Noto Sans SC', sans-serif; color: #5fb878;">For</span><span style="font-weight: 900; font-family: 'Noto Sans SC', sans-serif; color: #2d5016;">VPN</span>
+    </a>
+    <div class="navbar-nav">
+      <a href="index.html" class="navbar-link">首页</a>
+      <a href="rankings.html" class="navbar-link">机场榜单</a>
+      <a href="reviews.html" class="navbar-link active">机场评测</a>
+      <a href="wiki.html" class="navbar-link">科普百科</a>
+      <a href="tutorials.html" class="navbar-link">使用教程</a>
+      <a href="download.html" class="navbar-link">客户端下载</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <a href="reviews.html" class="back-link">← 返回评测列表</a>
+
+  <article>
+    <div class="article-header">
+      <div class="article-meta">
+        <span class="article-tag">新手指南</span>
+        <span>2026-08-20</span>
+      </div>
+      <h1 class="article-title">2026年如何选择适合自己的机场服务</h1>
+      <div class="article-stats">
+        <span>👁️ 5.1K 阅读</span>
+        <span>💬 32 评论</span>
+      </div>
+    </div>
+
+    <div class="article-content">
+      <p>选择机场服务对新手来说往往令人困惑。市面上机场众多，价格、速度、稳定性各不相同。本文将帮助你避开常见误区，根据自己的使用场景找到最适合的机场。</p>
+
+      <h2>一、明确你的使用场景</h2>
+
+      <p>在选择机场之前，首先要明确自己的主要需求：</p>
+
+      <h3>场景一：日常浏览和社交</h3>
+      <ul>
+        <li><strong>典型用户：</strong>查资料、刷Twitter、看YouTube</li>
+        <li><strong>速度需求：</strong>50-100 Mbps即可</li>
+        <li><strong>流量需求：</strong>100-300GB/月</li>
+        <li><strong>推荐机场：</strong>大鸽云、寰宇云等性价比机场</li>
+        <li><strong>预算：</strong>¥15-30/月</li>
+      </ul>
+
+      <h3>场景二：流媒体追剧</h3>
+      <ul>
+        <li><strong>典型用户：</strong>Netflix、Disney+、HBO Max重度用户</li>
+        <li><strong>速度需求：</strong>200+ Mbps（4K需要更高）</li>
+        <li><strong>流量需求：</strong>500GB-1TB/月</li>
+        <li><strong>推荐机场：</strong>极速Cloud、云图机场</li>
+        <li><strong>预算：</strong>¥30-60/月</li>
+      </ul>
+
+      <h3>场景三：游戏加速</h3>
+      <ul>
+        <li><strong>典型用户：</strong>玩国际服游戏</li>
+        <li><strong>延迟需求：</strong>< 50ms（越低越好）</li>
+        <li><strong>稳定性：</strong>极其重要，不能掉线</li>
+        <li><strong>推荐机场：</strong>云图机场、极速Cloud</li>
+        <li><strong>预算：</strong>¥40-80/月</li>
+      </ul>
+
+      <h3>场景四：大文件下载</h3>
+      <ul>
+        <li><strong>典型用户：</strong>开发者、设计师下载大型软件</li>
+        <li><strong>速度需求：</strong>500+ Mbps</li>
+        <li><strong>流量需求：</strong>1TB+/月</li>
+        <li><strong>推荐机场：</strong>云图机场</li>
+        <li><strong>预算：</strong>¥60-100/月</li>
+      </ul>
+
+      <div class="info-box">
+        <h4>💡 新手建议</h4>
+        <p>如果不确定自己的需求，建议从性价比机场的小套餐开始试用1-2个月，了解自己的实际流量和速度需求后，再决定是否升级或更换。</p>
+      </div>
+
+      <h2>二、理解关键指标</h2>
+
+      <h3>1. 速度（Mbps）</h3>
+      <ul>
+        <li><strong>50-100 Mbps：</strong>日常浏览、1080P视频</li>
+        <li><strong>100-300 Mbps：</strong>多设备、1080P流畅</li>
+        <li><strong>300-500 Mbps：</strong>4K视频、快速下载</li>
+        <li><strong>500+ Mbps：</strong>专业需求、多人共享</li>
+      </ul>
+
+      <h3>2. 流量（GB）</h3>
+      <ul>
+        <li><strong>100GB：</strong>轻度使用，每天1-2小时</li>
+        <li><strong>300GB：</strong>中度使用，每天3-4小时</li>
+        <li><strong>500GB：</strong>重度使用，看视频较多</li>
+        <li><strong>1TB+：</strong>极重度使用，下载大文件</li>
+      </ul>
+
+      <div class="info-box">
+        <h4>📊 流量消耗参考</h4>
+        <p><strong>YouTube 1080P：</strong>约 1.5GB/小时</p>
+        <p><strong>Netflix 4K：</strong>约 7GB/小时</p>
+        <p><strong>网页浏览：</strong>约 50MB/小时</p>
+        <p><strong>社交媒体：</strong>约 100MB/小时</p>
+      </div>
+
+      <h3>3. 倍率</h3>
+      <p>倍率是指流量计算方式，例如：</p>
+      <ul>
+        <li><strong>1倍率：</strong>用1GB算1GB（标准）</li>
+        <li><strong>0.5倍率：</strong>用1GB只算0.5GB（优惠）</li>
+        <li><strong>2倍率：</strong>用1GB算2GB（某些特殊节点）</li>
+      </ul>
+
+      <h3>4. 带宽和专线类型</h3>
+      <ul>
+        <li><strong>普通线路：</strong>成本低，晚高峰可能拥堵</li>
+        <li><strong>BGP中转：</strong>性价比高，速度较稳定</li>
+        <li><strong>CN2 GIA：</strong>电信优化线路，速度快</li>
+        <li><strong>IPLC/专线：</strong>最高端，不过墙，最稳定</li>
+      </ul>
+
+      <h2>三、避开常见误区</h2>
+
+      <div class="warning-box">
+        <h4>⚠️ 误区一：只看价格</h4>
+        <p>过低的价格往往意味着服务质量差、随时跑路的风险。建议选择口碑好的中等价位机场。</p>
+      </div>
+
+      <div class="warning-box">
+        <h4>⚠️ 误区二：盲信"不限速不限流量"</h4>
+        <p>真正的不限流量机场成本极高，大多数"不限流量"都有隐性限制或共享带宽严重，实际体验很差。</p>
+      </div>
+
+      <div class="warning-box">
+        <h4>⚠️ 误区三：只看节点数量</h4>
+        <p>节点质量比数量更重要。10个高质量节点远胜100个低质量节点。</p>
+      </div>
+
+      <div class="warning-box">
+        <h4>⚠️ 误区四：买年付"超值"套餐</h4>
+        <p>新手不建议直接年付。先月付试用1-2个月，确认服务稳定再考虑长期套餐。</p>
+      </div>
+
+      <div class="warning-box">
+        <h4>⚠️ 误区五：只用一个机场</h4>
+        <p>建议同时购买2个不同机场的小套餐，互为备用，避免单点故障导致无法使用。</p>
+      </div>
+
+      <h2>四、选购检查清单</h2>
+
+      <p>在购买机场前，检查以下几点：</p>
+
+      <h3>✅ 基础检查</h3>
+      <ul>
+        <li>机场运营时间（建议1年以上）</li>
+        <li>用户口碑和评价</li>
+        <li>是否提供试用或退款政策</li>
+        <li>客服响应速度</li>
+        <li>支付方式（支持支付宝/微信更安全）</li>
+      </ul>
+
+      <h3>✅ 技术检查</h3>
+      <ul>
+        <li>节点覆盖地区（是否包含你需要的地区）</li>
+        <li>线路类型（CN2/IPLC等）</li>
+        <li>是否支持你的设备和客户端</li>
+        <li>流媒体解锁能力（如需要）</li>
+        <li>同时在线设备数限制</li>
+      </ul>
+
+      <h3>✅ 服务检查</h3>
+      <ul>
+        <li>TG群/Discord社区活跃度</li>
+        <li>工单系统响应时间</li>
+        <li>使用文档是否完善</li>
+        <li>是否有知识库或教程</li>
+      </ul>
+
+      <h2>五、推荐购买策略</h2>
+
+      <h3>新手入门策略</h3>
+      <p><strong>第一步：</strong>选择1-2个口碑好的性价比机场（如大鸽云），购买最小套餐试用。</p>
+      <p><strong>第二步：</strong>使用1个月，记录实际流量消耗和速度需求。</p>
+      <p><strong>第三步：</strong>根据实际需求，选择合适的套餐或升级到更高端机场。</p>
+
+      <h3>进阶用户策略</h3>
+      <p><strong>主力机场：</strong>选择稳定性和速度兼顾的中高端机场，购买大流量套餐。</p>
+      <p><strong>备用机场：</strong>选择一个性价比机场的小套餐，作为主力机场故障时的备用。</p>
+      <p><strong>专用机场：</strong>如有特殊需求（如游戏、特定地区），可额外购买专门优化的机场。</p>
+
+      <div class="info-box">
+        <h4>💰 预算建议</h4>
+        <p><strong>学生党/轻度用户：</strong>¥15-30/月</p>
+        <p><strong>上班族/中度用户：</strong>¥30-60/月</p>
+        <p><strong>重度用户/专业需求：</strong>¥60-100/月</p>
+      </div>
+
+      <h2>六、安全注意事项</h2>
+
+      <ul>
+        <li>不要使用免费机场（安全风险极高）</li>
+        <li>不要在机场官网使用与其他网站相同的密码</li>
+        <li>避免在使用期间访问银行、支付等敏感网站</li>
+        <li>定期更换机场订阅链接</li>
+        <li>不要分享你的账号给他人</li>
+      </ul>
+
+      <h2>总结</h2>
+
+      <p>选择机场没有绝对的"最好"，只有"最适合"。明确自己的需求，理解关键指标，避开常见误区，按需选择，就能找到最适合自己的机场服务。</p>
+
+      <p>记住：<strong>稳定性 > 速度 > 价格</strong>。一个稳定运营、速度达标的机场，即使价格稍高，也比频繁更换机场的成本更低。</p>
+    </div>
+  </article>
+</div>
+
+
+
+
+
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-section">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span style="font-weight: 900; color: #2d5016;">Map</span><span style="font-weight: 900; color: #5fb878;">For</span><span style="font-weight: 900; color: #2d5016;">VPN</span>
+        </div>
+        <p class="footer-desc">专注真实机场测评，帮助用户找到最稳定、最高性价比的科学上网工具。数据持续更新，从不接受付费植入。</p>
+      </div>
+    </div>
+
+    <div class="footer-section">
+      <h4>机场推荐</h4>
+      <ul class="footer-links">
+        <li><a href="rankings.html">综合榜单</a></li>
+        <li><a href="rankings.html#speed">横向对比表</a></li>
+        <li><a href="review-netflix.html">ChatGPT机场</a></li>
+        <li><a href="review-netflix.html">Netflix机场</a></li>
+        <li><a href="review-netflix.html">TikTok机场</a></li>
+        <li><a href="rankings.html">便宜机场</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h4>使用教程</h4>
+      <ul class="footer-links">
+        <li><a href="tutorials.html">Windows教程</a></li>
+        <li><a href="tutorials.html">Mac教程</a></li>
+        <li><a href="tutorials.html">iOS教程</a></li>
+        <li><a href="tutorials.html">Android教程</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h4>更多</h4>
+      <ul class="footer-links">
+        <li><a href="wiki.html">科普百科</a></li>
+        <li><a href="reviews.html">优惠专区</a></li>
+        <li><a href="index.html#about">关于我们</a></li>
+        <li><a href="https://t.me/shinhuw" target="_blank" rel="noopener noreferrer">TG频道</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-disclaimer">
+      <p>⚠️ 免责声明：本站所有内容仅供学习与技术研究参考，请遵守所在地区相关法律法规。本站仅链接至联盟推广链接，点击购买后本站获得少量佣金，但不影响购买价格。</p>
+    </div>
+    <div class="footer-meta">
+      <p>© 2026 MapForVPN · 保留所有权利</p>
+      <p>📧 联系我们：<a href="https://t.me/shinhuw" target="_blank" rel="noopener noreferrer">@shinhuw</a> · ⭐ <a href="https://github.com/shinhuw" target="_blank" rel="noopener noreferrer">GitHub 数据仓库</a></p>
+    </div>
+  </div>
+</footer>
+
+
+<style>
+.footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  margin-top: 80px;
+}
+
+.footer-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 60px 24px 40px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+}
+
+.footer-section h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.footer-brand .footer-logo {
+  font-size: 24px;
+  margin-bottom: 12px;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+
+.footer-desc {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 400px;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 12px;
+}
+
+.footer-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
+.footer-bottom {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px 24px 32px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.footer-disclaimer {
+  margin-bottom: 20px;
+}
+
+.footer-disclaimer p {
+  color: var(--text-faint);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.footer-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-meta p {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin: 0;
+}
+
+.footer-meta a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-meta a:hover {
+  color: var(--accent-strong);
+}
+
+@media (max-width: 1024px) {
+  .footer-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .footer-meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+</style>
+
+</body>
+</html>

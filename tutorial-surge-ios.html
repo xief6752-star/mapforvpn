@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Surge iOS 配置教程 - MapForVPN</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=Noto+Sans+SC:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600&display=swap">
+
+<style>
+  :root {
+    --bg: #f8faf9;
+    --bg-soft: #f0f4f1;
+    --surface: #ffffff;
+    --border: #d1e4d7;
+    --border-soft: #e8f3ec;
+    --text: #1a3a2a;
+    --text-muted: #4a6355;
+    --text-faint: #6b8577;
+    --accent: #2d6a4f;
+    --accent-strong: #1b4332;
+    --accent-soft: rgba(45, 106, 79, 0.1);
+    --success: #40916c;
+    --r: 12px;
+    --shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0d1f17;
+      --bg-soft: #152d23;
+      --surface: #1a3329;
+      --border: #2d4a3d;
+      --border-soft: #243d32;
+      --text: #e8f3ec;
+      --text-muted: #a5bfb0;
+      --text-faint: #6b8577;
+      --accent: #52b788;
+      --accent-strong: #74c69d;
+      --accent-soft: rgba(82, 183, 136, 0.15);
+      --success: #74c69d;
+      --shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Noto Sans SC', sans-serif;
+    line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+
+  .navbar {
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow); position: sticky; top: 0; z-index: 100;
+  }
+  .navbar-inner {
+    max-width: 1400px; margin: 0 auto; padding: 0 24px;
+    display: flex; align-items: center; justify-content: space-between; height: 64px;
+  }
+  .navbar-logo {
+    font-size: 22px; font-weight: 400;
+    text-decoration: none; color: var(--text);
+    display: flex; align-items: center;
+  }
+  .navbar-nav { display: flex; align-items: center; gap: 32px; }
+  .navbar-link {
+    color: var(--text-muted); text-decoration: none;
+    font-size: 14px; font-weight: 500; transition: color .2s;
+  }
+  .navbar-link:hover { color: var(--accent); }
+  .navbar-link.active { color: var(--accent); font-weight: 600; }
+
+  .container { max-width: 1000px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  .tutorial-header {
+    text-align: center; margin-bottom: 40px;
+    padding-bottom: 32px; border-bottom: 2px solid var(--border);
+  }
+  .tutorial-icon {
+    font-size: 72px; margin-bottom: 16px;
+  }
+  .tutorial-header h1 {
+    font-size: 36px; font-weight: 900; margin: 0 0 12px;
+    color: var(--text);
+  }
+  .tutorial-header p {
+    font-size: 16px; color: var(--text-muted);
+  }
+
+  .download-section {
+    background: var(--accent-soft); border: 1px solid var(--accent);
+    border-radius: var(--r); padding: 28px; margin-bottom: 40px;
+  }
+  .download-title {
+    font-size: 20px; font-weight: 700; color: var(--text);
+    margin-bottom: 16px;
+  }
+  .download-info {
+    font-size: 14px; color: var(--text-muted); margin-bottom: 16px;
+    line-height: 1.7;
+  }
+
+  .steps {
+    margin-bottom: 60px;
+  }
+  .step {
+    margin-bottom: 40px; padding-bottom: 40px;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .step:last-child {
+    border-bottom: none;
+  }
+  .step-number {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--accent); color: white;
+    font-weight: 700; font-size: 18px;
+    margin-bottom: 16px;
+  }
+  .step h2 {
+    font-size: 24px; font-weight: 700; color: var(--text);
+    margin: 0 0 16px 0;
+  }
+  .step-content {
+    font-size: 15px; color: var(--text-muted); line-height: 1.8;
+  }
+  .step-content p {
+    margin: 0 0 16px 0;
+  }
+  .step-content ul {
+    margin: 16px 0; padding-left: 24px;
+  }
+  .step-content li {
+    margin-bottom: 8px;
+  }
+  .step-note {
+    background: var(--accent-soft); border-left: 3px solid var(--accent);
+    padding: 16px 20px; margin: 16px 0;
+    border-radius: 6px; font-size: 14px;
+  }
+  .step-note strong {
+    color: var(--accent-strong); font-weight: 600;
+  }
+  .step-warning {
+    background: #fff3cd; border-left: 3px solid #ffc107;
+    padding: 16px 20px; margin: 16px 0;
+    border-radius: 6px; font-size: 14px;
+    color: #856404;
+  }
+
+  .back-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--accent); text-decoration: none;
+    font-weight: 600; font-size: 14px;
+    margin-bottom: 32px;
+    transition: all .2s;
+  }
+  .back-link:hover {
+    color: var(--accent-strong);
+    transform: translateX(-4px);
+  }
+
+  @media (max-width: 860px) {
+    .navbar-nav { display: none; }
+  }
+
+
+.footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  margin-top: 80px;
+}
+
+.footer-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 60px 24px 40px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+}
+
+.footer-section h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.footer-brand .footer-logo {
+  font-size: 24px;
+  margin-bottom: 12px;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+
+.footer-desc {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 400px;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 12px;
+}
+
+.footer-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
+.footer-bottom {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px 24px 32px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.footer-disclaimer {
+  margin-bottom: 20px;
+}
+
+.footer-disclaimer p {
+  color: var(--text-faint);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.footer-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-meta p {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin: 0;
+}
+
+.footer-meta a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-meta a:hover {
+  color: var(--accent-strong);
+}
+
+@media (max-width: 1024px) {
+  .footer-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .footer-meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+</style>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="提供真实的机场测评和科学上网教程">
+    <meta name="keywords" content="机场推荐,VPN推荐,科学上网">
+    <meta name="author" content="MapForVPN">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="bingbot" content="index, follow">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mapforvpn.com/tutorial-surge-ios.html">
+    <meta property="og:title" content="MapForVPN - 专业机场测评与推荐">
+    <meta property="og:description" content="提供真实的机场测评和科学上网教程">
+    <meta property="og:site_name" content="MapForVPN">
+    <meta property="og:locale" content="zh_CN">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://mapforvpn.com/tutorial-surge-ios.html">
+    <meta name="twitter:title" content="MapForVPN - 专业机场测评与推荐">
+    <meta name="twitter:description" content="提供真实的机场测评和科学上网教程">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://mapforvpn.com/tutorial-surge-ios.html">
+
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="navbar-logo">
+      <span style="font-weight: 900; font-family: 'Noto Sans SC', sans-serif; color: #2d5016;">Map</span><span style="font-weight: 900; font-family: 'Noto Sans SC', sans-serif; color: #5fb878;">For</span><span style="font-weight: 900; font-family: 'Noto Sans SC', sans-serif; color: #2d5016;">VPN</span>
+    </a>
+    <div class="navbar-nav">
+      <a href="index.html" class="navbar-link">首页</a>
+      <a href="rankings.html" class="navbar-link">机场榜单</a>
+      <a href="reviews.html" class="navbar-link">机场评测</a>
+      <a href="wiki.html" class="navbar-link">科普百科</a>
+      <a href="tutorials.html" class="navbar-link active">使用教程</a>
+      <a href="download.html" class="navbar-link">客户端下载</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <a href="tutorials.html" class="back-link">← 返回教程列表</a>
+
+  <div class="tutorial-header">
+    <div class="tutorial-icon">🌊</div>
+    <h1>Surge iOS 配置教程</h1>
+    <p>适用于 iOS 13+ 系统 · 专业级网络调试工具</p>
+  </div>
+
+  <div class="download-section">
+    <div class="download-title">📱 获取 Surge</div>
+    <div class="download-info">
+      <p><strong>注意：</strong>Surge 是付费应用，需要从 App Store 购买（美区 $49.99，终身许可）。</p>
+      <p style="margin-bottom: 0;"><strong>购买方式：</strong></p>
+      <ul style="margin-top: 8px; padding-left: 24px;">
+        <li>使用美区 Apple ID 登录 App Store</li>
+        <li>搜索"Surge 5"购买下载</li>
+        <li>或从 <a href="https://nssurge.com" target="_blank" style="color: var(--accent);">官网</a> 购买激活码后下载免费版激活</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-number">1</div>
+      <h2>下载并安装</h2>
+      <div class="step-content">
+        <p>从 App Store 下载 Surge：</p>
+        <ul>
+          <li>切换到美区 Apple ID</li>
+          <li>打开 App Store</li>
+          <li>搜索"Surge 5"</li>
+          <li>购买并下载（$49.99，一次性付费）</li>
+        </ul>
+        <div class="step-warning">
+          <strong>⚠️ 价格说明：</strong>Surge 价格较高但功能强大，适合对网络调试有专业需求的用户。普通用户可选择 Shadowrocket 等平价替代品。
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">2</div>
+      <h2>获取托管配置</h2>
+      <div class="step-content">
+        <p>从你的机场获取 Surge 配置：</p>
+        <ul>
+          <li>使用 Safari 浏览器登录机场官网</li>
+          <li>进入用户中心或仪表板</li>
+          <li>找到"Surge 托管配置"或"Surge 订阅"</li>
+          <li>复制托管配置链接</li>
+        </ul>
+        <div class="step-note">
+          <strong>💡 提示：</strong>Surge 使用托管配置而非普通订阅，确保复制正确的链接类型。
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">3</div>
+      <h2>导入托管配置</h2>
+      <div class="step-content">
+        <p>在 Surge 中导入配置文件：</p>
+        <ul>
+          <li>打开 Surge 应用</li>
+          <li>点击底部"首页"标签</li>
+          <li>点击顶部"配置"区域</li>
+          <li>选择"从 URL 下载配置"</li>
+          <li>粘贴托管配置链接</li>
+          <li>点击"下载"</li>
+        </ul>
+        <div class="step-note">
+          <strong>🔄 托管配置：</strong>使用托管配置后，Surge 会自动从服务器更新节点和规则，无需手动维护。
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">4</div>
+      <h2>安装证书（可选）</h2>
+      <div class="step-content">
+        <p>如需 HTTPS 解密功能，需要安装证书：</p>
+        <ul>
+          <li>在 Surge 首页点击"配置 HTTPS 解密"</li>
+          <li>点击"安装证书"</li>
+          <li>按照提示完成证书安装</li>
+          <li>前往"设置 → 通用 → 关于本机 → 证书信任设置"</li>
+          <li>启用对 Surge 根证书的完全信任</li>
+        </ul>
+        <div class="step-warning">
+          <strong>⚠️ 注意：</strong>仅在需要解密 HTTPS 流量时安装证书。日常使用代理功能无需此步骤。
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">5</div>
+      <h2>启用 Surge</h2>
+      <div class="step-content">
+        <p>激活代理连接：</p>
+        <ul>
+          <li>返回 Surge 首页</li>
+          <li>点击顶部的大开关启用 Surge</li>
+          <li>首次使用需要授权添加 VPN 配置</li>
+          <li>输入设备密码或使用 Face ID / Touch ID 验证</li>
+          <li>开关变为绿色表示已启用</li>
+        </ul>
+        <div class="step-note">
+          <strong>✅ 状态指示：</strong>顶部状态栏出现"VPN"图标表示 Surge 正在运行。
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">6</div>
+      <h2>选择代理策略</h2>
+      <div class="step-content">
+        <p>配置出站模式和策略组：</p>
+        <ul>
+          <li>点击底部"策略组"标签</li>
+          <li>在"Proxy"策略组中选择你想使用的节点</li>
+          <li>托管配置通常已包含智能分流规则</li>
+          <li>国内网站直连，国外网站走代理</li>
+        </ul>
+        <div class="step-note">
+          <strong>🎯 策略组：</strong>Surge 支持自动选择、负载均衡等高级策略，可在策略组中切换不同的出站模式。
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">7</div>
+      <h2>验证连接</h2>
+      <div class="step-content">
+        <p>测试代理是否正常工作：</p>
+        <ul>
+          <li>打开 Safari 访问 <a href="https://www.google.com" target="_blank" style="color: var(--accent);">https://www.google.com</a></li>
+          <li>如果能正常访问，说明配置成功</li>
+          <li>可在"更多 → 最近请求"中查看流量详情</li>
+        </ul>
+        <div class="step-note">
+          <strong>✅ 配置完成！</strong>Surge 提供详细的请求日志和性能监控，可在"更多"标签中探索各种高级功能。
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-section">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span style="font-weight: 900; color: #2d5016;">Map</span><span style="font-weight: 900; color: #5fb878;">For</span><span style="font-weight: 900; color: #2d5016;">VPN</span>
+        </div>
+        <p class="footer-desc">专注真实机场测评，帮助用户找到最稳定、最高性价比的科学上网工具。数据持续更新，从不接受付费植入。</p>
+      </div>
+    </div>
+
+    <div class="footer-section">
+      <h4>机场推荐</h4>
+      <ul class="footer-links">
+        <li><a href="rankings.html">综合榜单</a></li>
+        <li><a href="rankings.html#speed">横向对比表</a></li>
+        <li><a href="review-netflix.html">ChatGPT机场</a></li>
+        <li><a href="review-netflix.html">Netflix机场</a></li>
+        <li><a href="review-netflix.html">TikTok机场</a></li>
+        <li><a href="rankings.html">便宜机场</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h4>使用教程</h4>
+      <ul class="footer-links">
+        <li><a href="tutorials.html">Windows教程</a></li>
+        <li><a href="tutorials.html">Mac教程</a></li>
+        <li><a href="tutorials.html">iOS教程</a></li>
+        <li><a href="tutorials.html">Android教程</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h4>更多</h4>
+      <ul class="footer-links">
+        <li><a href="wiki.html">科普百科</a></li>
+        <li><a href="reviews.html">优惠专区</a></li>
+        <li><a href="index.html#about">关于我们</a></li>
+        <li><a href="https://t.me/shinhuw" target="_blank" rel="noopener noreferrer">TG频道</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-disclaimer">
+      <p>⚠️ 免责声明：本站所有内容仅供学习与技术研究参考，请遵守所在地区相关法律法规。本站仅链接至联盟推广链接，点击购买后本站获得少量佣金，但不影响购买价格。</p>
+    </div>
+    <div class="footer-meta">
+      <p>© 2026 MapForVPN · 保留所有权利</p>
+      <p>📧 联系我们：<a href="https://t.me/shinhuw" target="_blank" rel="noopener noreferrer">@shinhuw</a> · ⭐ <a href="https://github.com/shinhuw" target="_blank" rel="noopener noreferrer">GitHub 数据仓库</a></p>
+    </div>
+  </div>
+</footer>
+
+
+<style>
+.footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  margin-top: 80px;
+}
+
+.footer-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 60px 24px 40px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+}
+
+.footer-section h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.footer-brand .footer-logo {
+  font-size: 24px;
+  margin-bottom: 12px;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+
+.footer-desc {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 400px;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 12px;
+}
+
+.footer-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
+.footer-bottom {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px 24px 32px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.footer-disclaimer {
+  margin-bottom: 20px;
+}
+
+.footer-disclaimer p {
+  color: var(--text-faint);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.footer-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-meta p {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin: 0;
+}
+
+.footer-meta a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-meta a:hover {
+  color: var(--accent-strong);
+}
+
+@media (max-width: 1024px) {
+  .footer-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .footer-meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+</style>
+
+</body>
+</html>

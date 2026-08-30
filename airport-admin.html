@@ -1,0 +1,658 @@
+<title>机场数据管理</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=Noto+Sans+SC:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600&display=swap">
+
+<style>
+  :root {
+    --bg: #F4F6FB; --bg-soft: #ECEEF6; --surface: #FFFFFF;
+    --border: #DDE1EC; --border-soft: #E7E9F2;
+    --text: #171B29; --text-muted: #5B6172; --text-faint: #8890A2;
+    --accent: #3652E0; --accent-strong: #2740C4; --accent-soft: #E8ECFF;
+    --success: #10B981; --danger: #EF4444;
+    --shadow: 0 1px 3px rgba(23,27,41,.05), 0 8px 24px -12px rgba(23,27,41,.12);
+    --r: 10px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0A0E1A; --bg-soft: #101527; --surface: #121729;
+      --border: #232B42; --border-soft: #1B2136;
+      --text: #E8EAF3; --text-muted: #A5ABC0; --text-faint: #6C7288;
+      --accent: #6E8BFF; --accent-strong: #8CA3FF; --accent-soft: #1B2450;
+      --success: #34D399; --danger: #F87171;
+      --shadow: 0 1px 3px rgba(0,0,0,.3), 0 12px 32px -14px rgba(0,0,0,.5);
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Noto Sans SC', "PingFang SC", "Microsoft YaHei", sans-serif;
+    line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+
+  .page { max-width: 1200px; margin: 0 auto; padding: 32px 24px 80px; }
+
+  .header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 32px;
+  }
+  .header h1 {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 32px; font-weight: 400; margin: 0;
+  }
+  .header-actions { display: flex; gap: 12px; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 20px; border-radius: 8px; font-weight: 600;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: all .12s; font-size: 14px; font-family: inherit;
+  }
+  .btn-primary {
+    background: var(--accent); color: white;
+  }
+  .btn-primary:hover { background: var(--accent-strong); }
+  .btn-secondary {
+    background: var(--bg-soft); color: var(--text); border: 1px solid var(--border);
+  }
+  .btn-secondary:hover { background: var(--border); }
+  .btn-success {
+    background: var(--success); color: white;
+  }
+  .btn-success:hover { opacity: .9; }
+  .btn-danger {
+    background: var(--danger); color: white;
+  }
+  .btn-danger:hover { opacity: .9; }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--r); box-shadow: var(--shadow); padding: 24px;
+    margin-bottom: 24px;
+  }
+
+  .data-viewer {
+    background: var(--bg-soft); border: 1px solid var(--border);
+    border-radius: 8px; padding: 16px; font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; max-height: 600px; overflow: auto;
+    white-space: pre-wrap; word-break: break-all;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+  .form-label {
+    display: block; font-size: 14px; font-weight: 600;
+    margin-bottom: 8px; color: var(--text);
+  }
+  .form-input, .form-textarea, .form-select {
+    width: 100%; padding: 10px 14px; border-radius: 6px;
+    border: 1px solid var(--border); background: var(--surface);
+    color: var(--text); font-size: 14px; font-family: inherit;
+    transition: border-color .12s;
+  }
+  .form-input:focus, .form-textarea:focus, .form-select:focus {
+    outline: none; border-color: var(--accent);
+  }
+  .form-textarea {
+    min-height: 100px; resize: vertical;
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+  }
+  .form-hint {
+    font-size: 12px; color: var(--text-faint); margin-top: 4px;
+  }
+
+  .grid-2 {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
+  }
+  @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  .alert {
+    padding: 14px 16px; border-radius: 8px; margin-bottom: 20px;
+    display: flex; align-items: start; gap: 12px;
+  }
+  .alert-success {
+    background: color-mix(in srgb, var(--success) 15%, var(--surface));
+    border: 1px solid var(--success); color: var(--success);
+  }
+  .alert-danger {
+    background: color-mix(in srgb, var(--danger) 15%, var(--surface));
+    border: 1px solid var(--danger); color: var(--danger);
+  }
+
+  .airport-list {
+    display: grid; gap: 12px;
+  }
+  .airport-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px; background: var(--bg-soft); border-radius: 8px;
+    border: 1px solid var(--border-soft);
+  }
+  .airport-item-info { flex: 1; }
+  .airport-item-name { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+  .airport-item-meta { font-size: 12px; color: var(--text-muted); }
+  .airport-item-actions { display: flex; gap: 8px; }
+  .btn-sm {
+    padding: 6px 12px; font-size: 12px;
+  }
+
+  .modal {
+    display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.6); z-index: 1000;
+    align-items: center; justify-content: center; padding: 20px;
+  }
+  .modal.active { display: flex; }
+  .modal-content {
+    background: var(--surface); border-radius: 12px;
+    max-width: 800px; width: 100%; max-height: 90vh;
+    overflow: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  .modal-header {
+    padding: 20px 24px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .modal-title { font-size: 20px; font-weight: 700; margin: 0; }
+  .modal-close {
+    background: none; border: none; font-size: 24px;
+    cursor: pointer; color: var(--text-muted); padding: 0;
+    width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .modal-close:hover { background: var(--bg-soft); }
+  .modal-body { padding: 24px; }
+  .modal-footer {
+    padding: 16px 24px; border-top: 1px solid var(--border);
+    display: flex; justify-content: flex-end; gap: 12px;
+  }
+
+
+.footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  margin-top: 80px;
+}
+
+.footer-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 60px 24px 40px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+}
+
+.footer-section h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.footer-brand .footer-logo {
+  font-size: 24px;
+  margin-bottom: 12px;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+
+.footer-desc {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 400px;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 12px;
+}
+
+.footer-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
+.footer-bottom {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px 24px 32px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.footer-disclaimer {
+  margin-bottom: 20px;
+}
+
+.footer-disclaimer p {
+  color: var(--text-faint);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.footer-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-meta p {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin: 0;
+}
+
+.footer-meta a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-meta a:hover {
+  color: var(--accent-strong);
+}
+
+@media (max-width: 1024px) {
+  .footer-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .footer-meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+</style>
+
+<div class="page">
+  <div class="header">
+    <h1>机场数据管理</h1>
+    <div class="header-actions">
+      <a class="btn btn-secondary" href="china-province-airports.html">
+        <span>🗺️</span>
+        <span>查看地图</span>
+      </a>
+      <button class="btn btn-primary" onclick="openAddModal()">
+        <span>➕</span>
+        <span>添加机场</span>
+      </button>
+    </div>
+  </div>
+
+  <div id="alertContainer"></div>
+
+  <div class="card">
+    <h2 style="margin-top:0">当前机场列表</h2>
+    <div class="airport-list" id="airportList">
+      <div style="text-align:center; padding:40px; color:var(--text-faint);">
+        加载中...
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0">JSON 数据</h2>
+    <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px;">
+      当前数据文件内容（仅供查看，编辑请使用上方表单）
+    </p>
+    <div class="data-viewer" id="jsonViewer">加载中...</div>
+    <div style="margin-top:16px; display:flex; gap:12px;">
+      <button class="btn btn-secondary" onclick="downloadJSON()">
+        <span>💾</span>
+        <span>下载 JSON</span>
+      </button>
+      <button class="btn btn-secondary" onclick="copyJSON()">
+        <span>📋</span>
+        <span>复制 JSON</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Add/Edit Modal -->
+<div class="modal" id="editModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 class="modal-title" id="modalTitle">添加机场</h3>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <form id="airportForm">
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label">机场名称 *</label>
+            <input type="text" class="form-input" id="inputName" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">英文名称</label>
+            <input type="text" class="form-input" id="inputNameEn">
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label">档次 *</label>
+            <select class="form-select" id="inputTier" required>
+              <option value="高端">高端</option>
+              <option value="中端">中端</option>
+              <option value="入门">入门</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">评分 (1-5)</label>
+            <input type="number" class="form-input" id="inputRating" min="1" max="5" step="0.1" value="4.0">
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label">月付价格 (CNY)</label>
+            <input type="number" class="form-input" id="inputMonthly" value="19">
+          </div>
+          <div class="form-group">
+            <label class="form-label">季付价格 (CNY)</label>
+            <input type="number" class="form-input" id="inputQuarterly" value="49">
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label">年付价格 (CNY)</label>
+            <input type="number" class="form-input" id="inputYearly" value="188">
+          </div>
+          <div class="form-group">
+            <label class="form-label">流量配额</label>
+            <input type="text" class="form-input" id="inputTraffic" value="100GB/月起">
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label">同时设备数</label>
+            <input type="number" class="form-input" id="inputDevices" value="3">
+          </div>
+          <div class="form-group">
+            <label class="form-label">运营状态</label>
+            <select class="form-select" id="inputStatus">
+              <option value="正常运营">正常运营</option>
+              <option value="维护中">维护中</option>
+              <option value="已跑路">已跑路</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">官网地址 *</label>
+          <input type="url" class="form-input" id="inputUrl" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">优惠码（可选）</label>
+          <input type="text" class="form-input" id="inputPromo">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Logo URL</label>
+          <input type="url" class="form-input" id="inputLogo" value="https://via.placeholder.com/80">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">支持协议（逗号分隔）</label>
+          <input type="text" class="form-input" id="inputProtocols" value="Shadowsocks, V2Ray, Trojan">
+          <div class="form-hint">例如：Shadowsocks, V2Ray, Trojan</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">特性（逗号分隔）</label>
+          <textarea class="form-textarea" id="inputFeatures">Netflix解锁, YouTube 4K, 游戏加速</textarea>
+          <div class="form-hint">每个特性用逗号分隔</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">标签（逗号分隔）</label>
+          <input type="text" class="form-input" id="inputTags" value="流媒体, 稳定">
+          <div class="form-hint">例如：流媒体, 游戏, 稳定, 高速</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">省份节点数据（JSON 格式）</label>
+          <textarea class="form-textarea" id="inputProvinces" style="min-height:200px;">{
+  "110000": {
+    "nodeCount": 3,
+    "avgSpeed": 650,
+    "avgLatency": 18,
+    "stability": 98.5
+  },
+  "310000": {
+    "nodeCount": 5,
+    "avgSpeed": 720,
+    "avgLatency": 12,
+    "stability": 99.2
+  }
+}</textarea>
+          <div class="form-hint">
+            省份代码：110000=北京, 310000=上海, 320000=江苏, 330000=浙江, 370000=山东, 440000=广东
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal()">取消</button>
+      <button class="btn btn-success" onclick="saveAirport()">
+        <span>💾</span>
+        <span>保存</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+let airportsData = [];
+let editingId = null;
+
+// Load data
+loadData();
+
+function loadData() {
+  fetch('data/airports.json')
+    .then(res => res.json())
+    .then(data => {
+      airportsData = data;
+      renderList();
+      renderJSON();
+    })
+    .catch(err => {
+      console.error('Failed to load data:', err);
+      showAlert('加载数据失败', 'danger');
+    });
+}
+
+function renderList() {
+  const container = document.getElementById('airportList');
+
+  if (airportsData.length === 0) {
+    container.innerHTML = `
+      <div style="text-align:center; padding:40px; color:var(--text-faint);">
+        暂无机场数据，点击上方"添加机场"按钮开始添加
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = airportsData.map(airport => `
+    <div class="airport-item">
+      <div class="airport-item-info">
+        <div class="airport-item-name">${airport.name}</div>
+        <div class="airport-item-meta">
+          ${airport.tier} · ¥${airport.price.monthly}/月 ·
+          ${Object.keys(airport.provinces || {}).length} 个省份
+        </div>
+      </div>
+      <div class="airport-item-actions">
+        <button class="btn btn-secondary btn-sm" onclick="editAirport('${airport.id}')">编辑</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteAirport('${airport.id}')">删除</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderJSON() {
+  document.getElementById('jsonViewer').textContent = JSON.stringify(airportsData, null, 2);
+}
+
+function openAddModal() {
+  editingId = null;
+  document.getElementById('modalTitle').textContent = '添加机场';
+  document.getElementById('airportForm').reset();
+  document.getElementById('editModal').classList.add('active');
+}
+
+function editAirport(id) {
+  const airport = airportsData.find(a => a.id === id);
+  if (!airport) return;
+
+  editingId = id;
+  document.getElementById('modalTitle').textContent = '编辑机场';
+
+  document.getElementById('inputName').value = airport.name;
+  document.getElementById('inputNameEn').value = airport.nameEn || '';
+  document.getElementById('inputTier').value = airport.tier;
+  document.getElementById('inputRating').value = airport.rating;
+  document.getElementById('inputMonthly').value = airport.price.monthly;
+  document.getElementById('inputQuarterly').value = airport.price.quarterly;
+  document.getElementById('inputYearly').value = airport.price.yearly;
+  document.getElementById('inputTraffic').value = airport.traffic;
+  document.getElementById('inputDevices').value = airport.devices;
+  document.getElementById('inputStatus').value = airport.status;
+  document.getElementById('inputUrl').value = airport.officialUrl;
+  document.getElementById('inputPromo').value = airport.promoCode || '';
+  document.getElementById('inputLogo').value = airport.logo;
+  document.getElementById('inputProtocols').value = airport.protocols.join(', ');
+  document.getElementById('inputFeatures').value = airport.features.join(', ');
+  document.getElementById('inputTags').value = (airport.tags || []).join(', ');
+  document.getElementById('inputProvinces').value = JSON.stringify(airport.provinces, null, 2);
+
+  document.getElementById('editModal').classList.add('active');
+}
+
+function closeModal() {
+  document.getElementById('editModal').classList.remove('active');
+  editingId = null;
+}
+
+function saveAirport() {
+  try {
+    const name = document.getElementById('inputName').value.trim();
+    const provinces = JSON.parse(document.getElementById('inputProvinces').value);
+
+    if (!name) {
+      alert('请填写机场名称');
+      return;
+    }
+
+    const airportData = {
+      id: editingId || `airport_${Date.now()}`,
+      name: name,
+      nameEn: document.getElementById('inputNameEn').value.trim(),
+      logo: document.getElementById('inputLogo').value.trim(),
+      tier: document.getElementById('inputTier').value,
+      rating: parseFloat(document.getElementById('inputRating').value),
+      price: {
+        monthly: parseFloat(document.getElementById('inputMonthly').value),
+        quarterly: parseFloat(document.getElementById('inputQuarterly').value),
+        yearly: parseFloat(document.getElementById('inputYearly').value),
+        currency: 'CNY'
+      },
+      traffic: document.getElementById('inputTraffic').value.trim(),
+      devices: parseInt(document.getElementById('inputDevices').value),
+      protocols: document.getElementById('inputProtocols').value.split(',').map(s => s.trim()).filter(Boolean),
+      features: document.getElementById('inputFeatures').value.split(',').map(s => s.trim()).filter(Boolean),
+      provinces: provinces,
+      officialUrl: document.getElementById('inputUrl').value.trim(),
+      promoCode: document.getElementById('inputPromo').value.trim() || null,
+      tags: document.getElementById('inputTags').value.split(',').map(s => s.trim()).filter(Boolean),
+      status: document.getElementById('inputStatus').value,
+      registerDate: new Date().toISOString().split('T')[0],
+      lastCheck: new Date().toISOString().split('T')[0]
+    };
+
+    if (editingId) {
+      const index = airportsData.findIndex(a => a.id === editingId);
+      if (index !== -1) {
+        airportsData[index] = airportData;
+      }
+    } else {
+      airportsData.push(airportData);
+    }
+
+    renderList();
+    renderJSON();
+    closeModal();
+    showAlert(editingId ? '机场信息已更新' : '机场已添加', 'success');
+  } catch (err) {
+    alert('数据格式错误：' + err.message);
+  }
+}
+
+function deleteAirport(id) {
+  if (!confirm('确定要删除这个机场吗？')) return;
+
+  airportsData = airportsData.filter(a => a.id !== id);
+  renderList();
+  renderJSON();
+  showAlert('机场已删除', 'success');
+}
+
+function downloadJSON() {
+  const blob = new Blob([JSON.stringify(airportsData, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'airports.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  showAlert('JSON 文件已下载', 'success');
+}
+
+function copyJSON() {
+  const text = JSON.stringify(airportsData, null, 2);
+  navigator.clipboard.writeText(text).then(() => {
+    showAlert('JSON 已复制到剪贴板', 'success');
+  }).catch(() => {
+    alert('复制失败');
+  });
+}
+
+function showAlert(message, type) {
+  const container = document.getElementById('alertContainer');
+  const alert = document.createElement('div');
+  alert.className = `alert alert-${type}`;
+  alert.innerHTML = `<span>${type === 'success' ? '✓' : '✗'}</span><span>${message}</span>`;
+  container.appendChild(alert);
+
+  setTimeout(() => {
+    alert.remove();
+  }, 3000);
+}
+</script>

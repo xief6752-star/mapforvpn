@@ -1,0 +1,240 @@
+[
+  {
+    "id": "yuntu",
+    "name": "云图机场",
+    "nameEn": "Yuntu",
+    "tier": "高端",
+    "rating": 5.0,
+    "price": {
+      "monthly": 25,
+      "quarterly": 75,
+      "yearly": 300,
+      "currency": "CNY"
+    },
+    "traffic": "150GB/月起",
+    "devices": 10,
+    "protocols": ["Shadowsocks", "V2Ray", "Trojan"],
+    "features": [
+      "金融级专线",
+      "Netflix/ChatGPT解锁",
+      "1倍率无陷阱",
+      "TikTok原生"
+    ],
+    "provinces": {
+      "110000": { "nodeCount": 8, "avgSpeed": 920, "avgLatency": 8, "stability": 99.8 },
+      "310000": { "nodeCount": 10, "avgSpeed": 950, "avgLatency": 6, "stability": 99.9 },
+      "440000": { "nodeCount": 9, "avgSpeed": 935, "avgLatency": 7, "stability": 99.8 },
+      "320000": { "nodeCount": 8, "avgSpeed": 925, "avgLatency": 7, "stability": 99.7 },
+      "330000": { "nodeCount": 7, "avgSpeed": 910, "avgLatency": 9, "stability": 99.6 }
+    },
+    "affUrl": "https://vip.ytjcok.org/#/register?code=iV8ahCNE",
+    "promoCode": "yt88",
+    "tags": ["金融级专线", "流媒体", "ChatGPT"],
+    "status": "正常运营",
+    "description": "金融级专线，新上线优质机场"
+  },
+  {
+    "id": "jisuyun",
+    "name": "极速Cloud",
+    "nameEn": "JisuCloud",
+    "tier": "高端",
+    "rating": 4.9,
+    "price": {
+      "monthly": 30,
+      "quarterly": 85,
+      "yearly": 320,
+      "currency": "CNY"
+    },
+    "traffic": "200GB/月起",
+    "devices": 8,
+    "protocols": ["VLess", "V2Ray", "Trojan"],
+    "features": [
+      "CN2GIA三网精品",
+      "TikTok原生IP",
+      "28+地区节点",
+      "VLess协议"
+    ],
+    "provinces": {
+      "110000": { "nodeCount": 8, "avgSpeed": 900, "avgLatency": 28, "stability": 99.5 },
+      "310000": { "nodeCount": 10, "avgSpeed": 920, "avgLatency": 25, "stability": 99.6 },
+      "440000": { "nodeCount": 9, "avgSpeed": 910, "avgLatency": 26, "stability": 99.5 },
+      "320000": { "nodeCount": 8, "avgSpeed": 905, "avgLatency": 27, "stability": 99.5 },
+      "330000": { "nodeCount": 7, "avgSpeed": 895, "avgLatency": 29, "stability": 99.4 }
+    },
+    "affUrl": "https://ygbk.jsjc456789.com/#/register?code=EocII8EW",
+    "promoCode": null,
+    "tags": ["CN2GIA", "TikTok", "流媒体"],
+    "status": "正常运营",
+    "description": "三网CN2GIA精品线路，TikTok原生"
+  },
+  {
+    "id": "shunyun",
+    "name": "瞬云",
+    "nameEn": "ShunYun",
+    "tier": "中端",
+    "rating": 4.4,
+    "price": {
+      "monthly": 16,
+      "quarterly": 45,
+      "yearly": 168,
+      "currency": "CNY"
+    },
+    "traffic": "100GB/月起",
+    "devices": 6,
+    "protocols": ["Shadowsocks", "V2Ray"],
+    "features": [
+      "IEPL专线",
+      "Netflix解锁",
+      "套餐灵活",
+      "年付实惠"
+    ],
+    "provinces": {
+      "110000": { "nodeCount": 6, "avgSpeed": 700, "avgLatency": 35, "stability": 99.2 },
+      "310000": { "nodeCount": 8, "avgSpeed": 720, "avgLatency": 32, "stability": 99.3 },
+      "440000": { "nodeCount": 7, "avgSpeed": 710, "avgLatency": 33, "stability": 99.2 },
+      "320000": { "nodeCount": 6, "avgSpeed": 705, "avgLatency": 34, "stability": 99.2 },
+      "330000": { "nodeCount": 5, "avgSpeed": 695, "avgLatency": 36, "stability": 99.1 }
+    },
+    "affUrl": "https://ccc.jichang.best/#/register?code=za8UKIYz",
+    "promoCode": "20off",
+    "tags": ["IEPL", "性价比", "流媒体"],
+    "status": "正常运营",
+    "description": "IEPL专线，套餐灵活性价比高"
+  },
+  {
+    "id": "huanyuyun",
+    "name": "寰宇云",
+    "nameEn": "HuanYuYun",
+    "tier": "中端",
+    "rating": 4.6,
+    "price": {
+      "monthly": 14,
+      "quarterly": 39,
+      "yearly": 148,
+      "currency": "CNY"
+    },
+    "traffic": "120GB/月起",
+    "devices": 6,
+    "protocols": ["Shadowsocks", "V2Ray", "Trojan"],
+    "features": [
+      "IPLC专线",
+      "不限时流量",
+      "Netflix解锁",
+      "三网优化"
+    ],
+    "provinces": {
+      "110000": { "nodeCount": 7, "avgSpeed": 700, "avgLatency": 15, "stability": 99.7 },
+      "310000": { "nodeCount": 9, "avgSpeed": 720, "avgLatency": 12, "stability": 99.8 },
+      "440000": { "nodeCount": 8, "avgSpeed": 710, "avgLatency": 13, "stability": 99.7 },
+      "320000": { "nodeCount": 7, "avgSpeed": 705, "avgLatency": 14, "stability": 99.7 },
+      "330000": { "nodeCount": 6, "avgSpeed": 695, "avgLatency": 16, "stability": 99.6 }
+    },
+    "affUrl": "https://hyy.52kok.cn/#/register?code=CPBmzXgk",
+    "promoCode": "KY78",
+    "tags": ["IPLC", "性价比", "流媒体"],
+    "status": "正常运营",
+    "description": "IPLC专线，不限时流量套餐"
+  },
+  {
+    "id": "jilianyun",
+    "name": "极连云",
+    "nameEn": "JiLianYun",
+    "tier": "中端",
+    "rating": 4.6,
+    "price": {
+      "monthly": 18,
+      "quarterly": 50,
+      "yearly": 188,
+      "currency": "CNY"
+    },
+    "traffic": "150GB/月起",
+    "devices": 8,
+    "protocols": ["Shadowsocks", "V2Ray", "Trojan"],
+    "features": [
+      "全IPLC专线",
+      "原生IP",
+      "流媒体解锁",
+      "ChatGPT可用"
+    ],
+    "provinces": {
+      "110000": { "nodeCount": 6, "avgSpeed": 600, "avgLatency": 20, "stability": 99.5 },
+      "310000": { "nodeCount": 8, "avgSpeed": 620, "avgLatency": 18, "stability": 99.6 },
+      "440000": { "nodeCount": 7, "avgSpeed": 610, "avgLatency": 19, "stability": 99.5 },
+      "320000": { "nodeCount": 6, "avgSpeed": 605, "avgLatency": 20, "stability": 99.5 },
+      "330000": { "nodeCount": 5, "avgSpeed": 595, "avgLatency": 21, "stability": 99.4 }
+    },
+    "affUrl": "https://haozevpn.jlyvipaff.com/#/?code=KUKfOY13",
+    "promoCode": null,
+    "tags": ["IPLC", "原生IP", "ChatGPT"],
+    "status": "正常运营",
+    "description": "全IPLC专线，原生IP解锁流媒体"
+  },
+  {
+    "id": "dageyun",
+    "name": "大哥云",
+    "nameEn": "DaGeYun",
+    "tier": "入门",
+    "rating": 4.7,
+    "price": {
+      "monthly": 19,
+      "quarterly": 53,
+      "yearly": 198,
+      "currency": "CNY"
+    },
+    "traffic": "100GB/月起",
+    "devices": 5,
+    "protocols": ["Shadowsocks", "V2Ray"],
+    "features": [
+      "老牌稳定",
+      "免费试用",
+      "Netflix解锁",
+      "ChatGPT可用"
+    ],
+    "provinces": {
+      "110000": { "nodeCount": 5, "avgSpeed": 500, "avgLatency": 22, "stability": 99.6 },
+      "310000": { "nodeCount": 6, "avgSpeed": 520, "avgLatency": 20, "stability": 99.7 },
+      "440000": { "nodeCount": 6, "avgSpeed": 510, "avgLatency": 21, "stability": 99.6 },
+      "320000": { "nodeCount": 5, "avgSpeed": 505, "avgLatency": 22, "stability": 99.6 },
+      "330000": { "nodeCount": 4, "avgSpeed": 495, "avgLatency": 23, "stability": 99.5 }
+    },
+    "affUrl": "https://aff02.dgy02.com/#/register?code=PQdpFA0R",
+    "promoCode": "dgy",
+    "tags": ["性价比", "新手友好", "流媒体"],
+    "status": "正常运营",
+    "description": "老牌稳定机场，免费试用支持"
+  },
+  {
+    "id": "jindouyun",
+    "name": "筋斗云",
+    "nameEn": "JinDouYun",
+    "tier": "中端",
+    "rating": 4.5,
+    "price": {
+      "monthly": 16,
+      "quarterly": 45,
+      "yearly": 168,
+      "currency": "CNY"
+    },
+    "traffic": "120GB/月起",
+    "devices": 6,
+    "protocols": ["Shadowsocks", "V2Ray", "Trojan"],
+    "features": [
+      "IEPL专线",
+      "三网优化",
+      "Netflix解锁",
+      "ChatGPT可用"
+    ],
+    "provinces": {
+      "110000": { "nodeCount": 6, "avgSpeed": 600, "avgLatency": 22, "stability": 99.4 },
+      "310000": { "nodeCount": 7, "avgSpeed": 620, "avgLatency": 20, "stability": 99.5 },
+      "440000": { "nodeCount": 7, "avgSpeed": 610, "avgLatency": 21, "stability": 99.4 },
+      "320000": { "nodeCount": 6, "avgSpeed": 605, "avgLatency": 22, "stability": 99.4 },
+      "330000": { "nodeCount": 5, "avgSpeed": 595, "avgLatency": 23, "stability": 99.3 }
+    },
+    "affUrl": "https://jdy.52kok.cn/#/register?code=wUKiwosG",
+    "promoCode": null,
+    "tags": ["IEPL", "三网优化", "ChatGPT"],
+    "status": "正常运营",
+    "description": "IEPL专线，三网优化稳定"
+  }
+]

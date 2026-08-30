@@ -1,0 +1,25 @@
+User-agent: *
+Allow: /
+
+# 禁止抓取的目录
+Disallow: /assets/
+Disallow: /*.js$
+Disallow: /*.css$
+
+# Sitemap位置
+Sitemap: https://mapforvpn.com/sitemap.xml
+
+# 针对Bingbot的特殊规则
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# 针对Googlebot的特殊规则
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# 针对百度的特殊规则
+User-agent: Baiduspider
+Allow: /
+Crawl-delay: 1

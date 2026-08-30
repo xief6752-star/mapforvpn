@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026年机场推荐榜单 - 速度与稳定性综合评测 | MapForVPN</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=Noto+Sans+SC:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600&display=swap">
+
+<style>
+  :root {
+    --bg: #f8faf9;
+    --bg-soft: #f0f4f1;
+    --surface: #ffffff;
+    --border: #d1e4d7;
+    --border-soft: #e8f3ec;
+    --text: #1a3a2a;
+    --text-muted: #4a6355;
+    --text-faint: #6b8577;
+    --accent: #2d6a4f;
+    --accent-strong: #1b4332;
+    --accent-soft: rgba(45, 106, 79, 0.1);
+    --accent-2: #52b788;
+    --success: #40916c;
+    --ocean: #d8f3dc;
+    --land-empty: #f1faee;
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+    --glow: 0 0 20px rgba(45, 106, 79, 0.3);
+    --r: 12px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #f8faf9; --bg-soft: #f0f4f1; --surface: #ffffff;
+      --border: #d1e4d7; --border-soft: #e8f3ec;
+      --text: #1a3a2a; --text-muted: #4a6355; --text-faint: #6b8577;
+      --accent: #2d6a4f; --accent-strong: #1b4332; --accent-soft: rgba(45, 106, 79, 0.1); --accent-2: #52b788;
+      --success: #40916c;
+      --ocean: #d8f3dc; --land-empty: #f1faee;
+      --shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Noto Sans SC', sans-serif;
+    line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+
+  /* Navigation Bar */
+  .navbar {
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow); position: sticky; top: 0; z-index: 100;
+  }
+  .navbar-inner {
+    max-width: 1400px; margin: 0 auto; padding: 0 24px;
+    display: flex; align-items: center; justify-content: space-between; height: 64px;
+  }
+  .navbar-logo {
+    font-family: 'ZCOOL XiaoWei', serif; font-size: 22px; font-weight: 400;
+    text-decoration: none; color: var(--text);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .navbar-logo-icon { font-size: 26px; }
+  .navbar-nav { display: flex; align-items: center; gap: 32px; }
+  .navbar-link {
+    color: var(--text-muted); text-decoration: none;
+    font-size: 14px; font-weight: 500; transition: color .2s;
+  }
+  .navbar-link:hover { color: var(--accent); }
+  .navbar-link.active { color: var(--accent); font-weight: 600; }
+
+  .container { max-width: 1400px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  .page-header {
+    text-align: center; margin-bottom: 48px;
+  }
+  .page-header h1 {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 36px; font-weight: 900; margin: 0 0 12px;
+    color: var(--text);
+  }
+  .page-header p {
+    font-size: 16px; color: var(--text-muted);
+  }
+
+  .filter-bar {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--r); padding: 20px; margin-bottom: 32px;
+    box-shadow: var(--shadow);
+  }
+  .filter-group {
+    margin-bottom: 16px;
+  }
+  .filter-group:last-child { margin-bottom: 0; }
+  .filter-label {
+    font-size: 14px; font-weight: 600; color: var(--text);
+    margin-bottom: 10px; display: block;
+  }
+  .filter-chips {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .filter-chip {
+    padding: 6px 16px; border-radius: 20px; border: 1px solid var(--border);
+    background: var(--bg-soft); color: var(--text-muted);
+    font-size: 13px; font-weight: 500; cursor: pointer;
+    transition: all .15s;
+  }
+  .filter-chip:hover {
+    background: var(--border); color: var(--text);
+  }
+  .filter-chip.active {
+    background: var(--accent); color: white; border-color: var(--accent);
+  }
+
+  .ranking-table {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--r); overflow: hidden; box-shadow: var(--shadow);
+  }
+  table {
+    width: 100%; border-collapse: collapse;
+  }
+  thead tr {
+    background: var(--bg-soft); border-bottom: 2px solid var(--border);
+  }
+  th {
+    padding: 16px; text-align: left; font-size: 14px;
+    font-weight: 600; color: var(--text-muted);
+  }
+  tbody tr {
+    border-bottom: 1px solid var(--border-soft);
+    transition: background .15s;
+  }
+  tbody tr:hover {
+    background: var(--bg-soft);
+  }
+  td {
+    padding: 18px 16px;
+  }
+  .rank-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px; border-radius: 50%;
+    font-weight: 700; font-size: 15px;
+  }
+  .rank-1 { background: #FEF3C7; color: #B45309; }
+  .rank-2 { background: #E0E7FF; color: #4338CA; }
+  .rank-3 { background: #DBEAFE; color: #1E40AF; }
+  .rank-other { background: var(--bg-soft); color: var(--text-muted); }
+  .airport-name {
+    font-weight: 600; color: var(--text); font-size: 15px;
+  }
+  .airport-link {
+    color: var(--accent); text-decoration: none;
+    margin-left: 8px; font-size: 13px;
+  }
+  .speed-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600; font-size: 16px; color: var(--success);
+  }
+  .stars {
+    display: flex; gap: 2px;
+  }
+  .star { color: #F59E0B; }
+  .star-empty { color: #D1D5DB; }
+  .price {
+    font-weight: 600; color: var(--text); font-size: 15px;
+  }
+  .tag {
+    display: inline-block; padding: 4px 10px; border-radius: 12px;
+    font-size: 12px; font-weight: 500; background: var(--accent-soft);
+    color: var(--accent); margin-right: 4px;
+  }
+
+  .footer {
+    background: var(--surface); border-top: 1px solid var(--border);
+    padding: 32px 24px; margin-top: 80px;
+  }
+  .footer-inner {
+    max-width: 1400px; margin: 0 auto; text-align: center;
+    font-size: 13px; color: var(--text-faint);
+  }
+
+  @media (max-width: 860px) {
+    .navbar-nav { display: none; }
+  }
+</style>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="基于真实测试数据的机场排名榜单，包含速度测试、稳定性评分、价格对比。涵盖高端IPLC专线、性价比中端机场、入门级便宜机场推荐。">
+    <meta name="keywords" content="机场榜单,机场排名,机场推荐,VPN排名,最快机场,稳定机场,便宜机场,性价比机场">
+    <meta name="author" content="MapForVPN">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="bingbot" content="index, follow">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mapforvpn.com/rankings.html">
+    <meta property="og:title" content="2026年机场推荐榜单 - 速度与稳定性综合评测 | MapForVPN">
+    <meta property="og:description" content="基于真实测试数据的机场排名榜单，包含速度测试、稳定性评分、价格对比。涵盖高端IPLC专线、性价比中端机场、入门级便宜机场推荐。">
+    <meta property="og:site_name" content="MapForVPN">
+    <meta property="og:locale" content="zh_CN">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://mapforvpn.com/rankings.html">
+    <meta name="twitter:title" content="2026年机场推荐榜单 - 速度与稳定性综合评测 | MapForVPN">
+    <meta name="twitter:description" content="基于真实测试数据的机场排名榜单，包含速度测试、稳定性评分、价格对比。涵盖高端IPLC专线、性价比中端机场、入门级便宜机场推荐。">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://mapforvpn.com/rankings.html">
+
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="navbar-logo">
+      <span style="font-weight: 900; font-family: 'Noto Sans SC', sans-serif; color: #2d5016;">Map</span><span style="font-weight: 900; font-family: 'Noto Sans SC', sans-serif; color: #5fb878;">For</span><span style="font-weight: 900; font-family: 'Noto Sans SC', sans-serif; color: #2d5016;">VPN</span>
+    </a>
+    <div class="navbar-nav">
+      <a href="index.html" class="navbar-link">首页</a>
+      <a href="rankings.html" class="navbar-link active">机场榜单</a>
+      <a href="reviews.html" class="navbar-link">机场评测</a>
+      <a href="nodes/" class="navbar-link">省份节点</a>
+      <a href="wiki.html" class="navbar-link">科普百科</a>
+      <a href="tutorials.html" class="navbar-link">使用教程</a>
+      <a href="download.html" class="navbar-link">客户端下载</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="page-header">
+    <h1>🏆 机场榜单</h1>
+    <p>基于真实测速数据的机场排名，每日更新</p>
+  </div>
+
+  <!-- Filters -->
+  <div class="filter-bar">
+    <div class="filter-group">
+      <span class="filter-label">筛选条件</span>
+      <div class="filter-chips">
+        <div class="filter-chip active">全部</div>
+        <div class="filter-chip">高速稳定</div>
+        <div class="filter-chip">性价比高</div>
+        <div class="filter-chip">流媒体解锁</div>
+        <div class="filter-chip">游戏加速</div>
+        <div class="filter-chip">IPLC专线</div>
+      </div>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">价格区间</span>
+      <div class="filter-chips">
+        <div class="filter-chip active">全部</div>
+        <div class="filter-chip">¥0-15/月</div>
+        <div class="filter-chip">¥15-30/月</div>
+        <div class="filter-chip">¥30-50/月</div>
+        <div class="filter-chip">¥50+/月</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rankings Table -->
+  <div class="ranking-table">
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 80px;">排名</th>
+          <th>机场名称</th>
+          <th style="width: 140px;">平均速度</th>
+          <th style="width: 140px;">稳定性</th>
+          <th style="width: 120px;">价格起</th>
+          <th>特色标签</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="rank-badge rank-1">1</span></td>
+          <td>
+            <div class="airport-name">云图机场</div>
+          </td>
+          <td><span class="speed-value">930 Mbps</span></td>
+          <td>
+            <div class="stars">
+              <span class="star">★</span><span class="star">★</span><span class="star">★</span>
+              <span class="star">★</span><span class="star">★</span>
+            </div>
+          </td>
+          <td><span class="price">¥25/月</span></td>
+          <td>
+            <span class="tag">金融级专线</span>
+            <span class="tag">流媒体</span>
+            <span class="tag">ChatGPT</span>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="rank-badge rank-2">2</span></td>
+          <td>
+            <div class="airport-name">极速Cloud</div>
+          </td>
+          <td><span class="speed-value">885 Mbps</span></td>
+          <td>
+            <div class="stars">
+              <span class="star">★</span><span class="star">★</span><span class="star">★</span>
+              <span class="star">★</span><span class="star">★</span>
+            </div>
+          </td>
+          <td><span class="price">¥30/月</span></td>
+          <td>
+            <span class="tag">流媒体</span>
+            <span class="tag">游戏加速</span>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="rank-badge rank-3">3</span></td>
+          <td>
+            <div class="airport-name">大鸽云</div>
+          </td>
+          <td><span class="speed-value">760 Mbps</span></td>
+          <td>
+            <div class="stars">
+              <span class="star">★</span><span class="star">★</span><span class="star">★</span>
+              <span class="star">★</span><span class="star">★</span>
+            </div>
+          </td>
+          <td><span class="price">¥15/月</span></td>
+          <td>
+            <span class="tag">性价比高</span>
+            <span class="tag">稳定</span>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="rank-badge rank-other">4</span></td>
+          <td>
+            <div class="airport-name">寰宇云</div>
+          </td>
+          <td><span class="speed-value">695 Mbps</span></td>
+          <td>
+            <div class="stars">
+              <span class="star">★</span><span class="star">★</span><span class="star">★</span>
+              <span class="star">★</span><span class="star-empty">★</span>
+            </div>
+          </td>
+          <td><span class="price">¥12/月</span></td>
+          <td>
+            <span class="tag">入门首选</span>
+            <span class="tag">流媒体</span>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="rank-badge rank-other">5</span></td>
+          <td>
+            <div class="airport-name">极连云</div>
+          </td>
+          <td><span class="speed-value">580 Mbps</span></td>
+          <td>
+            <div class="stars">
+              <span class="star">★</span><span class="star">★</span><span class="star">★</span>
+              <span class="star">★</span><span class="star-empty">★</span>
+            </div>
+          </td>
+          <td><span class="price">¥18/月</span></td>
+          <td>
+            <span class="tag">流媒体</span>
+            <span class="tag">稳定</span>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="rank-badge rank-other">6</span></td>
+          <td>
+            <div class="airport-name">金斗云</div>
+          </td>
+          <td><span class="speed-value">520 Mbps</span></td>
+          <td>
+            <div class="stars">
+              <span class="star">★</span><span class="star">★</span><span class="star">★</span>
+              <span class="star">★</span><span class="star-empty">★</span>
+            </div>
+          </td>
+          <td><span class="price">¥10/月</span></td>
+          <td>
+            <span class="tag">性价比高</span>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="rank-badge rank-other">7</span></td>
+          <td>
+            <div class="airport-name">顺云</div>
+          </td>
+          <td><span class="speed-value">480 Mbps</span></td>
+          <td>
+            <div class="stars">
+              <span class="star">★</span><span class="star">★</span><span class="star">★</span>
+              <span class="star">★</span><span class="star-empty">★</span>
+            </div>
+          </td>
+          <td><span class="price">¥9/月</span></td>
+          <td>
+            <span class="tag">入门首选</span>
+          </td>
+        </tr>
+            <div class="airport-name">示例机场 D</div>
+          </td>
+          <td><span class="speed-value">128 Mbps</span></td>
+          <td>
+            <div class="stars">
+              <span class="star">★</span><span class="star">★</span><span class="star">★</span>
+              <span class="star">★</span><span class="star-empty">★</span>
+            </div>
+          </td>
+          <td><span class="price">¥18/月</span></td>
+          <td>
+            <span class="tag">游戏优化</span>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="rank-badge rank-other">5</span></td>
+          <td>
+            <div class="airport-name">示例机场 E</div>
+          </td>
+          <td><span class="speed-value">125 Mbps</span></td>
+          <td>
+            <div class="stars">
+              <span class="star">★</span><span class="star">★</span><span class="star">★</span>
+              <span class="star">★</span><span class="star-empty">★</span>
+            </div>
+          </td>
+          <td><span class="price">¥20/月</span></td>
+          <td>
+            <span class="tag">ChatGPT</span>
+            <span class="tag">流媒体</span>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="rank-badge rank-other">6</span></td>
+          <td>
+            <div class="airport-name">示例机场 F</div>
+          </td>
+          <td><span class="speed-value">118 Mbps</span></td>
+          <td>
+            <div class="stars">
+              <span class="star">★</span><span class="star">★</span><span class="star">★</span>
+              <span class="star-empty">★</span><span class="star-empty">★</span>
+            </div>
+          </td>
+          <td><span class="price">¥8/月</span></td>
+          <td>
+            <span class="tag">超低价</span>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="rank-badge rank-other">7</span></td>
+          <td>
+            <div class="airport-name">示例机场 G</div>
+          </td>
+          <td><span class="speed-value">112 Mbps</span></td>
+          <td>
+            <div class="stars">
+              <span class="star">★</span><span class="star">★</span><span class="star">★</span>
+              <span class="star">★</span><span class="star-empty">★</span>
+            </div>
+          </td>
+          <td><span class="price">¥25/月</span></td>
+          <td>
+            <span class="tag">IEPL</span>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="rank-badge rank-other">8</span></td>
+          <td>
+            <div class="airport-name">示例机场 H</div>
+          </td>
+          <td><span class="speed-value">108 Mbps</span></td>
+          <td>
+            <div class="stars">
+              <span class="star">★</span><span class="star">★</span><span class="star">★</span>
+              <span class="star-empty">★</span><span class="star-empty">★</span>
+            </div>
+          </td>
+          <td><span class="price">¥15/月</span></td>
+          <td>
+            <span class="tag">节点多</span>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="rank-badge rank-other">9</span></td>
+          <td>
+            <div class="airport-name">示例机场 I</div>
+          </td>
+          <td><span class="speed-value">105 Mbps</span></td>
+          <td>
+            <div class="stars">
+              <span class="star">★</span><span class="star">★</span><span class="star">★</span>
+              <span class="star">★</span><span class="star-empty">★</span>
+            </div>
+          </td>
+          <td><span class="price">¥12/月</span></td>
+          <td>
+            <span class="tag">老牌稳定</span>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="rank-badge rank-other">10</span></td>
+          <td>
+            <div class="airport-name">示例机场 J</div>
+          </td>
+          <td><span class="speed-value">98 Mbps</span></td>
+          <td>
+            <div class="stars">
+              <span class="star">★</span><span class="star">★</span><span class="star">★</span>
+              <span class="star-empty">★</span><span class="star-empty">★</span>
+            </div>
+          </td>
+          <td><span class="price">¥9/月</span></td>
+          <td>
+            <span class="tag">按量付费</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Footer -->
+
+
+
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-section">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span style="font-weight: 900; color: #2d5016;">Map</span><span style="font-weight: 900; color: #5fb878;">For</span><span style="font-weight: 900; color: #2d5016;">VPN</span>
+        </div>
+        <p class="footer-desc">专注真实机场测评，帮助用户找到最稳定、最高性价比的科学上网工具。数据持续更新，从不接受付费植入。</p>
+      </div>
+    </div>
+
+    <div class="footer-section">
+      <h4>机场推荐</h4>
+      <ul class="footer-links">
+        <li><a href="rankings.html">综合榜单</a></li>
+        <li><a href="rankings.html#speed">横向对比表</a></li>
+        <li><a href="review-netflix.html">ChatGPT机场</a></li>
+        <li><a href="review-netflix.html">Netflix机场</a></li>
+        <li><a href="review-netflix.html">TikTok机场</a></li>
+        <li><a href="rankings.html">便宜机场</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h4>使用教程</h4>
+      <ul class="footer-links">
+        <li><a href="tutorials.html">Windows教程</a></li>
+        <li><a href="tutorials.html">Mac教程</a></li>
+        <li><a href="tutorials.html">iOS教程</a></li>
+        <li><a href="tutorials.html">Android教程</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h4>更多</h4>
+      <ul class="footer-links">
+        <li><a href="wiki.html">科普百科</a></li>
+        <li><a href="reviews.html">优惠专区</a></li>
+        <li><a href="index.html#about">关于我们</a></li>
+        <li><a href="https://t.me/shinhuw" target="_blank" rel="noopener noreferrer">TG频道</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-disclaimer">
+      <p>⚠️ 免责声明：本站所有内容仅供学习与技术研究参考，请遵守所在地区相关法律法规。本站仅链接至联盟推广链接，点击购买后本站获得少量佣金，但不影响购买价格。</p>
+    </div>
+    <div class="footer-meta">
+      <p>© 2026 MapForVPN · 保留所有权利</p>
+      <p>📧 联系我们：<a href="https://t.me/shinhuw" target="_blank" rel="noopener noreferrer">@shinhuw</a> · ⭐ <a href="https://github.com/shinhuw" target="_blank" rel="noopener noreferrer">GitHub 数据仓库</a></p>
+    </div>
+  </div>
+</footer>
+
+
+<style>
+.footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  margin-top: 80px;
+}
+
+.footer-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 60px 24px 40px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+}
+
+.footer-section h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.footer-brand .footer-logo {
+  font-size: 24px;
+  margin-bottom: 12px;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+
+.footer-desc {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 400px;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 12px;
+}
+
+.footer-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
+.footer-bottom {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px 24px 32px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.footer-disclaimer {
+  margin-bottom: 20px;
+}
+
+.footer-disclaimer p {
+  color: var(--text-faint);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.footer-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-meta p {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin: 0;
+}
+
+.footer-meta a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-meta a:hover {
+  color: var(--accent-strong);
+}
+
+@media (max-width: 1024px) {
+  .footer-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .footer-meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+</style>
+
+</body>
+</html>

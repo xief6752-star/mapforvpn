@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>v2rayN 配置教程 - MapForVPN</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=Noto+Sans+SC:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600&display=swap">
+
+<style>
+  :root {
+    --bg: #f8faf9;
+    --bg-soft: #f0f4f1;
+    --surface: #ffffff;
+    --border: #d1e4d7;
+    --border-soft: #e8f3ec;
+    --text: #1a3a2a;
+    --text-muted: #4a6355;
+    --text-faint: #6b8577;
+    --accent: #2d6a4f;
+    --accent-strong: #1b4332;
+    --accent-soft: rgba(45, 106, 79, 0.1);
+    --success: #40916c;
+    --r: 12px;
+    --shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0d1f17;
+      --bg-soft: #152d23;
+      --surface: #1a3329;
+      --border: #2d4a3d;
+      --border-soft: #243d32;
+      --text: #e8f3ec;
+      --text-muted: #a5bfb0;
+      --text-faint: #6b8577;
+      --accent: #52b788;
+      --accent-strong: #74c69d;
+      --accent-soft: rgba(82, 183, 136, 0.15);
+      --success: #74c69d;
+      --shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Noto Sans SC', sans-serif;
+    line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+
+  .navbar {
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow); position: sticky; top: 0; z-index: 100;
+  }
+  .navbar-inner {
+    max-width: 1400px; margin: 0 auto; padding: 0 24px;
+    display: flex; align-items: center; justify-content: space-between; height: 64px;
+  }
+  .navbar-logo {
+    font-size: 22px; font-weight: 400;
+    text-decoration: none; color: var(--text);
+    display: flex; align-items: center;
+  }
+  .navbar-nav { display: flex; align-items: center; gap: 32px; }
+  .navbar-link {
+    color: var(--text-muted); text-decoration: none;
+    font-size: 14px; font-weight: 500; transition: color .2s;
+  }
+  .navbar-link:hover { color: var(--accent); }
+  .navbar-link.active { color: var(--accent); font-weight: 600; }
+
+  .container { max-width: 1000px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  .tutorial-header {
+    text-align: center; margin-bottom: 40px;
+    padding-bottom: 32px; border-bottom: 2px solid var(--border);
+  }
+  .tutorial-icon {
+    font-size: 72px; margin-bottom: 16px;
+  }
+  .tutorial-header h1 {
+    font-size: 36px; font-weight: 900; margin: 0 0 12px;
+    color: var(--text);
+  }
+  .tutorial-header p {
+    font-size: 16px; color: var(--text-muted);
+  }
+
+  .download-section {
+    background: var(--accent-soft); border: 1px solid var(--accent);
+    border-radius: var(--r); padding: 28px; margin-bottom: 40px;
+  }
+  .download-title {
+    font-size: 20px; font-weight: 700; color: var(--text);
+    margin-bottom: 16px;
+  }
+  .download-buttons {
+    display: flex; flex-wrap: wrap; gap: 12px;
+  }
+  .download-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 24px; background: var(--accent);
+    color: white; text-decoration: none;
+    border-radius: 8px; font-weight: 600; font-size: 14px;
+    transition: all .2s;
+  }
+  .download-btn:hover {
+    background: var(--accent-strong);
+    transform: translateY(-2px);
+  }
+  .download-btn.secondary {
+    background: var(--surface); color: var(--accent);
+    border: 1px solid var(--accent);
+  }
+  .download-btn.secondary:hover {
+    background: var(--accent); color: white;
+  }
+
+  .steps {
+    margin-bottom: 60px;
+  }
+  .step {
+    margin-bottom: 40px; padding-bottom: 40px;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .step:last-child {
+    border-bottom: none;
+  }
+  .step-number {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--accent); color: white;
+    font-weight: 700; font-size: 18px;
+    margin-bottom: 16px;
+  }
+  .step h2 {
+    font-size: 24px; font-weight: 700; color: var(--text);
+    margin: 0 0 16px 0;
+  }
+  .step-content {
+    font-size: 15px; color: var(--text-muted); line-height: 1.8;
+  }
+  .step-content p {
+    margin: 0 0 16px 0;
+  }
+  .step-content ul {
+    margin: 16px 0; padding-left: 24px;
+  }
+  .step-content li {
+    margin-bottom: 8px;
+  }
+  .step-note {
+    background: var(--accent-soft); border-left: 3px solid var(--accent);
+    padding: 16px 20px; margin: 16px 0;
+    border-radius: 6px; font-size: 14px;
+  }
+  .step-note strong {
+    color: var(--accent-strong); font-weight: 600;
+  }
+  .step-warning {
+    background: #fff3cd; border-left: 3px solid #ffc107;
+    padding: 16px 20px; margin: 16px 0;
+    border-radius: 6px; font-size: 14px;
+    color: #856404;
+  }
+
+  .back-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--accent); text-decoration: none;
+    font-weight: 600; font-size: 14px;
+    margin-bottom: 32px;
+    transition: all .2s;
+  }
+  .back-link:hover {
+    color: var(--accent-strong);
+    transform: translateX(-4px);
+  }
+
+  @media (max-width: 860px) {
+    .navbar-nav { display: none; }
+  }
+
+
+.footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  margin-top: 80px;
+}
+
+.footer-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 60px 24px 40px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+}
+
+.footer-section h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.footer-brand .footer-logo {
+  font-size: 24px;
+  margin-bottom: 12px;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+
+.footer-desc {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 400px;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 12px;
+}
+
+.footer-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
+.footer-bottom {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px 24px 32px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.footer-disclaimer {
+  margin-bottom: 20px;
+}
+
+.footer-disclaimer p {
+  color: var(--text-faint);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.footer-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-meta p {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin: 0;
+}
+
+.footer-meta a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-meta a:hover {
+  color: var(--accent-strong);
+}
+
+@media (max-width: 1024px) {
+  .footer-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .footer-meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+</style>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="提供真实的机场测评和科学上网教程">
+    <meta name="keywords" content="机场推荐,VPN推荐,科学上网">
+    <meta name="author" content="MapForVPN">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="bingbot" content="index, follow">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mapforvpn.com/tutorial-v2rayn.html">
+    <meta property="og:title" content="MapForVPN - 专业机场测评与推荐">
+    <meta property="og:description" content="提供真实的机场测评和科学上网教程">
+    <meta property="og:site_name" content="MapForVPN">
+    <meta property="og:locale" content="zh_CN">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://mapforvpn.com/tutorial-v2rayn.html">
+    <meta name="twitter:title" content="MapForVPN - 专业机场测评与推荐">
+    <meta name="twitter:description" content="提供真实的机场测评和科学上网教程">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://mapforvpn.com/tutorial-v2rayn.html">
+
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="navbar-logo">
+      <span style="font-weight: 900; font-family: 'Noto Sans SC', sans-serif; color: #2d5016;">Map</span><span style="font-weight: 900; font-family: 'Noto Sans SC', sans-serif; color: #5fb878;">For</span><span style="font-weight: 900; font-family: 'Noto Sans SC', sans-serif; color: #2d5016;">VPN</span>
+    </a>
+    <div class="navbar-nav">
+      <a href="index.html" class="navbar-link">首页</a>
+      <a href="rankings.html" class="navbar-link">机场榜单</a>
+      <a href="reviews.html" class="navbar-link">机场评测</a>
+      <a href="nodes/" class="navbar-link">省份节点</a>
+      <a href="wiki.html" class="navbar-link">科普百科</a>
+      <a href="tutorials.html" class="navbar-link active">使用教程</a>
+      <a href="download.html" class="navbar-link">客户端下载</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <a href="tutorials.html" class="back-link">← 返回教程列表</a>
+
+  <div class="tutorial-header">
+    <div class="tutorial-icon">🌐</div>
+    <h1>v2rayN 配置教程</h1>
+    <p>适用于 Windows 7/10/11 系统 · 功能全面</p>
+  </div>
+
+  <div class="download-section">
+    <div class="download-title">📥 下载 v2rayN</div>
+    <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 16px;">
+      下载最新版本的 v2rayN（包含 v2ray-core）
+    </p>
+    <div class="download-buttons">
+      <a href="https://github.com/2dust/v2rayN/releases" class="download-btn" target="_blank" rel="noopener">
+        GitHub 官方下载
+      </a>
+      <a href="download.html" class="download-btn secondary">
+        查看更多下载源
+      </a>
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-number">1</div>
+      <h2>下载并解压</h2>
+      <div class="step-content">
+        <p>前往 GitHub 下载页面，下载最新版本：</p>
+        <ul>
+          <li>下载 <code>v2rayN-With-Core.zip</code>（带内核版本，推荐新手）</li>
+          <li>解压到任意文件夹（建议放在 C:\Program Files\v2rayN）</li>
+          <li>双击运行 <code>v2rayN.exe</code></li>
+        </ul>
+        <div class="step-warning">
+          <strong>⚠️ 注意：</strong>v2rayN 是绿色软件，解压即用，不要删除解压文件夹中的任何文件。
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">2</div>
+      <h2>获取订阅链接</h2>
+      <div class="step-content">
+        <p>从你的机场服务商获取订阅链接：</p>
+        <ul>
+          <li>登录机场官网，进入用户中心</li>
+          <li>找到"订阅地址"或"通用订阅"</li>
+          <li>复制订阅链接</li>
+        </ul>
+        <div class="step-note">
+          <strong>💡 提示：</strong>v2rayN 支持多种订阅格式，包括 VMess、VLESS、Trojan、Shadowsocks 等。
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">3</div>
+      <h2>添加订阅</h2>
+      <div class="step-content">
+        <p>在 v2rayN 中添加订阅：</p>
+        <ul>
+          <li>运行 v2rayN 后，图标会出现在系统托盘（右下角）</li>
+          <li>右键点击托盘图标，选择"订阅分组" → "订阅分组设置"</li>
+          <li>点击"添加"按钮</li>
+          <li>在"地址(url)"框中粘贴订阅链接</li>
+          <li>点击"确定"保存</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">4</div>
+      <h2>更新订阅</h2>
+      <div class="step-content">
+        <p>更新订阅获取节点列表：</p>
+        <ul>
+          <li>右键托盘图标，选择"订阅分组" → "更新全部订阅（不通过代理）"</li>
+          <li>等待更新完成，节点会显示在主窗口列表中</li>
+        </ul>
+        <div class="step-note">
+          <strong>🔄 自动更新：</strong>可以在"设置" → "v2rayN设置" → "订阅"中设置自动更新间隔。
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">5</div>
+      <h2>选择节点并启用</h2>
+      <div class="step-content">
+        <p>选择节点并启用系统代理：</p>
+        <ul>
+          <li>在主窗口节点列表中双击一个节点（节点会变为红色）</li>
+          <li>右键托盘图标，选择"系统代理" → "自动配置系统代理"</li>
+          <li>路由模式选择"绕过大陆"（国内直连，国外代理）</li>
+        </ul>
+        <div class="step-note">
+          <strong>⚡ 测速技巧：</strong>可以选中多个节点，右键选择"测试服务器真连接延迟"，找出最快的节点。
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">6</div>
+      <h2>验证连接</h2>
+      <div class="step-content">
+        <p>测试代理是否正常工作：</p>
+        <ul>
+          <li>打开浏览器访问 <a href="https://www.google.com" target="_blank" style="color: var(--accent);">https://www.google.com</a></li>
+          <li>如果能正常访问，说明配置成功</li>
+          <li>托盘图标显示绿色表示连接正常，红色表示连接失败</li>
+        </ul>
+        <div class="step-note">
+          <strong>✅ 配置完成！</strong>v2rayN 会在后台运行，可以设置开机自启，方便日常使用。
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-section">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span style="font-weight: 900; color: #2d5016;">Map</span><span style="font-weight: 900; color: #5fb878;">For</span><span style="font-weight: 900; color: #2d5016;">VPN</span>
+        </div>
+        <p class="footer-desc">专注真实机场测评，帮助用户找到最稳定、最高性价比的科学上网工具。数据持续更新，从不接受付费植入。</p>
+      </div>
+    </div>
+
+    <div class="footer-section">
+      <h4>机场推荐</h4>
+      <ul class="footer-links">
+        <li><a href="rankings.html">综合榜单</a></li>
+        <li><a href="rankings.html#speed">横向对比表</a></li>
+        <li><a href="review-netflix.html">ChatGPT机场</a></li>
+        <li><a href="review-netflix.html">Netflix机场</a></li>
+        <li><a href="review-netflix.html">TikTok机场</a></li>
+        <li><a href="rankings.html">便宜机场</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h4>使用教程</h4>
+      <ul class="footer-links">
+        <li><a href="tutorials.html">Windows教程</a></li>
+        <li><a href="tutorials.html">Mac教程</a></li>
+        <li><a href="tutorials.html">iOS教程</a></li>
+        <li><a href="tutorials.html">Android教程</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h4>更多</h4>
+      <ul class="footer-links">
+        <li><a href="wiki.html">科普百科</a></li>
+        <li><a href="reviews.html">优惠专区</a></li>
+        <li><a href="index.html#about">关于我们</a></li>
+        <li><a href="https://t.me/shinhuw" target="_blank" rel="noopener noreferrer">TG频道</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-disclaimer">
+      <p>⚠️ 免责声明：本站所有内容仅供学习与技术研究参考，请遵守所在地区相关法律法规。本站仅链接至联盟推广链接，点击购买后本站获得少量佣金，但不影响购买价格。</p>
+    </div>
+    <div class="footer-meta">
+      <p>© 2026 MapForVPN · 保留所有权利</p>
+      <p>📧 联系我们：<a href="https://t.me/shinhuw" target="_blank" rel="noopener noreferrer">@shinhuw</a> · ⭐ <a href="https://github.com/shinhuw" target="_blank" rel="noopener noreferrer">GitHub 数据仓库</a></p>
+    </div>
+  </div>
+</footer>
+
+
+<style>
+.footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  margin-top: 80px;
+}
+
+.footer-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 60px 24px 40px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+}
+
+.footer-section h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.footer-brand .footer-logo {
+  font-size: 24px;
+  margin-bottom: 12px;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+
+.footer-desc {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 400px;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 12px;
+}
+
+.footer-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
+.footer-bottom {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px 24px 32px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.footer-disclaimer {
+  margin-bottom: 20px;
+}
+
+.footer-disclaimer p {
+  color: var(--text-faint);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.footer-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-meta p {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin: 0;
+}
+
+.footer-meta a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-meta a:hover {
+  color: var(--accent-strong);
+}
+
+@media (max-width: 1024px) {
+  .footer-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .footer-meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+</style>
+
+</body>
+</html>

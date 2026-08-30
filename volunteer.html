@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>招募测速志愿者 - 长期免费节点回馈 | MapForVPN</title>
+
+<!-- SEO Meta Tags -->
+<meta name="description" content="MapForVPN招募全国各地测速志愿者，帮助完善省份测速数据。提供长期免费高质量节点链接作为回馈。">
+<meta name="keywords" content="测速志愿者,免费机场节点,机场测速,VPN测速">
+<meta name="robots" content="index, follow">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mapforvpn.com/volunteer.html">
+<meta property="og:title" content="招募测速志愿者 - 长期免费节点回馈">
+<meta property="og:description" content="帮助我们完善全国测速数据，获得长期免费高质量节点">
+
+<!-- Canonical URL -->
+<link rel="canonical" href="https://mapforvpn.com/volunteer.html">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap">
+
+<style>
+  :root {
+    --bg: #f8faf9;
+    --surface: #ffffff;
+    --border: #d1e4d7;
+    --border-soft: #e8f3ec;
+    --text: #1a3a2a;
+    --text-muted: #4a6355;
+    --text-faint: #6b8577;
+    --accent: #2d6a4f;
+    --accent-strong: #1b4332;
+    --accent-soft: rgba(45, 106, 79, 0.1);
+    --success: #40916c;
+    --warning: #ff6b00;
+    --r: 12px;
+    --shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0d1f17;
+      --surface: #1a3329;
+      --border: #2d4a3d;
+      --border-soft: #243d32;
+      --text: #e8f3ec;
+      --text-muted: #a5bfb0;
+      --text-faint: #6b8577;
+      --accent: #52b788;
+      --accent-strong: #74c69d;
+      --shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Noto Sans SC', sans-serif;
+    line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+
+  .navbar {
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow); position: sticky; top: 0; z-index: 100;
+  }
+  .navbar-inner {
+    max-width: 1400px; margin: 0 auto; padding: 0 24px;
+    display: flex; align-items: center; justify-content: space-between; height: 64px;
+  }
+  .navbar-logo {
+    font-size: 22px; text-decoration: none; color: var(--text);
+  }
+  .navbar-nav { display: flex; gap: 32px; }
+  .navbar-link {
+    color: var(--text-muted); text-decoration: none;
+    font-size: 14px; font-weight: 500; transition: color .2s;
+  }
+  .navbar-link:hover { color: var(--accent); }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  .hero {
+    text-align: center;
+    padding: 60px 0;
+    background: linear-gradient(135deg, var(--accent-soft) 0%, rgba(82, 183, 136, 0.05) 100%);
+    border-radius: var(--r);
+    margin-bottom: 48px;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    background: var(--warning);
+    color: white;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  .hero-title {
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--text);
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+
+  .hero-subtitle {
+    font-size: 20px;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+  }
+
+  .hero-cta {
+    display: inline-block;
+    padding: 16px 40px;
+    background: var(--accent);
+    color: white;
+    text-decoration: none;
+    border-radius: var(--r);
+    font-size: 18px;
+    font-weight: 600;
+    transition: all 0.3s;
+    box-shadow: var(--shadow);
+  }
+
+  .hero-cta:hover {
+    background: var(--accent-strong);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  .section {
+    margin-bottom: 48px;
+  }
+
+  .section-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+
+  .benefit-card {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: var(--r);
+    padding: 32px;
+    text-align: center;
+    transition: all 0.3s;
+  }
+
+  .benefit-card:hover {
+    border-color: var(--accent);
+    box-shadow: var(--shadow);
+    transform: translateY(-4px);
+  }
+
+  .benefit-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+  }
+
+  .benefit-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .benefit-desc {
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.8;
+  }
+
+  .requirements {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 32px;
+    margin-bottom: 48px;
+  }
+
+  .requirements h3 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+
+  .requirements ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .requirements li {
+    padding: 12px 0;
+    padding-left: 32px;
+    position: relative;
+    color: var(--text-muted);
+    font-size: 16px;
+  }
+
+  .requirements li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--success);
+    font-weight: 700;
+    font-size: 20px;
+  }
+
+  .process {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 32px;
+    margin-bottom: 48px;
+  }
+
+  .process h3 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 24px;
+  }
+
+  .process-steps {
+    display: grid;
+    gap: 20px;
+  }
+
+  .process-step {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .process-number {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    background: var(--accent);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 18px;
+  }
+
+  .process-content h4 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .process-content p {
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.8;
+  }
+
+  .faq {
+    margin-bottom: 48px;
+  }
+
+  .faq-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+
+  .faq-question {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .faq-answer {
+    color: var(--text-muted);
+    line-height: 1.8;
+  }
+
+  .highlight-box {
+    background: rgba(255, 107, 0, 0.1);
+    border-left: 4px solid var(--warning);
+    padding: 24px;
+    border-radius: var(--r);
+    margin: 32px 0;
+  }
+
+  .highlight-box h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .highlight-box p {
+    color: var(--text-muted);
+    line-height: 1.8;
+  }
+
+  .cta-section {
+    text-align: center;
+    padding: 60px 32px;
+    background: linear-gradient(135deg, var(--accent-soft) 0%, rgba(82, 183, 136, 0.05) 100%);
+    border-radius: var(--r);
+  }
+
+  .cta-section h2 {
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+
+  .cta-section p {
+    font-size: 18px;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+  }
+
+  @media (max-width: 768px) {
+    .navbar-nav { display: none; }
+    .hero-title { font-size: 36px; }
+    .section-title { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="navbar-logo">
+      <span style="font-weight: 900; color: #2d5016;">Map</span><span style="font-weight: 900; color: #5fb878;">For</span><span style="font-weight: 900; color: #2d5016;">VPN</span>
+    </a>
+    <div class="navbar-nav">
+      <a href="index.html" class="navbar-link">首页</a>
+      <a href="rankings.html" class="navbar-link">机场榜单</a>
+      <a href="reviews.html" class="navbar-link">机场评测</a>
+      <a href="nodes/" class="navbar-link">省份节点</a>
+      <a href="wiki.html" class="navbar-link">科普百科</a>
+      <a href="tutorials.html" class="navbar-link">使用教程</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="hero">
+    <div class="hero-badge">🔥 长期招募中</div>
+    <h1 class="hero-title">招募测速志愿者</h1>
+    <p class="hero-subtitle">帮助完善全国测速数据，获得长期免费高质量节点</p>
+    <a href="https://t.me/shinhuw" target="_blank" class="hero-cta">立即报名 →</a>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">🎁 志愿者福利</h2>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon">🚀</div>
+        <div class="benefit-title">长期免费节点</div>
+        <div class="benefit-desc">提供稳定的IPLC/CN2专线节点，无需付费，长期有效</div>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">⚡</div>
+        <div class="benefit-title">高质量线路</div>
+        <div class="benefit-desc">低延迟、高速度、解锁Netflix/ChatGPT等流媒体</div>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">🎯</div>
+        <div class="benefit-title">优先体验</div>
+        <div class="benefit-desc">优先测试新机场、新节点，第一时间获得最新资源</div>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">👥</div>
+        <div class="benefit-title">社群交流</div>
+        <div class="benefit-desc">加入核心测试群，与其他志愿者交流经验</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <h3>💎 节点质量保证</h3>
+    <p>
+      我们提供的免费节点来自合作的优质机场，包括IPLC专线、CN2 GIA等高端线路。
+      <strong>延迟低至15ms，速度500Mbps+，稳定性99%+</strong>。
+      绝非低价劣质节点，确保你的使用体验。
+    </p>
+  </div>
+
+  <div class="requirements">
+    <h3>📋 志愿者要求</h3>
+    <ul>
+      <li>拥有固定的网络环境（家庭宽带或稳定网络）</li>
+      <li>了解基本的网络知识（知道如何查看延迟、测速）</li>
+      <li>每周至少进行2-3次测速（每次5-10分钟）</li>
+      <li>能够使用Clash、V2Ray等常见客户端</li>
+      <li>如实反馈测速结果，不伪造数据</li>
+      <li>愿意长期参与（至少3个月）</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">🔄 测速流程</h2>
+    <div class="process">
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="process-number">1</div>
+          <div class="process-content">
+            <h4>联系我们报名</h4>
+            <p>通过TG联系 @shinhuw，告知你的省份、城市、运营商（电信/联通/移动）</p>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <div class="process-number">2</div>
+          <div class="process-content">
+            <h4>获得测试节点</h4>
+            <p>我们会提供3-5个机场的测试订阅链接，导入客户端即可使用</p>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <div class="process-number">3</div>
+          <div class="process-content">
+            <h4>进行测速测试</h4>
+            <p>每周2-3次，记录各节点的延迟、速度、稳定性（是否掉线）</p>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <div class="process-number">4</div>
+          <div class="process-content">
+            <h4>提交测速数据</h4>
+            <p>通过TG或表单提交测速结果，包括截图或文字记录</p>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <div class="process-number">5</div>
+          <div class="process-content">
+            <h4>长期免费使用</h4>
+            <p>持续提供数据的志愿者，可长期免费使用测试节点，无需续费</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">❓ 常见问题</h2>
+    <div class="faq">
+      <div class="faq-item">
+        <div class="faq-question">Q: 需要每天测速吗？</div>
+        <div class="faq-answer">
+          A: 不需要。每周2-3次即可，每次测速5-10分钟。我们理解大家都有自己的工作和生活，不会占用太多时间。
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">Q: 免费节点能用多久？</div>
+        <div class="faq-answer">
+          A: 只要你持续参与测速（每周2-3次），就可以一直免费使用。如果连续2周未提交数据，会暂停使用资格，恢复测速后可重新激活。
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">Q: 节点速度和流量怎么样？</div>
+        <div class="faq-answer">
+          A: 提供的都是高质量IPLC/CN2线路，延迟15-30ms，速度500Mbps+。流量根据测速贡献度分配，一般每月100-200GB，日常使用完全够用。
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">Q: 我是移动宽带，可以参加吗？</div>
+        <div class="faq-answer">
+          A: 当然可以！我们需要电信、联通、移动三网的测速数据。每个运营商的网络质量都不同，你的测速数据对其他同运营商用户非常有价值。
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">Q: 需要什么技术水平？</div>
+        <div class="faq-answer">
+          A: 会使用Clash/V2Ray等客户端，知道如何查看延迟和测速即可。我们会提供详细的测速教程，新手也能快速上手。
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">Q: 测速数据会公开我的隐私吗？</div>
+        <div class="faq-answer">
+          A: 不会。我们只收集省份、城市、运营商等基本信息，不会公开你的个人信息、IP地址等隐私数据。<strong>所有志愿者的个人信息都严格保密</strong>，仅用于内部测速数据统计，绝不会泄露或用于其他用途。
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">Q: 可以推荐朋友一起参加吗？</div>
+        <div class="faq-answer">
+          A: 可以！推荐朋友成功加入并完成首月测速，你和朋友都可以获得额外的流量奖励。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <h3>🎯 我们特别需要这些地区的志愿者</h3>
+    <p>
+      <strong>优先招募地区</strong>：江苏、浙江、四川、山东、河南、湖北、湖南、福建、陕西、辽宁、黑龙江、新疆、西藏<br><br>
+      <strong>需要运营商</strong>：电信、联通、移动三网都需要（每个运营商的网络质量都不同，都需要真实测速数据）<br><br>
+      以上地区的志愿者优先录取，帮助我们快速完善全国测速覆盖。
+    </p>
+  </div>
+
+  <div class="cta-section">
+    <h2>🚀 加入我们</h2>
+    <p>帮助完善全国机场测速数据，让更多用户找到适合的节点</p>
+    <a href="https://t.me/shinhuw" target="_blank" class="hero-cta">立即联系 @shinhuw</a>
+    <p style="margin-top: 24px; font-size: 14px; color: var(--text-faint);">
+      报名时请注明：志愿者报名 + 省份 + 城市 + 运营商
+    </p>
+  </div>
+
+  <div style="margin-top: 48px; padding: 24px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); text-align: center;">
+    <p style="color: var(--text-muted); line-height: 1.8;">
+      <strong>为什么要招募志愿者？</strong><br>
+      我们希望为全国用户提供<strong>真实、准确的本地化测速数据</strong>。
+      不同省份、不同运营商的网络环境差异巨大，
+      只有覆盖全国各地的真实测速，才能给出最靠谱的推荐。<br><br>
+      你的每一次测速，都在帮助其他用户避坑、找到最适合的机场。<br>
+      这是一件有意义的事情，感谢你的参与！❤️
+    </p>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-section">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span style="font-weight: 900; color: #2d5016;">Map</span><span style="font-weight: 900; color: #5fb878;">For</span><span style="font-weight: 900; color: #2d5016;">VPN</span>
+        </div>
+        <p class="footer-desc">专注真实机场测评，帮助用户找到最稳定、最高性价比的科学上网工具。数据持续更新，从不接受付费植入。</p>
+      </div>
+    </div>
+
+    <div class="footer-section">
+      <h4>机场推荐</h4>
+      <ul class="footer-links">
+        <li><a href="rankings.html">综合榜单</a></li>
+        <li><a href="rankings.html#speed">横向对比表</a></li>
+        <li><a href="review-netflix.html">ChatGPT机场</a></li>
+        <li><a href="review-netflix.html">Netflix机场</a></li>
+        <li><a href="review-netflix.html">TikTok机场</a></li>
+        <li><a href="rankings.html">便宜机场</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h4>使用教程</h4>
+      <ul class="footer-links">
+        <li><a href="tutorials.html">Windows教程</a></li>
+        <li><a href="tutorials.html">Mac教程</a></li>
+        <li><a href="tutorials.html">iOS教程</a></li>
+        <li><a href="tutorials.html">Android教程</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h4>更多</h4>
+      <ul class="footer-links">
+        <li><a href="wiki.html">科普百科</a></li>
+        <li><a href="reviews.html">优惠专区</a></li>
+        <li><a href="index.html#about">关于我们</a></li>
+        <li><a href="https://t.me/shinhuw" target="_blank" rel="noopener noreferrer">TG频道</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-disclaimer">
+      <p>⚠️ 免责声明：本站所有内容仅供学习与技术研究参考，请遵守所在地区相关法律法规。本站仅链接至联盟推广链接，点击购买后本站获得少量佣金，但不影响购买价格。</p>
+    </div>
+    <div class="footer-meta">
+      <p>© 2026 MapForVPN · 保留所有权利</p>
+      <p>📧 联系我们：<a href="https://t.me/shinhuw" target="_blank" rel="noopener noreferrer">@shinhuw</a> · ⭐ <a href="https://github.com/shinhuw" target="_blank" rel="noopener noreferrer">GitHub 数据仓库</a></p>
+    </div>
+  </div>
+</footer>
+
+<style>
+.footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  margin-top: 80px;
+}
+
+.footer-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 60px 24px 40px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+}
+
+.footer-section h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.footer-brand .footer-logo {
+  font-size: 24px;
+  margin-bottom: 12px;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+
+.footer-desc {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 400px;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 12px;
+}
+
+.footer-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
+.footer-bottom {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px 24px 32px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.footer-disclaimer {
+  margin-bottom: 20px;
+}
+
+.footer-disclaimer p {
+  color: var(--text-faint);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.footer-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-meta p {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin: 0;
+}
+
+.footer-meta a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-meta a:hover {
+  color: var(--accent-strong);
+}
+
+@media (max-width: 1024px) {
+  .footer-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .footer-meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+</style>
+
+</body>
+</html>

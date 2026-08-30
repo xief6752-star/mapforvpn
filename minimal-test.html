@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>最小测试版本</title>
+<style>
+body { font-family: sans-serif; padding: 20px; }
+.container { display: flex; gap: 20px; }
+.map-area { flex: 2; }
+.info-area { flex: 1; }
+.isp-card { border: 1px solid #ddd; border-radius: 8px; padding: 15px; margin-bottom: 15px; }
+.isp-header { font-weight: bold; margin-bottom: 10px; }
+.airport-item { padding: 8px; background: #f5f5f5; margin: 5px 0; border-radius: 4px; }
+button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+
+
+.footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  margin-top: 80px;
+}
+
+.footer-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 60px 24px 40px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+}
+
+.footer-section h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.footer-brand .footer-logo {
+  font-size: 24px;
+  margin-bottom: 12px;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+
+.footer-desc {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 400px;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 12px;
+}
+
+.footer-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
+.footer-bottom {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px 24px 32px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.footer-disclaimer {
+  margin-bottom: 20px;
+}
+
+.footer-disclaimer p {
+  color: var(--text-faint);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.footer-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-meta p {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin: 0;
+}
+
+.footer-meta a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-meta a:hover {
+  color: var(--accent-strong);
+}
+
+@media (max-width: 1024px) {
+  .footer-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .footer-meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+</style>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="提供真实的机场测评和科学上网教程">
+    <meta name="keywords" content="机场推荐,VPN推荐,科学上网">
+    <meta name="author" content="MapForVPN">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="bingbot" content="index, follow">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mapforvpn.com/minimal-test.html">
+    <meta property="og:title" content="MapForVPN - 专业机场测评与推荐">
+    <meta property="og:description" content="提供真实的机场测评和科学上网教程">
+    <meta property="og:site_name" content="MapForVPN">
+    <meta property="og:locale" content="zh_CN">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://mapforvpn.com/minimal-test.html">
+    <meta name="twitter:title" content="MapForVPN - 专业机场测评与推荐">
+    <meta name="twitter:description" content="提供真实的机场测评和科学上网教程">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://mapforvpn.com/minimal-test.html">
+
+</head>
+<body>
+<h1>最小测试版本</h1>
+
+<div class="container">
+  <div class="map-area">
+    <h2>点击按钮模拟选择省份</h2>
+    <button onclick="selectProvince('内蒙古自治区', '150000')">内蒙古</button>
+    <button onclick="selectProvince('黑龙江省', '230000')">黑龙江</button>
+    <button onclick="selectProvince('浙江省', '330000')">浙江</button>
+  </div>
+
+  <div class="info-area">
+    <div class="isp-card">
+      <div class="isp-header" id="mobileTitle">中国移动测速</div>
+      <div id="mobileContent">点击省份查看数据</div>
+    </div>
+
+    <div class="isp-card">
+      <div class="isp-header" id="unicomTitle">中国联通测速</div>
+      <div id="unicomContent">点击省份查看数据</div>
+    </div>
+
+    <div class="isp-card">
+      <div class="isp-header" id="telecomTitle">中国电信测速</div>
+      <div id="telecomContent">点击省份查看数据</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// 模拟数据
+const ISP_DATA = {
+  '150000': {
+    mobile: [
+      { rank: 1, name: '机场A', latency: 23 },
+      { rank: 2, name: '机场B', latency: 35 },
+      { rank: 3, name: '机场C', latency: 47 }
+    ],
+    unicom: [
+      { rank: 1, name: '机场A', latency: 20 },
+      { rank: 2, name: '机场B', latency: 30 },
+      { rank: 3, name: '机场C', latency: 42 }
+    ],
+    telecom: [
+      { rank: 1, name: '机场A', latency: 18 },
+      { rank: 2, name: '机场B', latency: 28 },
+      { rank: 3, name: '机场C', latency: 39 }
+    ]
+  },
+  '230000': {
+    mobile: [
+      { rank: 1, name: '机场X', latency: 28 },
+      { rank: 2, name: '机场Y', latency: 41 },
+      { rank: 3, name: '机场Z', latency: 53 }
+    ],
+    unicom: [
+      { rank: 1, name: '机场X', latency: 25 },
+      { rank: 2, name: '机场Y', latency: 36 },
+      { rank: 3, name: '机场Z', latency: 48 }
+    ],
+    telecom: [
+      { rank: 1, name: '机场X', latency: 22 },
+      { rank: 2, name: '机场Y', latency: 33 },
+      { rank: 3, name: '机场Z', latency: 44 }
+    ]
+  },
+  '330000': {
+    mobile: [
+      { rank: 1, name: '杭州节点', latency: 15 },
+      { rank: 2, name: '宁波节点', latency: 22 },
+      { rank: 3, name: '温州节点', latency: 31 }
+    ],
+    unicom: [
+      { rank: 1, name: '杭州节点', latency: 13 },
+      { rank: 2, name: '宁波节点', latency: 19 },
+      { rank: 3, name: '温州节点', latency: 28 }
+    ],
+    telecom: [
+      { rank: 1, name: '杭州节点', latency: 11 },
+      { rank: 2, name: '宁波节点', latency: 17 },
+      { rank: 3, name: '温州节点', latency: 25 }
+    ]
+  }
+};
+
+function selectProvince(name, code) {
+  console.log('选择省份:', name, code);
+
+  const data = ISP_DATA[code];
+  if (!data) {
+    alert('该省份暂无数据');
+    return;
+  }
+
+  // 更新标题
+  document.getElementById('mobileTitle').textContent = name + '移动测速';
+  document.getElementById('unicomTitle').textContent = name + '联通测速';
+  document.getElementById('telecomTitle').textContent = name + '电信测速';
+
+  // 渲染移动数据
+  document.getElementById('mobileContent').innerHTML = data.mobile.map(airport =>
+    `<div class="airport-item">[${airport.rank}] ${airport.name} - ${airport.latency} ms</div>`
+  ).join('');
+
+  // 渲染联通数据
+  document.getElementById('unicomContent').innerHTML = data.unicom.map(airport =>
+    `<div class="airport-item">[${airport.rank}] ${airport.name} - ${airport.latency} ms</div>`
+  ).join('');
+
+  // 渲染电信数据
+  document.getElementById('telecomContent').innerHTML = data.telecom.map(airport =>
+    `<div class="airport-item">[${airport.rank}] ${airport.name} - ${airport.latency} ms</div>`
+  ).join('');
+
+  console.log('渲染完成');
+}
+</script>
+
+
+
+
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-section">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span style="font-weight: 900; color: #2d5016;">Map</span><span style="font-weight: 900; color: #5fb878;">For</span><span style="font-weight: 900; color: #2d5016;">VPN</span>
+        </div>
+        <p class="footer-desc">专注真实机场测评，帮助用户找到最稳定、最高性价比的科学上网工具。数据持续更新，从不接受付费植入。</p>
+      </div>
+    </div>
+
+    <div class="footer-section">
+      <h4>机场推荐</h4>
+      <ul class="footer-links">
+        <li><a href="rankings.html">综合榜单</a></li>
+        <li><a href="rankings.html#speed">横向对比表</a></li>
+        <li><a href="review-netflix.html">ChatGPT机场</a></li>
+        <li><a href="review-netflix.html">Netflix机场</a></li>
+        <li><a href="review-netflix.html">TikTok机场</a></li>
+        <li><a href="rankings.html">便宜机场</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h4>使用教程</h4>
+      <ul class="footer-links">
+        <li><a href="tutorials.html">Windows教程</a></li>
+        <li><a href="tutorials.html">Mac教程</a></li>
+        <li><a href="tutorials.html">iOS教程</a></li>
+        <li><a href="tutorials.html">Android教程</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h4>更多</h4>
+      <ul class="footer-links">
+        <li><a href="wiki.html">科普百科</a></li>
+        <li><a href="reviews.html">优惠专区</a></li>
+        <li><a href="index.html#about">关于我们</a></li>
+        <li><a href="https://t.me/shinhuw" target="_blank" rel="noopener noreferrer">TG频道</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-disclaimer">
+      <p>⚠️ 免责声明：本站所有内容仅供学习与技术研究参考，请遵守所在地区相关法律法规。本站仅链接至联盟推广链接，点击购买后本站获得少量佣金，但不影响购买价格。</p>
+    </div>
+    <div class="footer-meta">
+      <p>© 2026 MapForVPN · 保留所有权利</p>
+      <p>📧 联系我们：<a href="https://t.me/shinhuw" target="_blank" rel="noopener noreferrer">@shinhuw</a> · ⭐ <a href="https://github.com/shinhuw" target="_blank" rel="noopener noreferrer">GitHub 数据仓库</a></p>
+    </div>
+  </div>
+</footer>
+
+
+<style>
+.footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  margin-top: 80px;
+}
+
+.footer-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 60px 24px 40px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+}
+
+.footer-section h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.footer-brand .footer-logo {
+  font-size: 24px;
+  margin-bottom: 12px;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+
+.footer-desc {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 400px;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 12px;
+}
+
+.footer-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
+.footer-bottom {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px 24px 32px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.footer-disclaimer {
+  margin-bottom: 20px;
+}
+
+.footer-disclaimer p {
+  color: var(--text-faint);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.footer-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-meta p {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin: 0;
+}
+
+.footer-meta a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-meta a:hover {
+  color: var(--accent-strong);
+}
+
+@media (max-width: 1024px) {
+  .footer-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .footer-meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+</style>
+
+</body>
+</html>
