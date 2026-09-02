@@ -150,6 +150,12 @@
   .rank-other { background: var(--bg-soft); color: var(--text-muted); }
   .airport-name {
     font-weight: 600; color: var(--text); font-size: 15px;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  a.airport-name:hover {
+    color: var(--accent);
+    text-decoration: underline;
   }
   .airport-link {
     color: var(--accent); text-decoration: none;
@@ -281,7 +287,7 @@
         <tr>
           <td><span class="rank-badge rank-1">1</span></td>
           <td>
-            <div class="airport-name">云图机场</div>
+            <a href="review-yuntu.html" class="airport-name">云图机场</a>
           </td>
           <td><span class="speed-value">930 Mbps</span></td>
           <td>
@@ -300,7 +306,7 @@
         <tr>
           <td><span class="rank-badge rank-2">2</span></td>
           <td>
-            <div class="airport-name">极速Cloud</div>
+            <a href="review-jisucloud.html" class="airport-name">极速Cloud</a>
           </td>
           <td><span class="speed-value">885 Mbps</span></td>
           <td>
@@ -318,7 +324,7 @@
         <tr>
           <td><span class="rank-badge rank-3">3</span></td>
           <td>
-            <div class="airport-name">大鸽云</div>
+            <a href="review-dageyun.html" class="airport-name">大哥云</a>
           </td>
           <td><span class="speed-value">760 Mbps</span></td>
           <td>
@@ -336,7 +342,7 @@
         <tr>
           <td><span class="rank-badge rank-other">4</span></td>
           <td>
-            <div class="airport-name">寰宇云</div>
+            <a href="review-huanyuyun.html" class="airport-name">寰宇云</a>
           </td>
           <td><span class="speed-value">695 Mbps</span></td>
           <td>
@@ -354,7 +360,7 @@
         <tr>
           <td><span class="rank-badge rank-other">5</span></td>
           <td>
-            <div class="airport-name">极连云</div>
+            <a href="review-jilianyun.html" class="airport-name">极连云</a>
           </td>
           <td><span class="speed-value">580 Mbps</span></td>
           <td>
@@ -372,7 +378,7 @@
         <tr>
           <td><span class="rank-badge rank-other">6</span></td>
           <td>
-            <div class="airport-name">金斗云</div>
+            <a href="review-jindouyun.html" class="airport-name">筋斗云</a>
           </td>
           <td><span class="speed-value">520 Mbps</span></td>
           <td>
@@ -389,7 +395,7 @@
         <tr>
           <td><span class="rank-badge rank-other">7</span></td>
           <td>
-            <div class="airport-name">顺云</div>
+            <a href="review-shunyun.html" class="airport-name">瞬云</a>
           </td>
           <td><span class="speed-value">480 Mbps</span></td>
           <td>
@@ -401,123 +407,6 @@
           <td><span class="price">¥9/月</span></td>
           <td>
             <span class="tag">入门首选</span>
-          </td>
-        </tr>
-            <div class="airport-name">示例机场 D</div>
-          </td>
-          <td><span class="speed-value">128 Mbps</span></td>
-          <td>
-            <div class="stars">
-              <span class="star">★</span><span class="star">★</span><span class="star">★</span>
-              <span class="star">★</span><span class="star-empty">★</span>
-            </div>
-          </td>
-          <td><span class="price">¥18/月</span></td>
-          <td>
-            <span class="tag">游戏优化</span>
-          </td>
-        </tr>
-        <tr>
-          <td><span class="rank-badge rank-other">5</span></td>
-          <td>
-            <div class="airport-name">示例机场 E</div>
-          </td>
-          <td><span class="speed-value">125 Mbps</span></td>
-          <td>
-            <div class="stars">
-              <span class="star">★</span><span class="star">★</span><span class="star">★</span>
-              <span class="star">★</span><span class="star-empty">★</span>
-            </div>
-          </td>
-          <td><span class="price">¥20/月</span></td>
-          <td>
-            <span class="tag">ChatGPT</span>
-            <span class="tag">流媒体</span>
-          </td>
-        </tr>
-        <tr>
-          <td><span class="rank-badge rank-other">6</span></td>
-          <td>
-            <div class="airport-name">示例机场 F</div>
-          </td>
-          <td><span class="speed-value">118 Mbps</span></td>
-          <td>
-            <div class="stars">
-              <span class="star">★</span><span class="star">★</span><span class="star">★</span>
-              <span class="star-empty">★</span><span class="star-empty">★</span>
-            </div>
-          </td>
-          <td><span class="price">¥8/月</span></td>
-          <td>
-            <span class="tag">超低价</span>
-          </td>
-        </tr>
-        <tr>
-          <td><span class="rank-badge rank-other">7</span></td>
-          <td>
-            <div class="airport-name">示例机场 G</div>
-          </td>
-          <td><span class="speed-value">112 Mbps</span></td>
-          <td>
-            <div class="stars">
-              <span class="star">★</span><span class="star">★</span><span class="star">★</span>
-              <span class="star">★</span><span class="star-empty">★</span>
-            </div>
-          </td>
-          <td><span class="price">¥25/月</span></td>
-          <td>
-            <span class="tag">IEPL</span>
-          </td>
-        </tr>
-        <tr>
-          <td><span class="rank-badge rank-other">8</span></td>
-          <td>
-            <div class="airport-name">示例机场 H</div>
-          </td>
-          <td><span class="speed-value">108 Mbps</span></td>
-          <td>
-            <div class="stars">
-              <span class="star">★</span><span class="star">★</span><span class="star">★</span>
-              <span class="star-empty">★</span><span class="star-empty">★</span>
-            </div>
-          </td>
-          <td><span class="price">¥15/月</span></td>
-          <td>
-            <span class="tag">节点多</span>
-          </td>
-        </tr>
-        <tr>
-          <td><span class="rank-badge rank-other">9</span></td>
-          <td>
-            <div class="airport-name">示例机场 I</div>
-          </td>
-          <td><span class="speed-value">105 Mbps</span></td>
-          <td>
-            <div class="stars">
-              <span class="star">★</span><span class="star">★</span><span class="star">★</span>
-              <span class="star">★</span><span class="star-empty">★</span>
-            </div>
-          </td>
-          <td><span class="price">¥12/月</span></td>
-          <td>
-            <span class="tag">老牌稳定</span>
-          </td>
-        </tr>
-        <tr>
-          <td><span class="rank-badge rank-other">10</span></td>
-          <td>
-            <div class="airport-name">示例机场 J</div>
-          </td>
-          <td><span class="speed-value">98 Mbps</span></td>
-          <td>
-            <div class="stars">
-              <span class="star">★</span><span class="star">★</span><span class="star">★</span>
-              <span class="star-empty">★</span><span class="star-empty">★</span>
-            </div>
-          </td>
-          <td><span class="price">¥9/月</span></td>
-          <td>
-            <span class="tag">按量付费</span>
           </td>
         </tr>
       </tbody>
