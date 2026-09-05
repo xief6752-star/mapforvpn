@@ -231,6 +231,13 @@
     background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
     box-shadow: 0 4px 15px rgba(67, 233, 123, 0.3);
   }
+  .ad-item-empty,
+  .ad-item-empty:hover {
+    background: transparent;
+    box-shadow: none;
+    cursor: default;
+    transform: none;
+  }
   .ad-item:hover {
     transform: translateY(-6px);
     box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
@@ -1268,13 +1275,7 @@
       <div class="ad-button">立即访问</div>
     </a>
 
-    <a href="https://ygbk.jsjc456789.com/#/register?code=EocII8EW" class="ad-item" target="_blank" rel="noopener">
-      <div class="ad-badge">⭐ 4.9分</div>
-      <div class="ad-name">极速Cloud</div>
-      <div class="ad-desc">千兆带宽 · 游戏加速 · 不限设备</div>
-      <div class="ad-price">¥19.8/月起</div>
-      <div class="ad-button">立即访问</div>
-    </a>
+    <div class="ad-item ad-item-empty" aria-label="广告位招租">广告位招租</div>
   </div>
 
   <div class="top-bar">
