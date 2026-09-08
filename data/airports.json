@@ -204,6 +204,40 @@
     "description": "老牌稳定机场，免费试用支持"
   },
   {
+    "id": "guangsuyun",
+    "name": "光速云",
+    "nameEn": "GuangSuYun",
+    "tier": "中端",
+    "rating": 4.8,
+    "price": {
+      "monthly": 23,
+      "quarterly": 65,
+      "yearly": 240,
+      "currency": "CNY"
+    },
+    "traffic": "148GB/月起",
+    "devices": 999,
+    "protocols": ["Shadowsocks", "V2Ray", "Trojan"],
+    "features": [
+      "全球IPLC专线",
+      "单节点2.5Gbps",
+      "流媒体解锁",
+      "ChatGPT可用"
+    ],
+    "provinces": {
+      "110000": { "nodeCount": 8, "avgSpeed": 740, "avgLatency": 18, "stability": 99.5 },
+      "310000": { "nodeCount": 10, "avgSpeed": 760, "avgLatency": 16, "stability": 99.6 },
+      "440000": { "nodeCount": 9, "avgSpeed": 750, "avgLatency": 17, "stability": 99.5 },
+      "320000": { "nodeCount": 8, "avgSpeed": 745, "avgLatency": 18, "stability": 99.5 },
+      "330000": { "nodeCount": 7, "avgSpeed": 735, "avgLatency": 19, "stability": 99.4 }
+    },
+    "affUrl": "https://sjds8ds.guangsut.sbs/#/?code=XrQ58TLd",
+    "promoCode": null,
+    "tags": ["IPLC专线", "流媒体", "ChatGPT"],
+    "status": "正常运营",
+    "description": "全球IPLC专线，单节点2.5Gbps高速带宽"
+  },
+  {
     "id": "jindouyun",
     "name": "筋斗云",
     "nameEn": "JinDouYun",
